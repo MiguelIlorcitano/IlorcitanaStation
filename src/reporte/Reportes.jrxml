@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e82f4e5b-bee4-48ce-b5f2-4e674917ceda">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="Maquina" class="java.lang.String"/>
+	<field name="Fecha" class="java.lang.String"/>
+	<field name="Operario" class="java.lang.String"/>
+	<field name="Tiempo empleado" class="java.lang.String"/>
+	<field name="Tipo de mantenimiento" class="java.lang.String"/>
+	<field name="Tipo de problema" class="java.lang.String"/>
+	<field name="Operaciones" class="java.lang.String"/>
+	<field name="Piezas sustituidas" class="java.lang.String"/>
+	<field name="Observaciones" class="java.lang.String"/>
+	<detail>
+		<band height="802">
+			<rectangle radius="10">
+				<reportElement x="18" y="19" width="520" height="80" forecolor="#003333" backcolor="#003333" uuid="fbb0d5f0-69b8-4ad6-b74e-041773d956f5"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="18" y="118" width="520" height="80" forecolor="#003333" uuid="52a71b13-c938-41ac-aa9a-544bb1ef2ff5"/>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="18" y="239" width="520" height="545" forecolor="#003333" uuid="f9af3ce4-fd4b-41f1-b7a1-9c3cf56f572f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="18" y="198" width="520" height="41" forecolor="#003333" uuid="98623a68-88a1-46c3-b32e-af36c152c7ba"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalles de mantenimiento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="19" width="416" height="50" forecolor="#FFFFFF" uuid="663ad9da-a84c-4fd1-9e69-9ba027474ac3"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="28" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Acta de mantenimiento número:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="453" y="19" width="85" height="50" forecolor="#FFFFFF" uuid="02bf8b84-8e33-4b1e-81dc-dff69dec9c7e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="28" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="37" y="69" width="313" height="30" forecolor="#FFFFFF" uuid="05ae59f3-c1e9-453e-a5df-a0e440def89d"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="20"/>
+				</textElement>
+				<text><![CDATA[Comercial Ilorcitana de Mármoles S.L.]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="350" y="69" width="188" height="30" forecolor="#FFFFFF" uuid="73f81460-1132-4e5b-9156-9a1f413e99b6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="32" y="118" width="91" height="80" forecolor="#003333" uuid="c6f8fa48-5c84-4ae4-bcbd-c081d540a997"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Máquina:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="123" y="118" width="244" height="80" uuid="93219814-9d0a-4394-a862-fb335ec49076"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Maquina}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="367" y="118" width="70" height="80" forecolor="#003333" uuid="045abb04-e36d-49bd-a7b7-2ec87f9fe019"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="438" y="118" width="86" height="80" uuid="83b29c86-f5d7-4f83-bec9-338b0ca8002f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="34" y="258" width="79" height="21" forecolor="#003333" uuid="13ff124e-81f2-41fc-98e0-09b2fa8425ca"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Operario:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="34" y="291" width="126" height="20" forecolor="#003333" uuid="3a0725e3-eadb-4128-87ba-0c5b5b319f78"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tiempo empleado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="34" y="324" width="154" height="20" forecolor="#003333" uuid="b8e1955f-3d61-4195-9f25-522aa611611d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de mantenimiento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="357" width="123" height="20" forecolor="#003333" uuid="40c33665-5627-42bc-a382-a7f67983aa5a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo de problema:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="391" width="485" height="34" forecolor="#003333" uuid="5f97e411-504d-4ba7-a730-ef2b74a4c6d5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Operaciones:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="505" width="485" height="35" forecolor="#003333" uuid="9b007727-902d-41e6-9583-95d01cbbdeaa"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Piezas sustituidas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="620" width="485" height="35" forecolor="#003333" uuid="3700c1cf-f24e-4590-a6e4-c239627edbec"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Observaciones]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="113" y="258" width="409" height="20" forecolor="#003333" uuid="2f5d269b-2eed-4d63-96e8-80af7ac37a7c"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="123" y="258" width="387" height="20" uuid="308c3fb4-de9b-4ad6-9977-71fd9a5845a9"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Operario}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="160" y="291" width="362" height="20" forecolor="#003333" uuid="e955a301-e904-4f22-94d7-d52702fa5db5"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="178" y="291" width="332" height="20" uuid="76f77778-a348-46fb-b2bb-15852ac6fd79"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Tiempo empleado}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="188" y="324" width="334" height="20" forecolor="#003333" uuid="41b2a094-e167-4347-a5ef-5d718bf6b20c"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="201" y="324" width="309" height="20" uuid="141d12d9-d316-407b-9132-f11b50029bc2"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Tipo de mantenimiento}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="160" y="357" width="362" height="20" forecolor="#003333" uuid="087f4d3f-a601-49ab-936f-d0749fece01f"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="178" y="357" width="332" height="20" uuid="bcbeadb6-2e44-47be-b3d6-b11e02579f6f"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{Tipo de problema}]]></textFieldExpression>
+			</textField>
+			<rectangle radius="10">
+				<reportElement x="37" y="425" width="485" height="80" forecolor="#003333" uuid="ecde1fe2-2536-434e-9d5c-3208f0fd045c"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="37" y="540" width="485" height="80" uuid="239c6669-e175-475c-9815-61c1882a4c04"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle radius="10">
+				<reportElement x="37" y="655" width="485" height="107" uuid="8b1141cc-01de-4928-ba68-a5afad8115ed"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="49" y="540" width="461" height="80" uuid="a4417437-738f-454a-8505-6350a7d6eec5"/>
+				<textFieldExpression><![CDATA[$F{Piezas sustituidas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="425" width="461" height="80" uuid="b7793f67-8463-45c3-89e6-9210ba2eaf7c"/>
+				<textFieldExpression><![CDATA[$F{Operaciones}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="49" y="655" width="461" height="107" uuid="1f6a0fdc-fb3d-4b5a-b8cb-b1fab101711d"/>
+				<textFieldExpression><![CDATA[$F{Observaciones}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
