@@ -52,9 +52,9 @@ public class PanelStation extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         botonUsuario = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("IlorcitanaStation v1.2");
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/estacion.jpg")).getImage());
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("IlorcitanaStation V1.2.1");
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -62,14 +62,13 @@ public class PanelStation extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 102, 153));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/estacion.jpg"))); // NOI18N
-        jLabel1.setText("Ilorcitana Station 1.2");
+        jLabel1.setText("Ilorcitana Station 1.2.1");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
 
-        jButton1.setBackground(new java.awt.Color(31, 104, 153));
-        jButton1.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(0, 102, 153));
         jButton1.setText("Ilorcitanaoptimizer_Robot");
         jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -78,9 +77,8 @@ public class PanelStation extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(31, 104, 153));
-        jButton2.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(0, 102, 153));
         jButton2.setText("IlorcitanaOptimizer_CNC");
         jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -89,9 +87,8 @@ public class PanelStation extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(31, 104, 153));
-        jButton3.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(0, 102, 153));
         jButton3.setText("IlorcitnaSuport_CNC-III");
         jButton3.setEnabled(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -100,9 +97,9 @@ public class PanelStation extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(31, 104, 153));
-        jButton4.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
+        jButton4.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(0, 102, 153));
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/marketer.png"))); // NOI18N
         jButton4.setText("Gestion de tareas");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -110,9 +107,9 @@ public class PanelStation extends javax.swing.JFrame {
             }
         });
 
-        jButton5.setBackground(new java.awt.Color(31, 104, 153));
-        jButton5.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(0, 102, 153));
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/machinery.png"))); // NOI18N
         jButton5.setText("Gestión de máquinas");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,15 +117,14 @@ public class PanelStation extends javax.swing.JFrame {
             }
         });
 
-        jButton6.setBackground(new java.awt.Color(31, 104, 153));
-        jButton6.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jButton6.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(0, 102, 153));
         jButton6.setText("Saldida de material");
         jButton6.setEnabled(false);
 
-        jButton7.setBackground(new java.awt.Color(31, 104, 153));
-        jButton7.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(0, 102, 153));
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/tools.png"))); // NOI18N
         jButton7.setText("Gestión de mantenimiento");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,9 +132,8 @@ public class PanelStation extends javax.swing.JFrame {
             }
         });
 
-        botonUsuario.setBackground(new java.awt.Color(0, 102, 153));
         botonUsuario.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
-        botonUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        botonUsuario.setForeground(new java.awt.Color(0, 102, 153));
         botonUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/cambiar de usuario.png"))); // NOI18N
         botonUsuario.setText("Cambiar usuario");
         botonUsuario.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -158,13 +153,11 @@ public class PanelStation extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(botonUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -172,12 +165,10 @@ public class PanelStation extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -192,9 +183,9 @@ public class PanelStation extends javax.swing.JFrame {
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botonUsuario)
-                        .addGap(23, 23, 23))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                        .addComponent(botonUsuario)))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -185,7 +185,7 @@ public class panel_loging extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Loging");
         setBackground(java.awt.SystemColor.info);
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/estacion.jpg")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 

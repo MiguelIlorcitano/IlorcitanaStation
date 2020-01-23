@@ -111,6 +111,7 @@ public class PanelMaquinas extends javax.swing.JFrame {
                 jC_Empresa.setSelectedItem(rs.getString("Empresa"));
                 jC_Ubicacion.setSelectedItem(rs.getString("ubicacion"));
                 txt_man_semanal.setText(rs.getString("M_Semanal"));
+                txt_man_mensual.setText(rs.getString("M_Mensual"));
                 txt_man_trimestral.setText(rs.getString("M_Trimestral"));
                 txt_man_anual.setText(rs.getString("M_Anual"));
             }
@@ -121,7 +122,7 @@ public class PanelMaquinas extends javax.swing.JFrame {
     
     private void reemplazaMaquina() {
         try {
-            String query = "UPDATE maquinas SET modelo=\""+txt_modelo.getText()+"\",ano_fabricacion=\""+txt_año.getText()+"\",numero_referencia=\""+txt_referencia.getText()+"\",descripcion=\""+txt_descripcion.getText()+"\",numero_maquina="+Integer.parseInt(txt_numero_maquina.getText())+",fabricante=\""+txt_fabricante.getText()+"\",telefono=\""+txt_telefono.getText()+"\",movil=\""+txt_movil.getText()+"\",email=\""+txt_email.getText()+"\",Empresa=\""+jC_Empresa.getSelectedItem()+"\",ubicacion=\""+jC_Ubicacion.getSelectedItem()+"\",M_Semanal=\""+txt_man_semanal.getText()+"\",M_Trimestral=\""+txt_man_trimestral.getText()+"\",M_Anual=\""+txt_man_anual.getText()+"\" WHERE id_maquina ="+id_maquina;
+            String query = "UPDATE maquinas SET modelo=\""+txt_modelo.getText()+"\",ano_fabricacion=\""+txt_año.getText()+"\",numero_referencia=\""+txt_referencia.getText()+"\",descripcion=\""+txt_descripcion.getText()+"\",numero_maquina="+Integer.parseInt(txt_numero_maquina.getText())+",fabricante=\""+txt_fabricante.getText()+"\",telefono=\""+txt_telefono.getText()+"\",movil=\""+txt_movil.getText()+"\",email=\""+txt_email.getText()+"\",Empresa=\""+jC_Empresa.getSelectedItem()+"\",ubicacion=\""+jC_Ubicacion.getSelectedItem()+"\",M_Semanal=\""+txt_man_semanal.getText()+"\",M_Mensual=\""+txt_man_mensual.getText()+"\",M_Trimestral=\""+txt_man_trimestral.getText()+"\",M_Anual=\""+txt_man_anual.getText()+"\" WHERE id_maquina ="+id_maquina;
             st = conexion.createStatement();
             st.executeUpdate(query);
             modificaTxt();
@@ -134,7 +135,7 @@ public class PanelMaquinas extends javax.swing.JFrame {
     
     private void insertarMaquina() {
         try {
-            String query ="INSERT INTO `maquinas`(`modelo`, `ano_fabricacion`, `numero_referencia`, `descripcion`, `numero_maquina`, `fabricante`, `telefono`, `movil`, `email`, `Empresa`,`ubicacion`,`M_Semanal`, `M_Trimestral`, `M_Anual`) VALUES (\""+txt_modelo.getText()+"\",\""+txt_año.getText()+"\",\""+txt_referencia.getText()+"\",\""+txt_descripcion.getText()+"\","+Integer.parseInt(txt_numero_maquina.getText())+",\""+txt_fabricante.getText()+"\",\""+txt_telefono.getText()+"\",\""+txt_movil.getText()+"\",\""+txt_email.getText()+"\",\""+jC_Empresa.getSelectedItem()+"\",\""+jC_Ubicacion.getSelectedItem()+"\",\""+txt_man_semanal.getText()+"\",\""+txt_man_trimestral.getText()+"\",\""+txt_man_anual.getText()+"\")";
+            String query ="INSERT INTO `maquinas`(`modelo`, `ano_fabricacion`, `numero_referencia`, `descripcion`, `numero_maquina`, `fabricante`, `telefono`, `movil`, `email`, `Empresa`,`ubicacion`,`M_Semanal`, `M_Mensual`, `M_Trimestral`, `M_Anual`) VALUES (\""+txt_modelo.getText()+"\",\""+txt_año.getText()+"\",\""+txt_referencia.getText()+"\",\""+txt_descripcion.getText()+"\","+Integer.parseInt(txt_numero_maquina.getText())+",\""+txt_fabricante.getText()+"\",\""+txt_telefono.getText()+"\",\""+txt_movil.getText()+"\",\""+txt_email.getText()+"\",\""+jC_Empresa.getSelectedItem()+"\",\""+jC_Ubicacion.getSelectedItem()+"\",\""+txt_man_semanal.getText()+"\",\""+txt_man_mensual.getText()+"\",\""+txt_man_trimestral.getText()+"\",\""+txt_man_anual.getText()+"\")";
             st = conexion.createStatement();
             st.executeUpdate(query);
             modificaTxt();
@@ -232,6 +233,8 @@ public class PanelMaquinas extends javax.swing.JFrame {
         txt_numero_maquina = new javax.swing.JTextField();
         boton_reemplazar1 = new javax.swing.JButton();
         Boton_Añadir = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
+        txt_man_mensual = new javax.swing.JTextField();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -239,10 +242,9 @@ public class PanelMaquinas extends javax.swing.JFrame {
         setTitle("Gestión de máquinas");
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/editor.png")).getImage());
 
-        jPanel1.setBackground(new java.awt.Color(238, 246, 255));
+        jPanel1.setBackground(new java.awt.Color(226, 220, 220));
         jPanel1.setForeground(new java.awt.Color(238, 246, 255));
 
-        boton_registrar.setBackground(new java.awt.Color(102, 102, 102));
         boton_registrar.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
         boton_registrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/domain.png"))); // NOI18N
         boton_registrar.setText("Registrar");
@@ -253,75 +255,92 @@ public class PanelMaquinas extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setBackground(new java.awt.Color(86, 133, 181));
         jLabel1.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel1.setText(" Fabricante:");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel1.setOpaque(true);
 
         txt_fabricante.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         txt_fabricante.setToolTipText("");
-        txt_fabricante.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        txt_fabricante.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel2.setBackground(new java.awt.Color(86, 133, 181));
         jLabel2.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel2.setText(" Teléfono:");
-        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel2.setOpaque(true);
 
         txt_telefono.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         txt_telefono.setToolTipText("");
-        txt_telefono.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        txt_telefono.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel3.setBackground(new java.awt.Color(86, 133, 181));
         jLabel3.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel3.setText(" Movil:");
-        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel3.setOpaque(true);
 
         txt_movil.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         txt_movil.setToolTipText("");
-        txt_movil.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        txt_movil.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel4.setBackground(new java.awt.Color(86, 133, 181));
         jLabel4.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel4.setText(" Email:");
-        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel4.setOpaque(true);
 
         txt_email.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         txt_email.setToolTipText("");
-        txt_email.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        txt_email.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel5.setBackground(new java.awt.Color(86, 133, 181));
         jLabel5.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel5.setText(" Modelo:");
-        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel5.setOpaque(true);
 
         txt_modelo.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         txt_modelo.setToolTipText("");
-        txt_modelo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        txt_modelo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel6.setBackground(new java.awt.Color(86, 133, 181));
         jLabel6.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel6.setText(" Año de fabricación:");
-        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel6.setOpaque(true);
 
         txt_año.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         txt_año.setToolTipText("");
-        txt_año.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        txt_año.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel7.setBackground(new java.awt.Color(86, 133, 181));
         jLabel7.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel7.setText(" Descripción:");
-        jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel7.setOpaque(true);
 
+        jLabel8.setBackground(new java.awt.Color(86, 133, 181));
         jLabel8.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel8.setText(" Número de máquina:");
-        jLabel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        jLabel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel8.setOpaque(true);
 
         txt_descripcion.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         txt_descripcion.setToolTipText("");
-        txt_descripcion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        txt_descripcion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel9.setBackground(new java.awt.Color(86, 133, 181));
         jLabel9.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel9.setText(" Número de referencia:");
-        jLabel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        jLabel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel9.setOpaque(true);
 
         txt_referencia.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         txt_referencia.setToolTipText("");
-        txt_referencia.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        txt_referencia.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        boton_reemplazar.setBackground(new java.awt.Color(102, 102, 102));
         boton_reemplazar.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
         boton_reemplazar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/replace.png"))); // NOI18N
         boton_reemplazar.setText("Reemplazar");
@@ -334,35 +353,45 @@ public class PanelMaquinas extends javax.swing.JFrame {
 
         txt_man_semanal.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         txt_man_semanal.setToolTipText("");
-        txt_man_semanal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        txt_man_semanal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel10.setBackground(new java.awt.Color(86, 133, 181));
         jLabel10.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel10.setText(" Mantenimiento semanal: ");
-        jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel10.setOpaque(true);
 
+        jLabel11.setBackground(new java.awt.Color(86, 133, 181));
         jLabel11.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel11.setText(" Mantenimiento trimestral: ");
-        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel11.setOpaque(true);
 
         txt_man_trimestral.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         txt_man_trimestral.setToolTipText("");
-        txt_man_trimestral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        txt_man_trimestral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel12.setBackground(new java.awt.Color(86, 133, 181));
         jLabel12.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel12.setText(" Mantenimiento anual: ");
-        jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel12.setOpaque(true);
 
         txt_man_anual.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         txt_man_anual.setToolTipText("");
-        txt_man_anual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        txt_man_anual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel13.setBackground(new java.awt.Color(86, 133, 181));
         jLabel13.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel13.setText("Empresa:");
-        jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel13.setOpaque(true);
 
+        jLabel14.setBackground(new java.awt.Color(86, 133, 181));
         jLabel14.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel14.setText("Ubicación:");
-        jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel14.setOpaque(true);
 
         jC_Empresa.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         jC_Empresa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comercial Ilorcitana", "Canela Spring" }));
@@ -377,9 +406,8 @@ public class PanelMaquinas extends javax.swing.JFrame {
 
         txt_numero_maquina.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         txt_numero_maquina.setToolTipText("");
-        txt_numero_maquina.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(33, 135, 186)));
+        txt_numero_maquina.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        boton_reemplazar1.setBackground(new java.awt.Color(102, 102, 102));
         boton_reemplazar1.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
         boton_reemplazar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/folder.png"))); // NOI18N
         boton_reemplazar1.setText("Ver Documentos");
@@ -390,7 +418,6 @@ public class PanelMaquinas extends javax.swing.JFrame {
             }
         });
 
-        Boton_Añadir.setBackground(new java.awt.Color(102, 102, 102));
         Boton_Añadir.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
         Boton_Añadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/folder (2).png"))); // NOI18N
         Boton_Añadir.setText("Añadir Documentos");
@@ -401,63 +428,78 @@ public class PanelMaquinas extends javax.swing.JFrame {
             }
         });
 
+        jLabel15.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel15.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel15.setText(" Mantenimiento mensual: ");
+        jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel15.setOpaque(true);
+
+        txt_man_mensual.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
+        txt_man_mensual.setToolTipText("");
+        txt_man_mensual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jC_Empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_telefono)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_movil))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_referencia, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_año))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_modelo)
-                            .addComponent(txt_email)
-                            .addComponent(txt_fabricante)
-                            .addComponent(txt_descripcion)
-                            .addComponent(txt_man_semanal, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txt_man_trimestral)
-                            .addComponent(txt_man_anual, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jC_Ubicacion, 0, 425, Short.MAX_VALUE)
-                            .addComponent(txt_numero_maquina)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(boton_reemplazar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(boton_reemplazar1, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Boton_Añadir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(boton_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txt_man_mensual))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jC_Empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txt_telefono)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txt_movil))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel9)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txt_referencia, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jLabel6)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txt_año))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txt_modelo)
+                                .addComponent(txt_email)
+                                .addComponent(txt_fabricante)
+                                .addComponent(txt_descripcion)
+                                .addComponent(txt_man_semanal, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txt_man_trimestral)
+                                .addComponent(txt_man_anual, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jC_Ubicacion, 0, 425, Short.MAX_VALUE)
+                                .addComponent(txt_numero_maquina)))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(boton_reemplazar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(boton_reemplazar1, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(Boton_Añadir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(boton_registrar, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -509,13 +551,17 @@ public class PanelMaquinas extends javax.swing.JFrame {
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txt_man_mensual, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_man_trimestral, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_man_anual, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(boton_registrar)
                     .addComponent(boton_reemplazar))
@@ -542,19 +588,23 @@ public class PanelMaquinas extends javax.swing.JFrame {
 
     private void boton_reemplazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_reemplazarActionPerformed
         
-        if(numero.length()==1){
-            numero="00"+numero;
-        }
-        if(numero.length()==2){
-            numero="0"+numero;
-        }
-        if(numero.equals(txt_numero_maquina.getText())&&descripcion.equals(txt_descripcion.getText())){
+        
+        if (numero.equals(txt_numero_maquina.getText()) && descripcion.equals(txt_descripcion.getText())) {
             reemplazaMaquina();
-        }else{
-            if(cambiaNombreArchivo(new File("\\\\server\\datos\\GESCIM\\Gescim\\MODFACTUSOL\\DOCUMENTOS\\INFO_MAQUINARIA\\" + numero + " - " + descripcion))){
+        } else {
+            
+            if (numero.length() == 1) {
+                numero = "00" + numero;
+            }
+            
+            if (numero.length() == 2) {
+                numero = "0" + numero;
+            }
+            
+            if (cambiaNombreArchivo(new File("\\\\server\\datos\\GESCIM\\Gescim\\MODFACTUSOL\\DOCUMENTOS\\INFO_MAQUINARIA\\" + numero + " - " + descripcion))) {
                 reemplazaMaquina();
-            }else{
-                JOptionPane.showMessageDialog(null, "El fichero no se ha podido modificar. Comprueba que esten todos los documentos esten cerrados.");
+            } else {
+                JOptionPane.showMessageDialog(null, "El fichero no se ha podido modificar. Comprueba que esten todos los documentos cerrados.");
             }
         }
     }//GEN-LAST:event_boton_reemplazarActionPerformed
@@ -664,6 +714,7 @@ public class PanelMaquinas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -678,6 +729,7 @@ public class PanelMaquinas extends javax.swing.JFrame {
     private javax.swing.JTextField txt_email;
     private javax.swing.JTextField txt_fabricante;
     private javax.swing.JTextField txt_man_anual;
+    private javax.swing.JTextField txt_man_mensual;
     private javax.swing.JTextField txt_man_semanal;
     private javax.swing.JTextField txt_man_trimestral;
     private javax.swing.JTextField txt_modelo;

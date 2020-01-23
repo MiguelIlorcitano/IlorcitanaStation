@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
+import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.sql.Connection;
@@ -17,10 +18,12 @@ import java.sql.ResultSet;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.MessageFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -119,32 +122,38 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             String consulta = generaConsulta();
             st = conexion.createStatement();
             ResultSet r = st.executeQuery(consulta);
-            String titulos[] = {"Modelo", "Año de fabricación", "Número de referencia", "Descrición", "Número de máquina", "Fabricante", "Teléfono", "Movil", "Email", "Empresa", "Ubicación", "Mantenimiento semanl", "Mantenimiento trimestral", "Mantenimiento anual"};
+            String titulos[] = {"Modelo", "Descrición", "Número de máquina", "Fabricante", "Empresa", "Ubicación", "M_semanal", "M_mensual", "M_trimestral", "M_anual"};
             n = new DefaultTableModel(null, titulos);
-            String fila[] = new String[14];
+            String fila[] = new String[10];
             while (r.next()) {
                 fila[0] = r.getString("modelo");
-                fila[1] = r.getString("ano_fabricacion");
-                fila[2] = r.getString("numero_referencia");
-                fila[3] = r.getString("descripcion");
-                fila[4] = r.getString("numero_maquina");
-                fila[5] = r.getString("fabricante");
-                fila[6] = r.getString("telefono");
-                fila[7] = r.getString("movil");
-                fila[8] = r.getString("email");
-                fila[9] = r.getString("Empresa");
-                fila[10] = r.getString("ubicacion");
-                fila[11] = r.getString("M_Semanal");
-                fila[12] = r.getString("M_Trimestral");
-                fila[13] = r.getString("M_Anual");
+                fila[1] = r.getString("descripcion");
+                fila[2] = r.getString("numero_maquina");
+                fila[3] = r.getString("fabricante");
+                fila[4] = r.getString("Empresa");
+                fila[5] = r.getString("ubicacion");
+                fila[6] = r.getString("M_Semanal");
+                fila[7] = r.getString("M_Mensual");
+                fila[8] = r.getString("M_Trimestral");
+                fila[9] = r.getString("M_Anual");
                 n.addRow(fila);
             }
             Tabla.setModel(n);
             Tabla.setDefaultRenderer(Object.class, new RenderM());
+            Tabla.getColumnModel().getColumn(0).setPreferredWidth(150);
+            Tabla.getColumnModel().getColumn(1).setPreferredWidth(200);
+            Tabla.getColumnModel().getColumn(2).setPreferredWidth(100);
+            Tabla.getColumnModel().getColumn(3).setPreferredWidth(30);
+            Tabla.getColumnModel().getColumn(4).setPreferredWidth(30);
+            Tabla.getColumnModel().getColumn(5).setPreferredWidth(30);
+            Tabla.getColumnModel().getColumn(6).setPreferredWidth(30);
+            Tabla.getColumnModel().getColumn(7).setPreferredWidth(30);
+            Tabla.getColumnModel().getColumn(8).setPreferredWidth(30);
+            Tabla.getColumnModel().getColumn(9).setPreferredWidth(30);
             JTableHeader th;
             th = Tabla.getTableHeader();
             Font fuente = new Font("3ds Light", Font.BOLD, 14);
-            Color cl = new Color(14,70,126);
+            Color cl = new Color(14, 70, 126);
             th.setForeground(cl);
             th.setFont(fuente);
             Tabla.setShowHorizontalLines(true);
@@ -152,7 +161,40 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al cargar los datos de la tabla Maquinas");
         }
-
+    }
+    
+    public void utilJTablePrint(JTable jTable, String header, String footer, boolean showPrintDialog){        
+        boolean fitWidth = true;        
+        boolean interactive = true;
+        // We define the print mode (Definimos el modo de impresión)
+        JTable.PrintMode mode = fitWidth ? JTable.PrintMode.FIT_WIDTH : JTable.PrintMode.NORMAL;
+        try {
+            // Print the table (Imprimo la tabla)             
+            boolean complete = jTable.print(mode,
+                    new MessageFormat(header),
+                    new MessageFormat(footer),
+                    showPrintDialog,
+                    null,
+                    interactive);                 
+            if (complete) {
+                // Mostramos el mensaje de impresión existosa
+                JOptionPane.showMessageDialog(jTable,
+                        "Print complete (Impresión completa)",
+                        "Print result (Resultado de la impresión)",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // Mostramos un mensaje indicando que la impresión fue cancelada                 
+                JOptionPane.showMessageDialog(jTable,
+                        "Print canceled (Impresión cancelada)",
+                        "Print result (Resultado de la impresión)",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (PrinterException pe) {
+            JOptionPane.showMessageDialog(jTable, 
+                    "Print fail (Fallo de impresión): " + pe.getMessage(), 
+                    "Print result (Resultado de la impresión)", 
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     /**
@@ -185,6 +227,10 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         jR_Ubicacion = new javax.swing.JRadioButton();
         boton_reemplazar1 = new javax.swing.JButton();
         Boton_Añadir = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de máquinas");
@@ -192,7 +238,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/editor.png")).getImage());
         setPreferredSize(new java.awt.Dimension(1024, 768));
 
-        Panel1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        Panel1.setBackground(new java.awt.Color(227, 224, 224));
+
+        jScrollPane3.setAutoscrolls(true);
 
         Tabla.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -209,7 +257,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         ));
         Tabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         Tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        Tabla.setGridColor(new java.awt.Color(0, 102, 153));
+        Tabla.setGridColor(new java.awt.Color(51, 51, 51));
         Tabla.setIntercellSpacing(new java.awt.Dimension(10, 10));
         Tabla.setRowHeight(25);
         Tabla.setSelectionBackground(new java.awt.Color(204, 0, 0));
@@ -218,10 +266,13 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 click_tarea(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TablaMousePressed(evt);
+            }
         });
         jScrollPane3.setViewportView(Tabla);
 
-        botonPrincipal.setBackground(new java.awt.Color(102, 102, 102));
+        botonPrincipal.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
         botonPrincipal.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
         botonPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/homepage.png"))); // NOI18N
         botonPrincipal.setText("Panel principal");
@@ -232,6 +283,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
         jLabel2.setFont(new java.awt.Font("3ds Light", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(14, 70, 126));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -242,11 +294,11 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
         jlReloj.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
-        jlReloj.setForeground(new java.awt.Color(14, 70, 126));
+        jlReloj.setForeground(new java.awt.Color(51, 51, 51));
         jlReloj.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlReloj.setText("jLabel4");
 
-        jbCreaTarea1.setBackground(new java.awt.Color(102, 102, 102));
+        jbCreaTarea1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
         jbCreaTarea1.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
         jbCreaTarea1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/domain.png"))); // NOI18N
         jbCreaTarea1.setText("Registrar Máquina");
@@ -261,12 +313,12 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         txt_numeroMaquina.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_numeroMaquina.setText("0");
         txt_numeroMaquina.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
                 txt_numeroMaquinaAncestorRemoved(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         txt_numeroMaquina.addActionListener(new java.awt.event.ActionListener() {
@@ -275,9 +327,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jR_numeroMaquina.setBackground(new java.awt.Color(204, 204, 204));
+        jR_numeroMaquina.setBackground(new java.awt.Color(86, 133, 181));
         jR_numeroMaquina.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
-        jR_numeroMaquina.setForeground(new java.awt.Color(14, 70, 126));
+        jR_numeroMaquina.setForeground(new java.awt.Color(51, 51, 51));
         jR_numeroMaquina.setText("Nº de máquina:");
         jR_numeroMaquina.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jR_numeroMaquina.addActionListener(new java.awt.event.ActionListener() {
@@ -286,9 +338,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jR_Descripcion.setBackground(new java.awt.Color(204, 204, 204));
+        jR_Descripcion.setBackground(new java.awt.Color(86, 133, 181));
         jR_Descripcion.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
-        jR_Descripcion.setForeground(new java.awt.Color(14, 70, 126));
+        jR_Descripcion.setForeground(new java.awt.Color(51, 51, 51));
         jR_Descripcion.setText("Descripción:");
         jR_Descripcion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jR_Descripcion.addActionListener(new java.awt.event.ActionListener() {
@@ -304,9 +356,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jR_Fabricante.setBackground(new java.awt.Color(204, 204, 204));
+        jR_Fabricante.setBackground(new java.awt.Color(86, 133, 181));
         jR_Fabricante.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
-        jR_Fabricante.setForeground(new java.awt.Color(14, 70, 126));
+        jR_Fabricante.setForeground(new java.awt.Color(51, 51, 51));
         jR_Fabricante.setText("Fabricante:");
         jR_Fabricante.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jR_Fabricante.addActionListener(new java.awt.event.ActionListener() {
@@ -322,9 +374,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jR_Empresa.setBackground(new java.awt.Color(204, 204, 204));
+        jR_Empresa.setBackground(new java.awt.Color(86, 133, 181));
         jR_Empresa.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
-        jR_Empresa.setForeground(new java.awt.Color(14, 70, 126));
+        jR_Empresa.setForeground(new java.awt.Color(51, 51, 51));
         jR_Empresa.setText("Empresa:");
         jR_Empresa.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jR_Empresa.addActionListener(new java.awt.event.ActionListener() {
@@ -349,9 +401,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jR_Ubicacion.setBackground(new java.awt.Color(204, 204, 204));
+        jR_Ubicacion.setBackground(new java.awt.Color(86, 133, 181));
         jR_Ubicacion.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
-        jR_Ubicacion.setForeground(new java.awt.Color(14, 70, 126));
+        jR_Ubicacion.setForeground(new java.awt.Color(51, 51, 51));
         jR_Ubicacion.setText("Ubicación:");
         jR_Ubicacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jR_Ubicacion.setEnabled(false);
@@ -361,7 +413,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        boton_reemplazar1.setBackground(new java.awt.Color(102, 102, 102));
+        boton_reemplazar1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
         boton_reemplazar1.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
         boton_reemplazar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/folder.png"))); // NOI18N
         boton_reemplazar1.setText("Documentos");
@@ -372,7 +424,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        Boton_Añadir.setBackground(new java.awt.Color(102, 102, 102));
+        Boton_Añadir.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
         Boton_Añadir.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
         Boton_Añadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/folder (2).png"))); // NOI18N
         Boton_Añadir.setText("Añadir Documentos");
@@ -456,6 +508,36 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jMenu1.setBackground(new java.awt.Color(255, 255, 255));
+        jMenu1.setForeground(new java.awt.Color(51, 51, 51));
+        jMenu1.setText("Operaciones");
+        jMenu1.setFont(new java.awt.Font("3ds Light", 1, 14)); // NOI18N
+        jMenu1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu1ActionPerformed(evt);
+            }
+        });
+
+        jMenuItem1.setText("mantenimiento");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("imprimir");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -476,19 +558,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
 
     private void click_tarea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_tarea
         
-        try {
-            st = conexion.createStatement();
-            ResultSet r = st.executeQuery("SELECT * FROM maquinas WHERE descripcion=\"" + Tabla.getValueAt(Tabla.getSelectedRow(), 3) + "\"");
-            while (r.next()) {
-                String h = r.getString("descripcion");
-                mod = new PanelMaquinas(h);
-                mod.setVisible(true);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Maquinas_Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        mostrarTabla();
+        
     }//GEN-LAST:event_click_tarea
 
     private void jbCreaTarea1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreaTarea1ActionPerformed
@@ -615,6 +685,35 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         m.setVisible(true);
     }//GEN-LAST:event_Boton_AñadirActionPerformed
 
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+        
+    }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        Panel_Operaciones panel = new Panel_Operaciones();
+        panel.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        utilJTablePrint(Tabla, getTitle(), "Ilorcitana_Station", true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void TablaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMousePressed
+        try {
+            st = conexion.createStatement();
+            ResultSet r = st.executeQuery("SELECT * FROM maquinas WHERE descripcion=\"" + Tabla.getValueAt(Tabla.getSelectedRow(), 1) + "\"");
+            while (r.next()) {
+                String h = r.getString("descripcion");
+                mod = new PanelMaquinas(h);
+                mod.setVisible(true);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Maquinas_Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        mostrarTabla();
+    }//GEN-LAST:event_TablaMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -653,6 +752,10 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jC_Empresa;
     private javax.swing.JComboBox<String> jC_Ubicacion;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JRadioButton jR_Descripcion;
     private javax.swing.JRadioButton jR_Empresa;
     private javax.swing.JRadioButton jR_Fabricante;

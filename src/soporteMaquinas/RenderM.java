@@ -23,18 +23,44 @@ public class RenderM extends DefaultTableCellRenderer {
         
         JLabel cell = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         
-        Color color = new Color(227,227,227);
-        
-        if(column==3){
-            cell.setBackground(color);
-            //cell.setForeground(Color.WHITE);
-            cell.setFont(new Font("Century Gothic", Font.BOLD, 12));
-        }else{
-            cell.setBackground(Color.white);
-            //cell.setForeground(Color.black);
-            cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+        switch (column) {
+            case 1:
+                cell.setBackground(new Color(204,204,255));
+                //cell.setForeground(Color.WHITE);
+                cell.setFont(new Font("Century Gothic", Font.BOLD, 12));
+                break;
+            case 2:
+                cell.setBackground(new Color(255,204,204));
+                //cell.setForeground(Color.black);
+                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                break;
+            case 6:
+                cell.setBackground(new Color(204,255,204));
+                //cell.setForeground(Color.black);
+                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                break;
+            case 7:
+                cell.setBackground(new Color(204,255,255));
+                //cell.setForeground(Color.black);
+                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                break;
+            case 8:
+                cell.setBackground(new Color(255,255,204));
+                //cell.setForeground(Color.black);
+                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                break;
+            case 9:
+                cell.setBackground(new Color(204,204,204));
+                //cell.setForeground(Color.black);
+                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                break;
+            default:
+                cell.setBackground(Color.white);
+                //cell.setForeground(Color.black);
+                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                break;
         }
-
+        
 //        if (value instanceof String) {
 //            String valor = (String) value;
 //            switch (valor) {
