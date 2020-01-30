@@ -159,7 +159,7 @@ public final class panelActas extends javax.swing.JFrame {
             Tabla.getColumnModel().getColumn(9).setPreferredWidth(30);
             JTableHeader th;
             th = Tabla.getTableHeader();
-            Font fuente = new Font("3ds Light", Font.BOLD, 14);
+            Font fuente = new Font("Century Gothic", Font.BOLD, 14);
             Color cl = new Color(0,102,102);
             th.setForeground(cl);
             th.setFont(fuente);
@@ -594,9 +594,12 @@ public final class panelActas extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        Tabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         Tabla.setGridColor(new java.awt.Color(0, 0, 0));
         Tabla.setRowHeight(25);
         Tabla.setRowMargin(5);
+        Tabla.setSelectionBackground(new java.awt.Color(0, 102, 102));
+        Tabla.setSelectionForeground(new java.awt.Color(0, 0, 0));
         Tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 clicK_acta(evt);

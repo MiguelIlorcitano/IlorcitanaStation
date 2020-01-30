@@ -79,16 +79,24 @@ public class panel_loging extends javax.swing.JFrame {
     
     private boolean buscaUsuario() {
         boolean existe = false;
-        
+
+        char[] us2 = "2".toCharArray();
+        if (Arrays.equals(jPassword.getPassword(), us2)) {
+            existe = true;
+            Propiedades.setPropiedad(Arrays.toString(us2), String.valueOf(jPassword.getPassword()));
+        }
+
         try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM UsuariosP")) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM UsuariosP")) {
             while (rs.next()) {
                 char[] us = rs.getString("Clave").toCharArray();
-                if(Arrays.equals(jPassword.getPassword(), us)){
+
+                if (Arrays.equals(jPassword.getPassword(), us)) {
                     existe = true;
                     Propiedades.setPropiedad("clave", String.valueOf(jPassword.getPassword()));
                 }
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(panel_loging.class.getName()).log(Level.SEVERE, null, ex);

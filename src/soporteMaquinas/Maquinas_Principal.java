@@ -132,7 +132,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             Tabla.getColumnModel().getColumn(9).setPreferredWidth(30);
             JTableHeader th;
             th = Tabla.getTableHeader();
-            Font fuente = new Font("3ds Light", Font.BOLD, 14);
+            Font fuente = new Font("Century Gothic", Font.BOLD, 14);
             Color cl = new Color(0,102,102);
             th.setForeground(cl);
             th.setFont(fuente);

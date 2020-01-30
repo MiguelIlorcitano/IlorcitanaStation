@@ -209,7 +209,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                     Tabla.getColumnModel().getColumn(7).setPreferredWidth(450);
                     JTableHeader th;
                     th = Tabla.getTableHeader();
-                    Font fuente = new Font("3ds Light", Font.BOLD, 14);
+                    Font fuente = new Font("Century Gothic", Font.BOLD, 14);
                     Color cl = new Color(0,102,102);
                     th.setForeground(cl);
                     th.setFont(fuente);
@@ -264,7 +264,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                     Tabla.getColumnModel().getColumn(7).setPreferredWidth(450);
                     JTableHeader th;
                     th = Tabla.getTableHeader();
-                    Font fuente = new Font("3ds Light", Font.BOLD, 14);
+                    Font fuente = new Font("Century Gothic", Font.BOLD, 14);
                     Color cl = new Color(0,102,102);
                     th.setForeground(cl);
                     th.setFont(fuente);
@@ -300,7 +300,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                     Tabla.setDefaultRenderer(Object.class, new Render());
                     JTableHeader th;
                     th = Tabla.getTableHeader();
-                    Font fuente = new Font("3ds Light", Font.BOLD, 14);
+                    Font fuente = new Font("Century Gothic", Font.BOLD, 14);
                     Color cl = new Color(0,102,102);
                     th.setForeground(cl);
                     th.setFont(fuente);
@@ -355,7 +355,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                     Tabla.getColumnModel().getColumn(7).setPreferredWidth(450);
                     JTableHeader th;
                     th = Tabla.getTableHeader();
-                    Font fuente = new Font("3ds Light", Font.BOLD, 16);
+                    Font fuente = new Font("Century Gothic", Font.BOLD, 14);
                     th.setFont(fuente);
                     Tabla.setDefaultRenderer(Object.class, new Render());
                     Tabla.setShowHorizontalLines(true);

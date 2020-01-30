@@ -51,9 +51,12 @@ public class PanelStation extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         botonUsuario = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("IlorcitanaStation V1.2.2");
+        setTitle("IlorcitanaStation V1.2.3");
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -62,7 +65,7 @@ public class PanelStation extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 102, 153));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/estacion.jpg"))); // NOI18N
-        jLabel1.setText("Ilorcitana Station 1.2.1");
+        jLabel1.setText("Ilorcitana Station 1.2.3");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -188,6 +191,27 @@ public class PanelStation extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jMenu1.setForeground(new java.awt.Color(0, 102, 153));
+        jMenu1.setText("Opciones");
+        jMenu1.setToolTipText("");
+        jMenu1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+
+        jRadioButtonMenuItem1.setBackground(new java.awt.Color(255, 255, 255));
+        jRadioButtonMenuItem1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jRadioButtonMenuItem1.setForeground(new java.awt.Color(0, 102, 153));
+        jRadioButtonMenuItem1.setSelected(true);
+        jRadioButtonMenuItem1.setText("Actualizar operarios");
+        jRadioButtonMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jRadioButtonMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -241,6 +265,11 @@ public class PanelStation extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_botonUsuarioActionPerformed
 
+    private void jRadioButtonMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem1ActionPerformed
+        Migración m = new Migración();
+        m.main();
+    }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -292,6 +321,9 @@ public class PanelStation extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     // End of variables declaration//GEN-END:variables
 }
