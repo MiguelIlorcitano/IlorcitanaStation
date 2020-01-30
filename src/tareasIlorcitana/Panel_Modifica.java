@@ -197,7 +197,7 @@ public class Panel_Modifica extends javax.swing.JFrame {
         jLabel1.setText("Tarea:");
 
         tATarea.setColumns(20);
-        tATarea.setFont(new java.awt.Font("Monospaced", 0, 16)); // NOI18N
+        tATarea.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tATarea.setLineWrap(true);
         tATarea.setRows(5);
         jScrollPane1.setViewportView(tATarea);
@@ -207,7 +207,7 @@ public class Panel_Modifica extends javax.swing.JFrame {
         jLabel2.setText("Observaciones:");
 
         tAObservaciones.setColumns(20);
-        tAObservaciones.setFont(new java.awt.Font("Monospaced", 0, 16)); // NOI18N
+        tAObservaciones.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tAObservaciones.setLineWrap(true);
         tAObservaciones.setRows(5);
         jScrollPane2.setViewportView(tAObservaciones);

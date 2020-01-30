@@ -331,22 +331,26 @@ public class Muestra_Acta extends javax.swing.JFrame {
         jLabel15.setOpaque(true);
 
         taObservaciones.setColumns(20);
-        taObservaciones.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        taObservaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        taObservaciones.setLineWrap(true);
         taObservaciones.setRows(5);
         jScrollPane5.setViewportView(taObservaciones);
 
         taIndicaciones.setColumns(20);
-        taIndicaciones.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        taIndicaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        taIndicaciones.setLineWrap(true);
         taIndicaciones.setRows(5);
         jScrollPane6.setViewportView(taIndicaciones);
 
         taOperaciones.setColumns(20);
-        taOperaciones.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        taOperaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        taOperaciones.setLineWrap(true);
         taOperaciones.setRows(5);
         jScrollPane7.setViewportView(taOperaciones);
 
         taSustituidas.setColumns(20);
-        taSustituidas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        taSustituidas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        taSustituidas.setLineWrap(true);
         taSustituidas.setRows(5);
         jScrollPane8.setViewportView(taSustituidas);
 
@@ -382,10 +386,11 @@ public class Muestra_Acta extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane6)
-                    .addComponent(jLabel12)
                     .addComponent(jScrollPane7)
+                    .addComponent(jScrollPane8)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -401,8 +406,7 @@ public class Muestra_Acta extends javax.swing.JFrame {
                             .addComponent(jLabel11)
                             .addComponent(jLabel15)
                             .addComponent(jLabel13))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane8))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(

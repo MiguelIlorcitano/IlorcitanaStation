@@ -157,9 +157,10 @@ public class Panel_ModificaAdmin extends javax.swing.JFrame {
         jLabel1.setText("Tarea:");
 
         tATarea.setColumns(20);
-        tATarea.setFont(new java.awt.Font("Monospaced", 0, 16)); // NOI18N
+        tATarea.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tATarea.setLineWrap(true);
         tATarea.setRows(5);
+        tATarea.setWrapStyleWord(true);
         jScrollPane1.setViewportView(tATarea);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -167,9 +168,10 @@ public class Panel_ModificaAdmin extends javax.swing.JFrame {
         jLabel2.setText("Observaciones:");
 
         tAObservaciones.setColumns(20);
-        tAObservaciones.setFont(new java.awt.Font("Monospaced", 0, 16)); // NOI18N
+        tAObservaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tAObservaciones.setLineWrap(true);
         tAObservaciones.setRows(5);
+        tAObservaciones.setWrapStyleWord(true);
         jScrollPane2.setViewportView(tAObservaciones);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -369,7 +371,7 @@ public class Panel_ModificaAdmin extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel14)
                         .addComponent(jlUsuario)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         pack();

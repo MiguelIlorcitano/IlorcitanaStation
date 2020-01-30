@@ -163,7 +163,7 @@ public class Panel_Nueva_Tarea extends javax.swing.JFrame {
         jLabel2.setText("Observaciones:");
 
         tAObservaciones.setColumns(20);
-        tAObservaciones.setFont(new java.awt.Font("Monospaced", 0, 16)); // NOI18N
+        tAObservaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tAObservaciones.setLineWrap(true);
         tAObservaciones.setRows(5);
         jScrollPane2.setViewportView(tAObservaciones);
@@ -293,7 +293,7 @@ public class Panel_Nueva_Tarea extends javax.swing.JFrame {
                 .addComponent(rbNeumatico)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rbElectrico)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
