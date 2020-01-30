@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import satation.Main;
 import satation.Propiedades;
 
 /**
@@ -16,13 +17,6 @@ import satation.Propiedades;
  * @author Miguel Angel Carrillo Garcia
  */
 public class Panel_Mantenimiento extends javax.swing.JFrame {
-    
-    private Connection con;
-    private Connection conS;
-    private Statement st;
-    private Statement stS;
-    private ResultSet rs;
-    
     
     String operario;            //Recoge el nombre del operario que realiza el mantenimiento.
     String maquina;             //Regoge la máquina donde se realiza dicho mantenimiento.
@@ -55,7 +49,6 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         //this.setExtendedState(MAXIMIZED_BOTH);
-        conectar(); 
         llenarComboMaquinas();
         id_tarea="0";
         txtIndicaciones.setEditable(false);
@@ -76,7 +69,6 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         //this.setExtendedState(MAXIMIZED_BOTH);
         this.id_maquina=id_maquina;
         this.id_tarea=id_tarea;
-        conectar(); 
         llenarComboMaquinas();
         jCTarea.setSelectedIndex(muestraTarea(tr));
         jCTarea.setEditable(false);
@@ -90,24 +82,8 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         this.ob = ob;
         es_tarea=true;
     }
-     
-    /**
-    * Metodo para conectar con base de datos.
-    * @return 
-    */
-    private void conectar(){
-        try {
-            // TODO add your handling code here:
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://192.168.0.132:3307/ilorcitana", "irobotica", "1233");
-            //conS = DriverManager.getConnection("jdbc:ucanaccess://Z:\\Mantenimiento\\Mantenimiento.accdb");            
-        } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(null,"Error al realizar la conexion "+ex);
-            Logger.getLogger(Panel_Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
-        }   
-    }
     
-    int muestraTarea(String tipo){
+    private int muestraTarea(String tipo){
         int res=0;
         if("Rotura".equals(tipo)){
             res=1;
@@ -156,37 +132,38 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
      */
     private void llenarComboMaquinas(){ 
         String descripcion=null;
-        try {
+            
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT id_maquina,descripcion FROM maquinas")) {
             jCMaquina.setEnabled(true);
             jCMaquina.removeAllItems();
-            st= con.createStatement();
-            rs=st.executeQuery("SELECT id_maquina,descripcion FROM maquinas");
-            while(rs.next()){
+            while (rs.next()) {
                 jCMaquina.addItem(rs.getString("descripcion"));
-                if(rs.getString("id_maquina").equals(id_maquina)){
+                if (rs.getString("id_maquina").equals(id_maquina)) {
                     jCMaquina.addItem(rs.getString("descripcion"));
-                    descripcion=rs.getString("descripcion");
+                    descripcion = rs.getString("descripcion");
                 }
             }
-            if(descripcion!=null){
+            if (descripcion != null) {
                 jCMaquina.setSelectedItem(descripcion);
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(rootPane, e);
         }
-        
-        try {
+            
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT Nombre,Clave FROM UsuariosP ORDER BY nombre ASC;")) {
             boxOperario.setEnabled(true);
             boxOperario.removeAllItems();
-            st= con.createStatement();
-            rs=st.executeQuery("SELECT Nombre,Clave FROM UsuariosP ORDER BY nombre ASC;");
-            while(rs.next()){
+            while (rs.next()) {
                 boxOperario.addItem(rs.getString("Nombre"));
-                if(rs.getString("Clave").equals(Propiedades.getPropiedad("clave"))){
+                if (rs.getString("Clave").equals(Propiedades.getPropiedad("clave"))) {
                     boxOperario.setSelectedItem(rs.getString("Nombre"));
                 }
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(rootPane, e);
         }
     }
@@ -197,10 +174,10 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
     * @return 
     */
     private int añadirModElim(String sql){
-        try {
-            st= con.createStatement();
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();) {
             JOptionPane.showMessageDialog(null,"Acta almacenada correctamente.");
-            return st.executeUpdate(sql);
+            return stmt.executeUpdate(sql);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"Error al crear el objeto sentencia "+ex);
             Logger.getLogger(Panel_Mantenimiento.class.getName()).log(Level.SEVERE, null, ex);
@@ -323,74 +300,101 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/mantenimiento.png")).getImage());
         setUndecorated(true);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51), 2));
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204), 2));
         jPanel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
+        jLabel1.setBackground(new java.awt.Color(234, 245, 245));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mantenimiento_industrial1.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/man.png"))); // NOI18N
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(21, 30, 46));
+        jLabel3.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Tipo de mantenimiento:");
+        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
+        jLabel3.setOpaque(true);
 
-        rbPreventivo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        rbPreventivo.setBackground(new java.awt.Color(226, 236, 247));
+        rbPreventivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rbPreventivo.setText("Preventivo ");
 
-        rbCorrectivo.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        rbCorrectivo.setBackground(new java.awt.Color(226, 236, 247));
+        rbCorrectivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rbCorrectivo.setText("Correctivo");
 
-        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(21, 30, 46));
+        jLabel4.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Tipo de problema:");
+        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
+        jLabel4.setOpaque(true);
 
-        rbMecanico.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        rbMecanico.setBackground(new java.awt.Color(226, 236, 247));
+        rbMecanico.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rbMecanico.setText("Mecanico");
 
-        rbHidraulico.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        rbHidraulico.setBackground(new java.awt.Color(226, 236, 247));
+        rbHidraulico.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rbHidraulico.setText("Hidráulico");
 
-        rbNeumatico.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        rbNeumatico.setBackground(new java.awt.Color(226, 236, 247));
+        rbNeumatico.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rbNeumatico.setText("Neumático");
 
-        rbElectrico.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        rbElectrico.setBackground(new java.awt.Color(226, 236, 247));
+        rbElectrico.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         rbElectrico.setText("Eléctrico");
 
-        jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(21, 30, 46));
+        jLabel5.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Operaciones:");
+        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
+        jLabel5.setOpaque(true);
 
-        jLabel6.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(21, 30, 46));
+        jLabel6.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Piezas sustituidas:");
+        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
+        jLabel6.setOpaque(true);
 
-        jLabel7.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(21, 30, 46));
+        jLabel7.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Horas:");
+        jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
+        jLabel7.setOpaque(true);
 
-        jLabel8.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(21, 30, 46));
+        jLabel8.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Operario:");
+        jLabel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
+        jLabel8.setOpaque(true);
 
-        boxOperario.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        boxOperario.setForeground(new java.awt.Color(204, 0, 0));
+        boxOperario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         boxOperario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 boxOperarioActionPerformed(evt);
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(21, 30, 46));
+        jLabel9.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Máquina:");
+        jLabel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
+        jLabel9.setOpaque(true);
 
-        jCMaquina.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jCMaquina.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jButton1.setBackground(new java.awt.Color(0, 204, 204));
-        jButton1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/archivar.png"))); // NOI18N
         jButton1.setText("Finalizar");
         jButton1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -401,11 +405,14 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(21, 30, 46));
+        jLabel10.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Indicaciones:");
+        jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
+        jLabel10.setOpaque(true);
 
-        boxHoras.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        boxHoras.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         boxHoras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30" }));
         boxHoras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -413,22 +420,31 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(21, 30, 46));
+        jLabel11.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Minutos:");
+        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
+        jLabel11.setOpaque(true);
 
-        boxMinutos.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        boxMinutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         boxMinutos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "15", "30", "45" }));
 
-        jLabel12.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(21, 30, 46));
+        jLabel12.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Fecha:");
+        jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
+        jLabel12.setOpaque(true);
 
-        jLabel13.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(21, 30, 46));
+        jLabel13.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Especifica tarea:");
+        jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
+        jLabel13.setOpaque(true);
 
-        jButton2.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/adjuntar.png"))); // NOI18N
         jButton2.setText("Adjuntar documento");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -437,7 +453,7 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
             }
         });
 
-        jCTarea.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jCTarea.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jCTarea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin tarea", "Reparación", "Revisión", "Revisión semanal", "Revisión mensual", "Revisión semestral", "Elaboración", "Modificación", "Cambio de herramienta", "Montaje de nueva herramienta" }));
         jCTarea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -445,35 +461,38 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
             }
         });
 
-        jLabel14.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(21, 30, 46));
+        jLabel14.setBackground(new java.awt.Color(51, 153, 255));
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Observaciones:");
+        jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
+        jLabel14.setOpaque(true);
 
-        jCalendarCombo1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jCalendarCombo1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txtIndicaciones.setColumns(20);
-        txtIndicaciones.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtIndicaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtIndicaciones.setLineWrap(true);
         txtIndicaciones.setRows(5);
         txtIndicaciones.setWrapStyleWord(true);
         jScrollPane3.setViewportView(txtIndicaciones);
 
         txtObservaciones.setColumns(20);
-        txtObservaciones.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtObservaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtObservaciones.setLineWrap(true);
         txtObservaciones.setRows(5);
         txtObservaciones.setWrapStyleWord(true);
         jScrollPane4.setViewportView(txtObservaciones);
 
         txtOperaciones.setColumns(20);
-        txtOperaciones.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtOperaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtOperaciones.setLineWrap(true);
         txtOperaciones.setRows(5);
         txtOperaciones.setWrapStyleWord(true);
         jScrollPane5.setViewportView(txtOperaciones);
 
         txtPiezasSustituidas.setColumns(20);
-        txtPiezasSustituidas.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtPiezasSustituidas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtPiezasSustituidas.setLineWrap(true);
         txtPiezasSustituidas.setRows(5);
         txtPiezasSustituidas.setWrapStyleWord(true);
@@ -489,22 +508,39 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(rbPreventivo)
-                                .addGap(18, 18, 18)
-                                .addComponent(rbCorrectivo))
-                            .addComponent(jLabel3)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addGap(18, 18, 18)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCalendarCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(18, 18, 18)
-                                .addComponent(boxOperario, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(boxOperario, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(rbPreventivo)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(rbCorrectivo))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jCMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(boxHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(boxMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(33, 33, 33)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(rbMecanico)
                                         .addGap(18, 18, 18)
@@ -512,50 +548,34 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(rbNeumatico)
                                         .addGap(18, 18, 18)
-                                        .addComponent(rbElectrico))
-                                    .addComponent(jLabel4))
-                                .addGap(0, 58, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jCMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(boxHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel11)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(boxMinutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(rbElectrico)))
+                                .addGap(0, 109, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5)
-                            .addComponent(jButton2)
-                            .addComponent(jLabel14)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
-                            .addComponent(jScrollPane5))
+                            .addComponent(jScrollPane5)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton1))
+                            .addComponent(jScrollPane6)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel6))
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane6)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton1))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel13)
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -564,9 +584,10 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel9)
-                    .addComponent(jCMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jCMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(boxOperario, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel8)))
                 .addGap(18, 18, 18)
@@ -599,7 +620,7 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(jCTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -634,7 +655,7 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

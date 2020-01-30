@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import satation.Main;
 import satation.Propiedades;
 import tareasIlorcitana.Tareas_Principal;
 
@@ -28,10 +29,6 @@ import tareasIlorcitana.Tareas_Principal;
  */
 public class PanelMaquinas extends javax.swing.JFrame {
     
-    //Variables para la conexión.
-    private Connection conexion = null;
-    private Statement st;
-    private ResultSet rs;
     String descripcion;
     String numero;
     
@@ -43,7 +40,6 @@ public class PanelMaquinas extends javax.swing.JFrame {
     public PanelMaquinas() {
         initComponents();
         this.setLocationRelativeTo(null);
-        conectarMy();
         boton_reemplazar.setEnabled(false);
         //Cierra la ventana pulsando escape
     }
@@ -67,24 +63,8 @@ public class PanelMaquinas extends javax.swing.JFrame {
                     }
                 });
         this.setLocationRelativeTo(null);
-        conectarMy();
         muestraMaquina(h);
         boton_registrar.setEnabled(false);
-    }
-    
-    /**
-     * Conectar con la base de datos.
-     */
-    private void conectarMy() {
-        if (conexion == null) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                conexion = DriverManager.getConnection("jdbc:mysql://192.168.0.132:3307/ilorcitana", "irobotica", "1233");
-            } catch (ClassNotFoundException | SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Error al realizar la conexion " + ex);
-                Logger.getLogger(Tareas_Principal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
     
     private void modificaTxt() throws IOException{ 
@@ -92,9 +72,9 @@ public class PanelMaquinas extends javax.swing.JFrame {
     }
 
     private void muestraMaquina(String des) {
-        try {
-            st = conexion.createStatement();
-            rs = st.executeQuery("SELECT * FROM maquinas WHERE descripcion=\""+des+"\"");
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM maquinas WHERE descripcion=\""+des+"\"")) {
             while (rs.next()) {
                 id_maquina=Integer.parseInt(rs.getString("id_maquina"));
                 txt_modelo.setText(rs.getString("modelo"));
@@ -121,10 +101,10 @@ public class PanelMaquinas extends javax.swing.JFrame {
     }
     
     private void reemplazaMaquina() {
-        try {
-            String query = "UPDATE maquinas SET modelo=\""+txt_modelo.getText()+"\",ano_fabricacion=\""+txt_año.getText()+"\",numero_referencia=\""+txt_referencia.getText()+"\",descripcion=\""+txt_descripcion.getText()+"\",numero_maquina="+Integer.parseInt(txt_numero_maquina.getText())+",fabricante=\""+txt_fabricante.getText()+"\",telefono=\""+txt_telefono.getText()+"\",movil=\""+txt_movil.getText()+"\",email=\""+txt_email.getText()+"\",Empresa=\""+jC_Empresa.getSelectedItem()+"\",ubicacion=\""+jC_Ubicacion.getSelectedItem()+"\",M_Semanal=\""+txt_man_semanal.getText()+"\",M_Mensual=\""+txt_man_mensual.getText()+"\",M_Trimestral=\""+txt_man_trimestral.getText()+"\",M_Anual=\""+txt_man_anual.getText()+"\" WHERE id_maquina ="+id_maquina;
-            st = conexion.createStatement();
-            st.executeUpdate(query);
+        String query = "UPDATE maquinas SET modelo=\""+txt_modelo.getText()+"\",ano_fabricacion=\""+txt_año.getText()+"\",numero_referencia=\""+txt_referencia.getText()+"\",descripcion=\""+txt_descripcion.getText()+"\",numero_maquina="+Integer.parseInt(txt_numero_maquina.getText())+",fabricante=\""+txt_fabricante.getText()+"\",telefono=\""+txt_telefono.getText()+"\",movil=\""+txt_movil.getText()+"\",email=\""+txt_email.getText()+"\",Empresa=\""+jC_Empresa.getSelectedItem()+"\",ubicacion=\""+jC_Ubicacion.getSelectedItem()+"\",M_Semanal=\""+txt_man_semanal.getText()+"\",M_Mensual=\""+txt_man_mensual.getText()+"\",M_Trimestral=\""+txt_man_trimestral.getText()+"\",M_Anual=\""+txt_man_anual.getText()+"\" WHERE id_maquina ="+id_maquina;
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(query);
             modificaTxt();
             JOptionPane.showMessageDialog(null,"Máquina MODIFICADA correctamente.");   
             dispose();
@@ -134,14 +114,14 @@ public class PanelMaquinas extends javax.swing.JFrame {
     }
     
     private void insertarMaquina() {
-        try {
-            String query ="INSERT INTO `maquinas`(`modelo`, `ano_fabricacion`, `numero_referencia`, `descripcion`, `numero_maquina`, `fabricante`, `telefono`, `movil`, `email`, `Empresa`,`ubicacion`,`M_Semanal`, `M_Mensual`, `M_Trimestral`, `M_Anual`) VALUES (\""+txt_modelo.getText()+"\",\""+txt_año.getText()+"\",\""+txt_referencia.getText()+"\",\""+txt_descripcion.getText()+"\","+Integer.parseInt(txt_numero_maquina.getText())+",\""+txt_fabricante.getText()+"\",\""+txt_telefono.getText()+"\",\""+txt_movil.getText()+"\",\""+txt_email.getText()+"\",\""+jC_Empresa.getSelectedItem()+"\",\""+jC_Ubicacion.getSelectedItem()+"\",\""+txt_man_semanal.getText()+"\",\""+txt_man_mensual.getText()+"\",\""+txt_man_trimestral.getText()+"\",\""+txt_man_anual.getText()+"\")";
-            st = conexion.createStatement();
-            st.executeUpdate(query);
+        String query ="INSERT INTO `maquinas`(`modelo`, `ano_fabricacion`, `numero_referencia`, `descripcion`, `numero_maquina`, `fabricante`, `telefono`, `movil`, `email`, `Empresa`,`ubicacion`,`M_Semanal`, `M_Mensual`, `M_Trimestral`, `M_Anual`) VALUES (\""+txt_modelo.getText()+"\",\""+txt_año.getText()+"\",\""+txt_referencia.getText()+"\",\""+txt_descripcion.getText()+"\","+Integer.parseInt(txt_numero_maquina.getText())+",\""+txt_fabricante.getText()+"\",\""+txt_telefono.getText()+"\",\""+txt_movil.getText()+"\",\""+txt_email.getText()+"\",\""+jC_Empresa.getSelectedItem()+"\",\""+jC_Ubicacion.getSelectedItem()+"\",\""+txt_man_semanal.getText()+"\",\""+txt_man_mensual.getText()+"\",\""+txt_man_trimestral.getText()+"\",\""+txt_man_anual.getText()+"\")";           
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(query);
             modificaTxt();
             JOptionPane.showMessageDialog(null,"Máquina MODIFICADA correctamente.");   
             dispose();
-        } catch (SQLException | IOException ex) {
+        } catch (IOException | SQLException ex) {
             Logger.getLogger(PanelMaquinas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -255,8 +235,9 @@ public class PanelMaquinas extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel1.setBackground(new java.awt.Color(0, 102, 102));
         jLabel1.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText(" Fabricante:");
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel1.setOpaque(true);
@@ -265,8 +246,9 @@ public class PanelMaquinas extends javax.swing.JFrame {
         txt_fabricante.setToolTipText("");
         txt_fabricante.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel2.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel2.setBackground(new java.awt.Color(0, 102, 102));
         jLabel2.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText(" Teléfono:");
         jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel2.setOpaque(true);
@@ -275,8 +257,9 @@ public class PanelMaquinas extends javax.swing.JFrame {
         txt_telefono.setToolTipText("");
         txt_telefono.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel3.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel3.setBackground(new java.awt.Color(0, 102, 102));
         jLabel3.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText(" Movil:");
         jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel3.setOpaque(true);
@@ -285,8 +268,9 @@ public class PanelMaquinas extends javax.swing.JFrame {
         txt_movil.setToolTipText("");
         txt_movil.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel4.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel4.setBackground(new java.awt.Color(0, 102, 102));
         jLabel4.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText(" Email:");
         jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel4.setOpaque(true);
@@ -295,8 +279,9 @@ public class PanelMaquinas extends javax.swing.JFrame {
         txt_email.setToolTipText("");
         txt_email.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel5.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel5.setBackground(new java.awt.Color(0, 102, 102));
         jLabel5.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText(" Modelo:");
         jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel5.setOpaque(true);
@@ -305,8 +290,9 @@ public class PanelMaquinas extends javax.swing.JFrame {
         txt_modelo.setToolTipText("");
         txt_modelo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel6.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel6.setBackground(new java.awt.Color(0, 102, 102));
         jLabel6.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText(" Año de fabricación:");
         jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel6.setOpaque(true);
@@ -315,14 +301,16 @@ public class PanelMaquinas extends javax.swing.JFrame {
         txt_año.setToolTipText("");
         txt_año.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel7.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel7.setBackground(new java.awt.Color(0, 102, 102));
         jLabel7.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText(" Descripción:");
         jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel7.setOpaque(true);
 
-        jLabel8.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel8.setBackground(new java.awt.Color(0, 102, 102));
         jLabel8.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText(" Número de máquina:");
         jLabel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel8.setOpaque(true);
@@ -331,8 +319,9 @@ public class PanelMaquinas extends javax.swing.JFrame {
         txt_descripcion.setToolTipText("");
         txt_descripcion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel9.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel9.setBackground(new java.awt.Color(0, 102, 102));
         jLabel9.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText(" Número de referencia:");
         jLabel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel9.setOpaque(true);
@@ -355,14 +344,16 @@ public class PanelMaquinas extends javax.swing.JFrame {
         txt_man_semanal.setToolTipText("");
         txt_man_semanal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel10.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel10.setBackground(new java.awt.Color(0, 102, 102));
         jLabel10.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText(" Mantenimiento semanal: ");
         jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel10.setOpaque(true);
 
-        jLabel11.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel11.setBackground(new java.awt.Color(0, 102, 102));
         jLabel11.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText(" Mantenimiento trimestral: ");
         jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel11.setOpaque(true);
@@ -371,8 +362,9 @@ public class PanelMaquinas extends javax.swing.JFrame {
         txt_man_trimestral.setToolTipText("");
         txt_man_trimestral.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel12.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel12.setBackground(new java.awt.Color(0, 102, 102));
         jLabel12.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText(" Mantenimiento anual: ");
         jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel12.setOpaque(true);
@@ -381,14 +373,16 @@ public class PanelMaquinas extends javax.swing.JFrame {
         txt_man_anual.setToolTipText("");
         txt_man_anual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel13.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel13.setBackground(new java.awt.Color(0, 102, 102));
         jLabel13.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Empresa:");
         jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel13.setOpaque(true);
 
-        jLabel14.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel14.setBackground(new java.awt.Color(0, 102, 102));
         jLabel14.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Ubicación:");
         jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel14.setOpaque(true);
@@ -428,8 +422,9 @@ public class PanelMaquinas extends javax.swing.JFrame {
             }
         });
 
-        jLabel15.setBackground(new java.awt.Color(86, 133, 181));
+        jLabel15.setBackground(new java.awt.Color(0, 102, 102));
         jLabel15.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText(" Mantenimiento mensual: ");
         jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jLabel15.setOpaque(true);
@@ -629,6 +624,7 @@ public class PanelMaquinas extends javax.swing.JFrame {
             jC_Ubicacion.addItem("Altillo 3");
             jC_Ubicacion.addItem("Exterior 1");
             jC_Ubicacion.addItem("Exterior 2");
+            jC_Ubicacion.addItem("Nave externa");
         }else if(jC_Empresa.getSelectedItem().equals("Canela Spring")){
             jC_Ubicacion.addItem("Nave 1");
             jC_Ubicacion.addItem("Nave 2");

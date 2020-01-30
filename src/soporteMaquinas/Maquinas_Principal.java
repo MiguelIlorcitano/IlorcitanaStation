@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import satation.Main;
 
 
 
@@ -37,10 +38,6 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
     
     private static ServerSocket SERVER_SOCKET;
     
-    //Variables para la conexión.
-    private Connection conexion = null;
-    private Statement st;
-    private ResultSet rs;
     DefaultTableModel n;
     PanelMaquinas mod;
     
@@ -64,7 +61,6 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
                 });
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
-        conectarMy();
         mostrarTabla();
     }
     
@@ -82,21 +78,6 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         repaint();
     }
     
-    /**
-     * Conectar con la base de datos.
-     */
-    public final void conectarMy(){
-        if (conexion == null) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                conexion = DriverManager.getConnection("jdbc:mysql://192.168.0.132:3307/ilorcitana", "irobotica", "1233");
-            } catch (ClassNotFoundException | SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Error al realizar la conexion "+ex);
-                Logger.getLogger(Maquinas_Principal.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-        }
-    }
-    
     private String generaConsulta(){
         if(jR_numeroMaquina.isSelected()){
             return "SELECT * FROM maquinas WHERE numero_maquina="+Integer.parseInt(txt_numeroMaquina.getText());
@@ -112,16 +93,15 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             return "SELECT * FROM maquinas";
         }
     }
-    
    
     /**
      * Extrae el contenido de la base de datos y lo inserta en una jtable.
      */
     public void mostrarTabla() {
-        try {
-            String consulta = generaConsulta();
-            st = conexion.createStatement();
-            ResultSet r = st.executeQuery(consulta);
+        String consulta = generaConsulta();
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet r = stmt.executeQuery(consulta)) {
             String titulos[] = {"Modelo", "Descrición", "Número de máquina", "Fabricante", "Empresa", "Ubicación", "M_semanal", "M_mensual", "M_trimestral", "M_anual"};
             n = new DefaultTableModel(null, titulos);
             String fila[] = new String[10];
@@ -153,7 +133,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             JTableHeader th;
             th = Tabla.getTableHeader();
             Font fuente = new Font("3ds Light", Font.BOLD, 14);
-            Color cl = new Color(14, 70, 126);
+            Color cl = new Color(0,102,102);
             th.setForeground(cl);
             th.setFont(fuente);
             Tabla.setShowHorizontalLines(true);
@@ -238,7 +218,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/editor.png")).getImage());
         setPreferredSize(new java.awt.Dimension(1024, 768));
 
-        Panel1.setBackground(new java.awt.Color(227, 224, 224));
+        Panel1.setBackground(new java.awt.Color(204, 204, 204));
 
         jScrollPane3.setAutoscrolls(true);
 
@@ -260,8 +240,8 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         Tabla.setGridColor(new java.awt.Color(51, 51, 51));
         Tabla.setIntercellSpacing(new java.awt.Dimension(10, 10));
         Tabla.setRowHeight(25);
-        Tabla.setSelectionBackground(new java.awt.Color(204, 0, 0));
-        Tabla.setSelectionForeground(new java.awt.Color(255, 153, 153));
+        Tabla.setSelectionBackground(new java.awt.Color(0, 102, 102));
+        Tabla.setSelectionForeground(new java.awt.Color(0, 0, 0));
         Tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 click_tarea(evt);
@@ -285,7 +265,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
 
         jLabel2.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
         jLabel2.setFont(new java.awt.Font("3ds Light", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(14, 70, 126));
+        jLabel2.setForeground(new java.awt.Color(0, 102, 102));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/muestra.png"))); // NOI18N
         jLabel2.setText("Gestión de máquinas");
@@ -313,12 +293,12 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         txt_numeroMaquina.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txt_numeroMaquina.setText("0");
         txt_numeroMaquina.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
                 txt_numeroMaquinaAncestorRemoved(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         txt_numeroMaquina.addActionListener(new java.awt.event.ActionListener() {
@@ -327,9 +307,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jR_numeroMaquina.setBackground(new java.awt.Color(86, 133, 181));
+        jR_numeroMaquina.setBackground(new java.awt.Color(0, 102, 102));
         jR_numeroMaquina.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
-        jR_numeroMaquina.setForeground(new java.awt.Color(51, 51, 51));
+        jR_numeroMaquina.setForeground(new java.awt.Color(255, 255, 255));
         jR_numeroMaquina.setText("Nº de máquina:");
         jR_numeroMaquina.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jR_numeroMaquina.addActionListener(new java.awt.event.ActionListener() {
@@ -338,9 +318,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jR_Descripcion.setBackground(new java.awt.Color(86, 133, 181));
+        jR_Descripcion.setBackground(new java.awt.Color(0, 102, 102));
         jR_Descripcion.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
-        jR_Descripcion.setForeground(new java.awt.Color(51, 51, 51));
+        jR_Descripcion.setForeground(new java.awt.Color(255, 255, 255));
         jR_Descripcion.setText("Descripción:");
         jR_Descripcion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jR_Descripcion.addActionListener(new java.awt.event.ActionListener() {
@@ -356,9 +336,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jR_Fabricante.setBackground(new java.awt.Color(86, 133, 181));
+        jR_Fabricante.setBackground(new java.awt.Color(0, 102, 102));
         jR_Fabricante.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
-        jR_Fabricante.setForeground(new java.awt.Color(51, 51, 51));
+        jR_Fabricante.setForeground(new java.awt.Color(255, 255, 255));
         jR_Fabricante.setText("Fabricante:");
         jR_Fabricante.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jR_Fabricante.addActionListener(new java.awt.event.ActionListener() {
@@ -374,9 +354,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jR_Empresa.setBackground(new java.awt.Color(86, 133, 181));
+        jR_Empresa.setBackground(new java.awt.Color(0, 102, 102));
         jR_Empresa.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
-        jR_Empresa.setForeground(new java.awt.Color(51, 51, 51));
+        jR_Empresa.setForeground(new java.awt.Color(255, 255, 255));
         jR_Empresa.setText("Empresa:");
         jR_Empresa.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jR_Empresa.addActionListener(new java.awt.event.ActionListener() {
@@ -401,9 +381,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jR_Ubicacion.setBackground(new java.awt.Color(86, 133, 181));
+        jR_Ubicacion.setBackground(new java.awt.Color(0, 102, 102));
         jR_Ubicacion.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
-        jR_Ubicacion.setForeground(new java.awt.Color(51, 51, 51));
+        jR_Ubicacion.setForeground(new java.awt.Color(255, 255, 255));
         jR_Ubicacion.setText("Ubicación:");
         jR_Ubicacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jR_Ubicacion.setEnabled(false);
@@ -699,9 +679,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void TablaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMousePressed
-        try {
-            st = conexion.createStatement();
-            ResultSet r = st.executeQuery("SELECT * FROM maquinas WHERE descripcion=\"" + Tabla.getValueAt(Tabla.getSelectedRow(), 1) + "\"");
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet r = stmt.executeQuery("SELECT * FROM maquinas WHERE descripcion=\"" + Tabla.getValueAt(Tabla.getSelectedRow(), 1) + "\"")) {
             while (r.next()) {
                 String h = r.getString("descripcion");
                 mod = new PanelMaquinas(h);

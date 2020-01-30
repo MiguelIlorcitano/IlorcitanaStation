@@ -10,22 +10,15 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import tareasIlorcitana.Tareas_Principal;
 
 /**
  *
  * @author Diseño
  */
 public class panel_muestra extends javax.swing.JFrame {
-    
-    private final String driver = "jdbc:mysql://192.168.0.132:3307/ilorcitana";
-    private final String usuario = "irobotica";
-    private final String clave = "1233";
     
     private int id_maquina;
     private String periodo;
@@ -56,7 +49,7 @@ public class panel_muestra extends javax.swing.JFrame {
         DefaultListModel modelo = new DefaultListModel();
         switch (periodo) {
             case "anual":
-                try (Connection conn = DriverManager.getConnection(driver, usuario, clave);
+                try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                         Statement stmt = conn.createStatement();
                         ResultSet rs = stmt.executeQuery("SELECT Codigo,Descripcion,Especificacion FROM Operaciones WHERE Periodicidad=\"" + periodo + "\" AND id_maquina=" + id_maquina)) {
                     while (rs.next()) {
@@ -67,7 +60,7 @@ public class panel_muestra extends javax.swing.JFrame {
                 }
                 break;
             case "trimestral":
-                try (Connection conn = DriverManager.getConnection(driver, usuario, clave);
+                try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                         Statement stmt = conn.createStatement();
                         ResultSet rs = stmt.executeQuery("SELECT Codigo,Descripcion,Especificacion FROM Operaciones WHERE Periodicidad=\"" + periodo + "\" AND id_maquina=" + id_maquina)) {
                     while (rs.next()) {
@@ -78,7 +71,7 @@ public class panel_muestra extends javax.swing.JFrame {
                 }
                 break;
             case "mensual":
-                try (Connection conn = DriverManager.getConnection(driver, usuario, clave);
+                try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                         Statement stmt = conn.createStatement();
                         ResultSet rs = stmt.executeQuery("SELECT Codigo,Descripcion,Especificacion FROM Operaciones WHERE Periodicidad=\"" + periodo + "\" AND id_maquina=" + id_maquina)) {
                     while (rs.next()) {
@@ -89,7 +82,7 @@ public class panel_muestra extends javax.swing.JFrame {
                 }
                 break;
             case "semanal":
-                try (Connection conn = DriverManager.getConnection(driver, usuario, clave);
+                try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                         Statement stmt = conn.createStatement();
                         ResultSet rs = stmt.executeQuery("SELECT Codigo,Descripcion,Especificacion FROM Operaciones WHERE Periodicidad=\"" + periodo + "\" AND id_maquina=" + id_maquina)) {
                     while (rs.next()) {

@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.KeyEvent;
 import java.awt.print.PrinterException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -25,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import satation.Main;
 
 /**
  *
@@ -32,9 +32,6 @@ import javax.swing.table.JTableHeader;
  */
 public class Panel_Operaciones extends javax.swing.JFrame {
     
-    private Connection con = null;
-    private Statement st;
-    private ResultSet rs;
     DefaultTableModel n;
     boolean primero = true;
     String id_maquina = "0";
@@ -45,30 +42,14 @@ public class Panel_Operaciones extends javax.swing.JFrame {
      */
     public Panel_Operaciones() {
         initComponents();
-        conectarMy();
         llenarMaquinas();
         this.setLocationRelativeTo(null);
     }
     
-    /**
-     * Conectar con la base de datos.
-     */
-    public final void conectarMy(){
-        if (con == null) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://192.168.0.132:3307/ilorcitana", "irobotica", "1233");
-            } catch (ClassNotFoundException | SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Error al realizar la conexion "+ex);
-                Logger.getLogger(Maquinas_Principal.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-        }
-    }
-    
     private void llenarMaquinas(){
-        try {
-            st = con.createStatement();
-            rs = st.executeQuery("SELECT descripcion FROM maquinas");
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT descripcion FROM maquinas")) {
             while (rs.next()) {
                 jComboBox_maquinas.addItem(rs.getString("descripcion"));
             }
@@ -82,9 +63,9 @@ public class Panel_Operaciones extends javax.swing.JFrame {
         if (jComboBox_maquinas.getSelectedItem().toString().equals("") || jComboBox_maquinas.getSelectedItem().toString() == null) {
             return Integer.parseInt(id_maquina);
         } else {
-            try {
-                st = con.createStatement();
-                rs = st.executeQuery("SELECT id_maquina,numero_maquina FROM maquinas WHERE descripcion=\"" + maquina + "\"");
+            try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT id_maquina,numero_maquina FROM maquinas WHERE descripcion=\"" + maquina + "\"")) {
                 while (rs.next()) {
                     id_maquina = rs.getString("id_maquina");
                     numero_maquina = rs.getString("numero_maquina");
@@ -117,18 +98,18 @@ public class Panel_Operaciones extends javax.swing.JFrame {
         comboBox2.addItem("Cuadro eléctrico");
         comboBox2.addItem("Bomba de presión (W-J)");
         
-        try {
-            st = con.createStatement();
-            ResultSet r = st.executeQuery("SELECT * FROM Operaciones WHERE id_maquina="+i);
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Operaciones WHERE id_maquina="+i)) {
             String titulos[] = {"IdOperacion", "Codigo", "Descripcion", "Periodicidad", "Especificacion"};
             n = new DefaultTableModel(null, titulos);
             String fila[] = new String[5];
-            while (r.next()) {
-                fila[0] = r.getString("IdOperacion");
-                fila[1] = r.getString("Codigo");
-                fila[2] = r.getString("Descripcion");
-                fila[3] = r.getString("Periodicidad");
-                fila[4] = r.getString("Especificacion");
+            while (rs.next()) {
+                fila[0] = rs.getString("IdOperacion");
+                fila[1] = rs.getString("Codigo");
+                fila[2] = rs.getString("Descripcion");
+                fila[3] = rs.getString("Periodicidad");
+                fila[4] = rs.getString("Especificacion");
                 n.addRow(fila);
             }
             Tabla.setModel(n);
@@ -158,10 +139,10 @@ public class Panel_Operaciones extends javax.swing.JFrame {
     
     private void modificarOperacion() {
         for (int i = 0; i < Tabla.getRowCount(); i++) {
-            try {
-                String query  = "UPDATE Operaciones SET Codigo="+Integer.parseInt(Tabla.getValueAt(i,1).toString())+",Descripcion=\"" + Tabla.getValueAt(i,2).toString() + "\",Periodicidad=\"" + Tabla.getValueAt(i,3).toString() + "\",Especificacion=\"" + Tabla.getValueAt(i,4).toString() + "\" WHERE IdOperacion =" + Integer.parseInt(Tabla.getValueAt(i,0).toString());
-                st = con.createStatement();
-                st.executeUpdate(query);
+            String query = "UPDATE Operaciones SET Codigo=" + Integer.parseInt(Tabla.getValueAt(i, 1).toString()) + ",Descripcion=\"" + Tabla.getValueAt(i, 2).toString() + "\",Periodicidad=\"" + Tabla.getValueAt(i, 3).toString() + "\",Especificacion=\"" + Tabla.getValueAt(i, 4).toString() + "\" WHERE IdOperacion =" + Integer.parseInt(Tabla.getValueAt(i, 0).toString());
+            try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                    Statement stmt = conn.createStatement()) {
+                stmt.executeUpdate(query);
             } catch (SQLException ex) {
                 Logger.getLogger(PanelMaquinas.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -172,14 +153,14 @@ public class Panel_Operaciones extends javax.swing.JFrame {
     
     private void insertarOperacion() {
         String esp = String.valueOf(jComboBox_especificacion.getSelectedIndex());
-        if(esp.length()==1){
-            esp ="0"+ esp;
+        if (esp.length() == 1) {
+            esp = "0" + esp;
         }
-        try {
-            String query ="INSERT INTO Operaciones (TipoOperacion, Codigo, Descripcion, Periodicidad, TipoUsuario, Especificacion, id_maquina) VALUES (\"mantenimiento\",\""+Integer.parseInt(numero_maquina+esp+jTextField_codigo.getText())+"\",\""+jTextField_descripcion.getText()+"\",\""+jComboBox_periodo.getSelectedItem().toString()+"\",\"operario\",\""+jComboBox_especificacion.getSelectedItem().toString()+"\","+Integer.parseInt(id_maquina)+")";
-            st = con.createStatement();
-            st.executeUpdate(query);
-            JOptionPane.showMessageDialog(null,"Operación añadida.");   
+        String query = "INSERT INTO Operaciones (TipoOperacion, Codigo, Descripcion, Periodicidad, TipoUsuario, Especificacion, id_maquina) VALUES (\"mantenimiento\",\"" + Integer.parseInt(numero_maquina + esp + jTextField_codigo.getText()) + "\",\"" + jTextField_descripcion.getText() + "\",\"" + jComboBox_periodo.getSelectedItem().toString() + "\",\"operario\",\"" + jComboBox_especificacion.getSelectedItem().toString() + "\"," + Integer.parseInt(id_maquina) + ")";
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(query);
+            JOptionPane.showMessageDialog(null, "Operación añadida.");
             mostrarTabla(Integer.parseInt(id_maquina));
         } catch (SQLException ex) {
             Logger.getLogger(PanelMaquinas.class.getName()).log(Level.SEVERE, null, ex);

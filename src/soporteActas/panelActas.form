@@ -26,7 +26,7 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Organizar actas"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="0"/>
+              <Font name="3ds Light" size="14" style="1"/>
             </Property>
           </Properties>
           <SubComponents>
@@ -61,7 +61,7 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Opciones"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="0"/>
+              <Font name="3ds Light" size="14" style="1"/>
             </Property>
           </Properties>
           <SubComponents>
@@ -153,16 +153,10 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txtNActas" min="-2" pref="116" max="-2" attributes="0"/>
-                      </Group>
                       <Component id="jcFinRango" alignment="0" min="-2" pref="279" max="-2" attributes="0"/>
                       <Component id="jcInicioRango" min="-2" pref="279" max="-2" attributes="0"/>
                       <Component id="jLabel5" alignment="0" min="-2" pref="279" max="-2" attributes="0"/>
                       <Component id="rbPiezasS" alignment="0" min="-2" pref="279" max="-2" attributes="0"/>
-                      <Component id="rbNumeroActas" alignment="0" min="-2" pref="279" max="-2" attributes="0"/>
                       <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jbExportaPdf1" alignment="0" min="-2" pref="279" max="-2" attributes="0"/>
@@ -179,6 +173,14 @@
                       <Component id="selectorMaquina" alignment="0" min="-2" pref="279" max="-2" attributes="0"/>
                       <Component id="rbIndividual" alignment="0" min="-2" pref="279" max="-2" attributes="0"/>
                       <Component id="jbExportaPdf2" alignment="0" min="-2" pref="279" max="-2" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtNActas" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="rbNumeroActas" alignment="0" min="-2" pref="279" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane3" pref="783" max="32767" attributes="0"/>
@@ -248,6 +250,9 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="14" style="1"/>
             </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Todas las m&#xe1;quinas."/>
           </Properties>
           <Events>
@@ -264,6 +269,9 @@
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="14" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Elige la m&#xe1;quina a gestionar."/>
           </Properties>
@@ -304,6 +312,9 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="14" style="1"/>
             </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Desde el inicio."/>
           </Properties>
           <Events>
@@ -321,6 +332,9 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="14" style="1"/>
             </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="N&#xfa;mero de actas."/>
           </Properties>
           <Events>
@@ -334,6 +348,9 @@
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="14" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Solo piezas sustituidas"/>
           </Properties>
@@ -374,6 +391,9 @@
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Century Gothic" size="14" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Entre Fechas."/>
           </Properties>
@@ -525,9 +545,6 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Century Gothic" size="12" style="0"/>
                 </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="33" green="33" red="0" type="rgb"/>
-                </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="4">
                     <Column editable="true" title="Title 1" type="java.lang.Object"/>
@@ -537,13 +554,14 @@
                   </Table>
                 </Property>
                 <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="66" green="66" red="0" type="rgb"/>
+                  <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
                 <Property name="rowHeight" type="int" value="25"/>
                 <Property name="rowMargin" type="int" value="5"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="clicK_acta"/>
+                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="TablaMousePressed"/>
               </Events>
             </Component>
           </SubComponents>

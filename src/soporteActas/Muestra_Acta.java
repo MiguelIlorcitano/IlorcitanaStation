@@ -5,8 +5,6 @@
  */
 package soporteActas;
 
-import tareasIlorcitana.*;
-import java.awt.Color;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
@@ -16,10 +14,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import satation.Main;
 import satation.Propiedades;
 
 /**
@@ -52,8 +49,7 @@ public class Muestra_Acta extends javax.swing.JFrame {
                         return false;
                     }
                 });
-        this.setLocationRelativeTo(null);
-        conectarMy();        
+        this.setLocationRelativeTo(null);  
         muestraTarea(id_t=Integer.parseInt(id));  
         //jCMaquina.setEnabled(false);
     }
@@ -62,51 +58,16 @@ public class Muestra_Acta extends javax.swing.JFrame {
         initComponents();
     }
     
-     /**
-     * Conectar con la base de datos.
-     */
-    public final void conectarMy(){
-        if (conexion == null) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                conexion = DriverManager.getConnection("jdbc:mysql://192.168.0.132:3307/ilorcitana", "irobotica", "1233");
-                //conexion = DriverManager.getConnection("jdbc:mysql://nas:3307/ilorcitana", "local", "1233");
-            } catch (ClassNotFoundException | SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Error al realizar la conexion "+ex);
-            } 
-        }
-    }
-    
-//    /**
-//     * LLena los combobox.
-//     */
-//    public void llenarComboMaquinas(){ 
-//            String descripcion=null;
-//            try {
-//                jCMaquina.setEnabled(true);
-//                jCMaquina.removeAllItems();
-//                st= conexion.createStatement();
-//                rs=st.executeQuery("SELECT id_maquina,descripcion FROM maquinas");
-//                while(rs.next()){
-//                    jCMaquina.addItem(rs.getString("descripcion"));
-//                }
-//                if(descripcion!=null){
-//                jCMaquina.setSelectedItem(descripcion);
-//                }
-//            }catch(SQLException e){
-//                JOptionPane.showMessageDialog(rootPane, e);
-//            }
-//    }
-    
     private void modificaTxt() throws IOException{ 
         Propiedades.setPropiedad("modificado", "true");
     }
     
     private void muestraTarea(int i){
-        try{ 
-            st= conexion.createStatement();
-            ResultSet r = st.executeQuery("SELECT * FROM mantenimiento WHERE  NumeroActa="+i); 
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet r = stmt.executeQuery("SELECT * FROM mantenimiento WHERE  NumeroActa="+i)) {
             while (r.next()){ 
+                
                 lActa.setText(r.getString("NumeroActa"));
                 lTarea.setText(r.getString("Id_Tarea"));
                 lMaquina.setText(r.getString("Maquina"));
@@ -115,37 +76,20 @@ public class Muestra_Acta extends javax.swing.JFrame {
                 lHoras.setText(r.getString("Horas"));
                 lMantenimiento.setText(r.getString("TipoMantenimiento"));
                 lProblema.setText(r.getString("TipoProblema"));
+                
                 taObservaciones.setText(r.getString("Observaciones"));
                 taIndicaciones.setText(r.getString("Indicaciones"));
                 taOperaciones.setText(r.getString("Operaciones"));
                 taSustituidas.setText(r.getString("PiezasSustituidas"));
-                taObservaciones.setEditable(false);
-                taOperaciones.setEditable(false);
-                taSustituidas.setEditable(false);
+                //taObservaciones.setEditable(false);
+                //taOperaciones.setEditable(false);
+                //taSustituidas.setEditable(false);
             }
             
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,"Error al cargar los datos de la tabla Mantenimiento ");
         }
     }
-    
-//    private void modificaMaquina(){
-//        String com = jlMaquina.getText();
-//        String sss=null;
-//        try {
-//            st=conexion.createStatement();
-//            rs=st.executeQuery("SELECT * FROM maquinas WHERE descripcion=\""+com+"\"");
-//            while(rs.next()){
-//                 sss=rs.getString("id_maquina");
-//            }
-//            if(!com.equals(id_m)){
-//                id_m=sss;
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Panel_Modifica1.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    
-//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -177,26 +121,31 @@ public class Muestra_Acta extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         lHoras = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        taOperaciones = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        taObservaciones = new javax.swing.JTextArea();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        taSustituidas = new javax.swing.JTextArea();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        taIndicaciones = new javax.swing.JTextArea();
         jLabel15 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        taObservaciones = new javax.swing.JTextArea();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        taIndicaciones = new javax.swing.JTextArea();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        taOperaciones = new javax.swing.JTextArea();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        taSustituidas = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tarea");
         setBackground(new java.awt.Color(255, 255, 255));
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/editor.png")).getImage());
+        setResizable(false);
+        setType(java.awt.Window.Type.POPUP);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
+        jLabel1.setBackground(new java.awt.Color(0, 102, 102));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Número de acta:");
+        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel1.setOpaque(true);
 
         jButton1.setBackground(new java.awt.Color(0, 102, 102));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -212,6 +161,7 @@ public class Muestra_Acta extends javax.swing.JFrame {
         lActa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lActa.setForeground(new java.awt.Color(51, 51, 51));
         lActa.setText("jLabel3");
+        lActa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
         lActa.setOpaque(true);
         lActa.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -219,14 +169,18 @@ public class Muestra_Acta extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setBackground(new java.awt.Color(0, 102, 102));
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Id de tarea:");
+        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel3.setOpaque(true);
 
         lTarea.setBackground(new java.awt.Color(255, 255, 255));
         lTarea.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lTarea.setForeground(new java.awt.Color(51, 51, 51));
         lTarea.setText("jLabel3");
+        lTarea.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
         lTarea.setOpaque(true);
         lTarea.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -238,6 +192,7 @@ public class Muestra_Acta extends javax.swing.JFrame {
         lMaquina.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lMaquina.setForeground(new java.awt.Color(51, 51, 51));
         lMaquina.setText("jLabel3");
+        lMaquina.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
         lMaquina.setOpaque(true);
         lMaquina.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -245,14 +200,18 @@ public class Muestra_Acta extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setBackground(new java.awt.Color(0, 102, 102));
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Maquina:");
+        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel6.setOpaque(true);
 
         lFecha.setBackground(new java.awt.Color(255, 255, 255));
         lFecha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lFecha.setForeground(new java.awt.Color(51, 51, 51));
         lFecha.setText("jLabel3");
+        lFecha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
         lFecha.setOpaque(true);
         lFecha.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -260,18 +219,25 @@ public class Muestra_Acta extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setBackground(new java.awt.Color(0, 102, 102));
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Fecha:");
+        jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel7.setOpaque(true);
 
+        jLabel8.setBackground(new java.awt.Color(0, 102, 102));
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Operario:");
+        jLabel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel8.setOpaque(true);
 
         lOperario.setBackground(new java.awt.Color(255, 255, 255));
         lOperario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lOperario.setForeground(new java.awt.Color(51, 51, 51));
         lOperario.setText("jLabel3");
+        lOperario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
         lOperario.setOpaque(true);
         lOperario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -279,14 +245,18 @@ public class Muestra_Acta extends javax.swing.JFrame {
             }
         });
 
+        jLabel9.setBackground(new java.awt.Color(0, 102, 102));
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Tipo de mantenimiento:");
+        jLabel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel9.setOpaque(true);
 
         lMantenimiento.setBackground(new java.awt.Color(255, 255, 255));
         lMantenimiento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lMantenimiento.setForeground(new java.awt.Color(51, 51, 51));
         lMantenimiento.setText("jLabel3");
+        lMantenimiento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
         lMantenimiento.setOpaque(true);
         lMantenimiento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -294,14 +264,18 @@ public class Muestra_Acta extends javax.swing.JFrame {
             }
         });
 
+        jLabel10.setBackground(new java.awt.Color(0, 102, 102));
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Tipo de problema:");
+        jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel10.setOpaque(true);
 
         lProblema.setBackground(new java.awt.Color(255, 255, 255));
         lProblema.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lProblema.setForeground(new java.awt.Color(51, 51, 51));
         lProblema.setText("jLabel3");
+        lProblema.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
         lProblema.setOpaque(true);
         lProblema.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -309,26 +283,39 @@ public class Muestra_Acta extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setBackground(new java.awt.Color(0, 102, 102));
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Observaciones:");
+        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel11.setOpaque(true);
 
+        jLabel12.setBackground(new java.awt.Color(0, 102, 102));
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Operaciones:");
+        jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel12.setOpaque(true);
 
+        jLabel13.setBackground(new java.awt.Color(0, 102, 102));
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Piezas sustituidas:");
+        jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel13.setOpaque(true);
 
+        jLabel14.setBackground(new java.awt.Color(0, 102, 102));
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Horas:");
+        jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel14.setOpaque(true);
 
         lHoras.setBackground(new java.awt.Color(255, 255, 255));
         lHoras.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lHoras.setForeground(new java.awt.Color(51, 51, 51));
         lHoras.setText("jLabel3");
+        lHoras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
         lHoras.setOpaque(true);
         lHoras.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -336,38 +323,32 @@ public class Muestra_Acta extends javax.swing.JFrame {
             }
         });
 
-        taOperaciones.setColumns(20);
-        taOperaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        taOperaciones.setForeground(new java.awt.Color(51, 51, 51));
-        taOperaciones.setRows(5);
-        taOperaciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        jScrollPane1.setViewportView(taOperaciones);
+        jLabel15.setBackground(new java.awt.Color(0, 102, 102));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Indicaciones:");
+        jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel15.setOpaque(true);
 
         taObservaciones.setColumns(20);
-        taObservaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        taObservaciones.setForeground(new java.awt.Color(51, 51, 51));
+        taObservaciones.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         taObservaciones.setRows(5);
-        taObservaciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        taObservaciones.setPreferredSize(new java.awt.Dimension(242, 90));
-        jScrollPane2.setViewportView(taObservaciones);
-
-        taSustituidas.setColumns(20);
-        taSustituidas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        taSustituidas.setForeground(new java.awt.Color(51, 51, 51));
-        taSustituidas.setRows(5);
-        taSustituidas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        jScrollPane3.setViewportView(taSustituidas);
+        jScrollPane5.setViewportView(taObservaciones);
 
         taIndicaciones.setColumns(20);
-        taIndicaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        taIndicaciones.setForeground(new java.awt.Color(51, 51, 51));
+        taIndicaciones.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         taIndicaciones.setRows(5);
-        taIndicaciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        jScrollPane4.setViewportView(taIndicaciones);
+        jScrollPane6.setViewportView(taIndicaciones);
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 51, 51));
-        jLabel15.setText("Indicaciones:");
+        taOperaciones.setColumns(20);
+        taOperaciones.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        taOperaciones.setRows(5);
+        jScrollPane7.setViewportView(taOperaciones);
+
+        taSustituidas.setColumns(20);
+        taSustituidas.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        taSustituidas.setRows(5);
+        jScrollPane8.setViewportView(taSustituidas);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -376,7 +357,7 @@ public class Muestra_Acta extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane5)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -385,9 +366,6 @@ public class Muestra_Acta extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lMantenimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane4)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane3)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -402,7 +380,10 @@ public class Muestra_Acta extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane6)
+                    .addComponent(jLabel12)
+                    .addComponent(jScrollPane7)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -419,9 +400,9 @@ public class Muestra_Acta extends javax.swing.JFrame {
                                 .addComponent(lMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel11)
                             .addComponent(jLabel15)
-                            .addComponent(jLabel12)
                             .addComponent(jLabel13))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane8))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -458,20 +439,20 @@ public class Muestra_Acta extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -480,11 +461,11 @@ public class Muestra_Acta extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -561,28 +542,6 @@ public class Muestra_Acta extends javax.swing.JFrame {
         //</editor-fold>
         
         //</editor-fold>
-        //</editor-fold>
-        
-        //</editor-fold>
-        //</editor-fold>
-        
-        //</editor-fold>
-        //</editor-fold>
-        
-        //</editor-fold>
-        //</editor-fold>
-        
-        //</editor-fold>
-        //</editor-fold>
-        
-        //</editor-fold>
-        //</editor-fold>
-        
-        //</editor-fold>
-        //</editor-fold>
-        
-        //</editor-fold>
-        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
@@ -605,10 +564,10 @@ public class Muestra_Acta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JLabel lActa;
     private javax.swing.JLabel lFecha;
     private javax.swing.JLabel lHoras;

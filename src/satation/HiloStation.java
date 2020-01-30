@@ -36,10 +36,6 @@ public class HiloStation extends Thread {
     private boolean cont = true;
     private boolean primero = true;
     
-    private final String driver = "jdbc:mysql://192.168.0.132:3307/ilorcitana";
-    private final String usuario = "irobotica";
-    private final String clave = "1233";
-    
     panelActas p;
     boolean actualiza;
 
@@ -95,7 +91,7 @@ public class HiloStation extends Thread {
      * Recoge la información de todas las máquinas en la variables globales tipo ArrayList.
      */
     private void extraeMaquinas() {
-        try (Connection conn = DriverManager.getConnection(driver, usuario, clave);
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT id_maquina,M_Semanal,M_Mensual,M_Trimestral,M_Anual,descripcion,numero_maquina FROM maquinas")) {
             while (rs.next()) {
@@ -174,7 +170,7 @@ public class HiloStation extends Thread {
         // Se recoden las ordenes de mantenimiento para crear la tarea
         switch (tarea) {
             case 1:
-                try (Connection conn = DriverManager.getConnection(driver, usuario, clave);
+                try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT Codigo,Descripcion,Especificacion FROM Operaciones WHERE Periodicidad=\"anual\" AND id_maquina=" + Integer.parseInt(id_m))) {
                     while (rs.next()) {
@@ -186,7 +182,7 @@ public class HiloStation extends Thread {
                 }
                 break;
             case 2:
-                try (Connection conn = DriverManager.getConnection(driver, usuario, clave);
+                try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT Codigo,Descripcion,Especificacion FROM Operaciones WHERE Periodicidad=\"trimestral\" AND id_maquina=" + Integer.parseInt(id_m))) {
                     while (rs.next()) {
@@ -198,7 +194,7 @@ public class HiloStation extends Thread {
                 }
                 break;
             case 3:
-                try (Connection conn = DriverManager.getConnection(driver, usuario, clave);
+                try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT Codigo,Descripcion,Especificacion FROM Operaciones WHERE Periodicidad=\"mensual\" AND id_maquina=" + Integer.parseInt(id_m))) {
                     while (rs.next()) {
@@ -210,7 +206,7 @@ public class HiloStation extends Thread {
                 }
                 break;
             case 4:
-                try (Connection conn = DriverManager.getConnection(driver, usuario, clave);
+                try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT Codigo,Descripcion,Especificacion FROM Operaciones WHERE Periodicidad=\"semanal\" AND id_maquina=" + Integer.parseInt(id_m))) {
                     while (rs.next()) {
@@ -225,7 +221,7 @@ public class HiloStation extends Thread {
                 break;
         }
          // Se crea la tarea.
-        try (Connection conn = DriverManager.getConnection(driver, usuario, clave);
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
             Statement stmt = conn.createStatement();) {
             stmt.executeUpdate("INSERT INTO tareas(usuario,tarea, tipo_tarea,tipo_problema, id_maquina, nivel_preferencia, estado, observaciones, tipo_operario) VALUES (\"0\",\"" + mantenimiento + "\",\"mantenimiento operario\",\"mantenimiento\",\"" + id_m + "\",\"prioritaria\",\"en espera\",\"" + observaciones + "\",\"operario\")");
             JOptionPane.showMessageDialog(null, "Tarea creada correctamente.");
@@ -242,7 +238,7 @@ public class HiloStation extends Thread {
      */
     private boolean compruebaTarea(String f, String id_m , String tm) {
         boolean com = false;
-        try (Connection conn = DriverManager.getConnection(driver, usuario, clave);
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT estado FROM tareas WHERE id_maquina=\"" + id_m + "\" AND tarea=\"" + tm + "\"")) {
             while (rs.next()) {
@@ -264,7 +260,7 @@ public class HiloStation extends Thread {
      */
     private void compruebaRealizada(String id_m, String descip) {
         
-        try (Connection conn = DriverManager.getConnection(driver, usuario, clave);
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery("SELECT tarea,estado FROM tareas WHERE id_maquina="+Integer.parseInt(id_m))) {
             while (rs.next()) {

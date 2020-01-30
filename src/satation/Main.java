@@ -18,6 +18,10 @@ public class Main {
     HiloStation mihilo = new HiloStation();
     private static ServerSocket SERVER_SOCKET;
     
+    public static String driver = "jdbc:mysql://192.168.0.132:3307/ilorcitana";
+    public static String usuario = "irobotica";
+    public static String clave = "1233";
+    
     public Main() {
         /*El objeto trayIcon representa el tray icon valga la redundancia
           a este objeto se le pueden asigna imágenes, popups, tooltips y

@@ -20,7 +20,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import tareasIlorcitana.Tareas_Principal;
 
 /**
  *
@@ -28,9 +27,6 @@ import tareasIlorcitana.Tareas_Principal;
  */
 public class panel_loging extends javax.swing.JFrame {
     
-    private Connection conexion = null;
-    private Statement st;
-    private ResultSet rs;
     private static ServerSocket SERVER_SOCKET;
 
     /**
@@ -79,32 +75,14 @@ public class panel_loging extends javax.swing.JFrame {
 
             }
         });
-        conectarMy();
-    }
-    
-    /**
-     * Conectar con la base de datos.
-     */
-    public final void conectarMy(){
-        if (conexion == null) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                conexion = DriverManager.getConnection("jdbc:mysql://192.168.0.132:3307/ilorcitana", "irobotica", "1233");
-                //Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-                //conexion = DriverManager.getConnection("jdbc:ucanaccess://C:\\IlorcitanaOptimizer\\Cnc\\Data\\ilorcitana.accdb");
-                //conexion = DriverManager.getConnection("jdbc:ucanaccess://\\server\\datos\\GESCIM\\ClasGes6\\Modulo\\BD.accdb");
-            } catch (ClassNotFoundException | SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Error al realizar la conexion "+ex);
-                Logger.getLogger(Tareas_Principal.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-        }
     }
     
     private boolean buscaUsuario() {
         boolean existe = false;
-        try {
-            st = conexion.createStatement();
-            rs = st.executeQuery("SELECT * FROM UsuariosP");
+        
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM UsuariosP")) {
             while (rs.next()) {
                 char[] us = rs.getString("Clave").toCharArray();
                 if(Arrays.equals(jPassword.getPassword(), us)){

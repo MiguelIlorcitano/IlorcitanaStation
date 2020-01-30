@@ -23,6 +23,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import satation.Main;
 import satation.Propiedades;
 
 /**
@@ -31,9 +32,6 @@ import satation.Propiedades;
  */
 public class Panel_Nueva_Tarea extends javax.swing.JFrame {
     
-    private Connection conexion = null;
-    private Statement st;
-    private ResultSet rs;
     boolean pulsado;
     int contador = 0;
 
@@ -43,7 +41,6 @@ public class Panel_Nueva_Tarea extends javax.swing.JFrame {
     public Panel_Nueva_Tarea() {
         initComponents();
         this.setLocationRelativeTo(null);
-        conectarMy();
         rbMecanico.setVisible(false);
         rbHidraulico.setVisible(false);
         rbNeumatico.setVisible(false);
@@ -52,30 +49,15 @@ public class Panel_Nueva_Tarea extends javax.swing.JFrame {
         etiMaquina.setVisible(false);
     }
     
-     /**
-     * Conectar con la base de datos.
-     */
-    public final void conectarMy(){
-        if (conexion == null) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                conexion = DriverManager.getConnection("jdbc:mysql://192.168.0.132:3307/ilorcitana", "irobotica", "1233");
-                //conexion = DriverManager.getConnection("jdbc:mysql://nas:3307/ilorcitana", "local", "1233");
-            } catch (ClassNotFoundException | SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Error al realizar la conexion "+ex);
-            } 
-        }
-    }
-    
     /**
      * LLena los combobox.
      */
     private void llenarComboMaquinas(){ 
-        try {
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT descripcion FROM maquinas")) {
             jCMaquina.setEnabled(true);
             jCMaquina.removeAllItems();
-            st= conexion.createStatement();
-            rs=st.executeQuery("SELECT descripcion FROM maquinas");
             while(rs.next()){
                 jCMaquina.addItem(rs.getString("descripcion"));
             }
@@ -352,9 +334,9 @@ public class Panel_Nueva_Tarea extends javax.swing.JFrame {
         
         //Si el problema es una reparación se recoge qué máquina es la averiada.
         if(jCMaquina.isVisible()==true){
-            try {
-                st= conexion.createStatement();
-                rs=st.executeQuery("SELECT id_maquina FROM maquinas WHERE descripcion=\""+jCMaquina.getSelectedItem().toString()+"\"");
+            try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT id_maquina FROM maquinas WHERE descripcion=\""+jCMaquina.getSelectedItem().toString()+"\"")) {
                 while(rs.next()){
                     idmaquina=rs.getString("id_maquina");
                 }
@@ -363,9 +345,9 @@ public class Panel_Nueva_Tarea extends javax.swing.JFrame {
             } 
         }
         
-        try {
-            st = conexion.createStatement();
-            rs = st.executeQuery("SELECT IdUsuario FROM UsuariosP WHERE Clave="+ Integer.parseInt(Propiedades.getPropiedad("clave")+""));
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT IdUsuario FROM UsuariosP WHERE Clave="+ Integer.parseInt(Propiedades.getPropiedad("clave")+""))) {
             while (rs.next()) {
                 usuario = rs.getString("IdUsuario");
             }
@@ -385,10 +367,9 @@ public class Panel_Nueva_Tarea extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Mensaje enviado correctamente");
         } else {
             //Se pasa a la base de datos la nueva tarea
-            try {
-                // TODO add your handling code here:
-                st = conexion.createStatement();
-                st.executeUpdate("INSERT INTO tareas(usuario,tarea, tipo_tarea,tipo_problema, id_maquina, nivel_preferencia, estado, observaciones, tipo_operario) VALUES (\"" + usuario + "\",\"" + jCTarea.getSelectedItem().toString() + "\",\"" + jCTipoTarea.getSelectedItem().toString() + "\",\"" + tipoproblema + "\",\"" + idmaquina + "\",\"" + jCNivelPreferencia.getSelectedItem().toString() + "\",\"en espera\",\"" + tAObservaciones.getText() + "\",\"" + operario + "\")");
+            try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                Statement stmt = conn.createStatement()) {
+                stmt.executeUpdate("INSERT INTO tareas(usuario,tarea, tipo_tarea,tipo_problema, id_maquina, nivel_preferencia, estado, observaciones, tipo_operario) VALUES (\"" + usuario + "\",\"" + jCTarea.getSelectedItem().toString() + "\",\"" + jCTipoTarea.getSelectedItem().toString() + "\",\"" + tipoproblema + "\",\"" + idmaquina + "\",\"" + jCNivelPreferencia.getSelectedItem().toString() + "\",\"en espera\",\"" + tAObservaciones.getText() + "\",\"" + operario + "\")");
                 JOptionPane.showMessageDialog(null, "Tarea creada correctamente.");
                 modificaTxt();
                 dispose();

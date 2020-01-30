@@ -53,7 +53,7 @@ public class PanelStation extends javax.swing.JFrame {
         botonUsuario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("IlorcitanaStation V1.2.1");
+        setTitle("IlorcitanaStation V1.2.2");
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));

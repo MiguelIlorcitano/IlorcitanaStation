@@ -5,6 +5,7 @@
 
 package tareasIlorcitana;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.KeyEventPostProcessor;
 import java.awt.KeyboardFocusManager;
@@ -22,6 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import satation.Main;
 import satation.Propiedades;
 
 
@@ -34,10 +36,6 @@ public final class Tareas_Principal extends javax.swing.JFrame {
     
     private static ServerSocket SERVER_SOCKET;
     
-    //Variables para la conexión.
-    private Connection conexion = null;
-    private Statement st;
-    private ResultSet rs;
     DefaultTableModel n;
     Panel_Mantenimiento pm=null;
     Panel_ModificaAdmin modA=null;
@@ -87,7 +85,6 @@ public final class Tareas_Principal extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
-        conectarMy();
         if(!Propiedades.getPropiedad("usuario").equals("administrador")){
             botonPrincipal.setVisible(false);
         }
@@ -123,21 +120,6 @@ public final class Tareas_Principal extends javax.swing.JFrame {
     }
     
     /**
-     * Conectar con la base de datos.
-     */
-    public final void conectarMy(){
-        if (conexion == null) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                conexion = DriverManager.getConnection("jdbc:mysql://192.168.0.132:3307/ilorcitana", "irobotica", "1233");
-            } catch (ClassNotFoundException | SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Error al realizar la conexion "+ex);
-                Logger.getLogger(Tareas_Principal.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-        }
-    }
-    
-    /**
      * Lee el archivo filtrado para saber a que usuario va destinado el panel.
      */
     public void leeFiltrado() {
@@ -158,11 +140,11 @@ public final class Tareas_Principal extends javax.swing.JFrame {
     public void llenarComboMaquinas(){ 
         if(contador==0){
             String descripcion=null;
-            try {
+            try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT id_maquina,descripcion FROM maquinas")) {
                 jCMaquina.setEnabled(true);
                 jCMaquina.removeAllItems();
-                st= conexion.createStatement();
-                rs=st.executeQuery("SELECT id_maquina,descripcion FROM maquinas");
                 while(rs.next()){
                     jCMaquina.addItem(rs.getString("descripcion"));
                 }
@@ -183,9 +165,9 @@ public final class Tareas_Principal extends javax.swing.JFrame {
         preparaConsulta();
         switch (filtrado) {
             case "mecánica":
-                try {
-                    st = conexion.createStatement();
-                    ResultSet r = st.executeQuery(consulta);
+                try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                    Statement stmt = conn.createStatement();
+                    ResultSet r = stmt.executeQuery(consulta)) {
                     String titulos[] = {"Id", "Tarea", "Máquina", "Tipo_Problema", "Preferencia", "Estado", "Fecha de tarea", "Observaciones"};
                     n = new DefaultTableModel(null, titulos);
                     String fila[] = new String[8];
@@ -227,7 +209,9 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                     Tabla.getColumnModel().getColumn(7).setPreferredWidth(450);
                     JTableHeader th;
                     th = Tabla.getTableHeader();
-                    Font fuente = new Font("3ds Light", Font.BOLD, 16);
+                    Font fuente = new Font("3ds Light", Font.BOLD, 14);
+                    Color cl = new Color(0,102,102);
+                    th.setForeground(cl);
                     th.setFont(fuente);
                     Tabla.setShowHorizontalLines(true);
                     Tabla.setShowVerticalLines(true);
@@ -236,9 +220,9 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                 }
                 break;
             case "programación":
-                try {
-                    st = conexion.createStatement();
-                    ResultSet r = st.executeQuery(consulta);
+                try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                    Statement stmt = conn.createStatement();
+                    ResultSet r = stmt.executeQuery(consulta)) {
                     String titulos[] = {"Id", "Tarea", "Máquina", "Tipo_Problema", "Preferencia", "Estado", "Fecha de tarea", "Observaciones"};
                     n = new DefaultTableModel(null, titulos);
                     String fila[] = new String[8];
@@ -280,7 +264,9 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                     Tabla.getColumnModel().getColumn(7).setPreferredWidth(450);
                     JTableHeader th;
                     th = Tabla.getTableHeader();
-                    Font fuente = new Font("3ds Light", Font.BOLD, 16);
+                    Font fuente = new Font("3ds Light", Font.BOLD, 14);
+                    Color cl = new Color(0,102,102);
+                    th.setForeground(cl);
                     th.setFont(fuente);
                     Tabla.setShowHorizontalLines(true);
                     Tabla.setShowVerticalLines(true);
@@ -289,9 +275,9 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                 }
                 break;
             case "administrador":
-                try {
-                    st = conexion.createStatement();
-                    ResultSet r = st.executeQuery(consulta);
+                try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                    Statement stmt = conn.createStatement();
+                    ResultSet r = stmt.executeQuery(consulta)) {
                     String titulos[] = {"Id", "usuario", "Tarea", "Tipo de tarea", "Maquina", "Tipo de problema", "Preferencia", "Estado", "Fecha de tarea", "Fecha de inicio", "Fecha de fin", "Observaciones"};
                     n = new DefaultTableModel(null, titulos);
                     String fila[] = new String[12];
@@ -314,7 +300,9 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                     Tabla.setDefaultRenderer(Object.class, new Render());
                     JTableHeader th;
                     th = Tabla.getTableHeader();
-                    Font fuente = new Font("3ds Light", Font.BOLD, 16);
+                    Font fuente = new Font("3ds Light", Font.BOLD, 14);
+                    Color cl = new Color(0,102,102);
+                    th.setForeground(cl);
                     th.setFont(fuente);
                     Tabla.setShowHorizontalLines(true);
                     Tabla.setShowVerticalLines(true);
@@ -323,9 +311,9 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                 }
                 break;
             case "mantenimiento operario":
-                try {
-                    st = conexion.createStatement();
-                    ResultSet r = st.executeQuery(consulta);
+                try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                    Statement stmt = conn.createStatement();
+                    ResultSet r = stmt.executeQuery(consulta)) {
                     String titulos[] = {"Id", "Tarea", "Máquina", "Tipo_Problema", "Preferencia", "Estado", "Fecha de tarea", "Observaciones"};
                     n = new DefaultTableModel(null, titulos);
                     String fila[] = new String[8];
@@ -462,7 +450,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
             }
         ));
         Tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        Tabla.setGridColor(new java.awt.Color(0, 102, 102));
+        Tabla.setGridColor(new java.awt.Color(0, 0, 0));
         Tabla.setIntercellSpacing(new java.awt.Dimension(10, 10));
         Tabla.setRowHeight(25);
         Tabla.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -662,21 +650,9 @@ public final class Tareas_Principal extends javax.swing.JFrame {
 
     private void TablaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMousePressed
 
-        try {
-            st= conexion.createStatement();
-            //ResultSet r = st.executeQuery("SELECT * FROM tareas WHERE tarea=\""+Tabla.getSelectedRow()+"\"");
-            ResultSet r = st.executeQuery("SELECT * FROM tareas WHERE Id_tarea=\""+Tabla.getSelectedRow()+"\"");
-        } catch (SQLException ex) {
-            Logger.getLogger(Tareas_Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_TablaMousePressed
-
-    private void click_tarea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_tarea
-        
-        try {
-            st = conexion.createStatement();
-            //ResultSet r = st.executeQuery("SELECT * FROM tareas WHERE tarea=\""+Tabla.getValueAt(Tabla.getSelectedRow(), 0)+"\"");
-            ResultSet r = st.executeQuery("SELECT * FROM tareas WHERE Id_tarea=\"" + Tabla.getValueAt(Tabla.getSelectedRow(), 0) + "\"");
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet r = stmt.executeQuery("SELECT * FROM tareas WHERE Id_tarea=\"" + Tabla.getValueAt(Tabla.getSelectedRow(), 0) + "\"")) {
             while (r.next()) {
                 String h = r.getString("Id_tarea");
                 if ("administrador".equals(filtrado)) {
@@ -718,6 +694,11 @@ public final class Tareas_Principal extends javax.swing.JFrame {
             Logger.getLogger(Tareas_Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
         mostrarTabla();
+    }//GEN-LAST:event_TablaMousePressed
+
+    private void click_tarea(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_click_tarea
+        
+        
     }//GEN-LAST:event_click_tarea
 
     private void jCNivelPreferenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCNivelPreferenciaActionPerformed

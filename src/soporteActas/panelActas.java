@@ -5,6 +5,7 @@
 
 package soporteActas;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.KeyEventDispatcher;
@@ -30,16 +31,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import tareasIlorcitana.Tareas_Principal;
 import reporte.Proyecto_Report;
+import satation.Main;
 import satation.Propiedades;
+
 /**
  *
  * @author Miguel Angel Carrillo Garcia
  */
 public final class panelActas extends javax.swing.JFrame {
     
-    private Connection con;
-    private ResultSet rs;
-    private Statement st;
     DefaultTableModel n;
     
     String operario;            //Recoge el nombre del operario que realiza el mantenimiento.
@@ -81,24 +81,8 @@ public final class panelActas extends javax.swing.JFrame {
                 });
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
-        conectarMy();
         llenarComboMaquinas();
         mostrarTabla();
-    }
-    
-    /**
-     * Conectar con la base de datos.
-     */
-    public final void conectarMy(){
-        if (con == null) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://192.168.0.132:3307/ilorcitana", "irobotica", "1233");
-            } catch (ClassNotFoundException | SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Error al realizar la conexion "+ex);
-                Logger.getLogger(Tareas_Principal.class.getName()).log(Level.SEVERE, null, ex);
-            } 
-        }
     }
    
     /**
@@ -106,13 +90,13 @@ public final class panelActas extends javax.swing.JFrame {
      */
     public void llenarComboMaquinas() {
         String descripcion = null;
-        try {
+       try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet r = stmt.executeQuery("SELECT id_maquina,descripcion FROM maquinas")) {
             selectorMaquina.setEnabled(true);
             selectorMaquina.removeAllItems();
-            st = con.createStatement();
-            rs = st.executeQuery("SELECT id_maquina,descripcion FROM maquinas");
-            while (rs.next()) {
-                selectorMaquina.addItem(rs.getString("descripcion"));
+            while (r.next()) {
+                selectorMaquina.addItem(r.getString("descripcion"));
             }
             if (descripcion != null) {
                 selectorMaquina.setSelectedItem(descripcion);
@@ -140,10 +124,9 @@ public final class panelActas extends javax.swing.JFrame {
      */
     public void mostrarTabla(){
         //Extrae el contenido de la tabla y lo almacena en el resultset.
-        try{ 
-            st= con.createStatement();
-            //Extrae el contenido de la tabla y lo almacena en el resultset.
-            ResultSet r = st.executeQuery(generaConsulta(Integer.parseInt(txtNActas.getText())));
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet r = stmt.executeQuery(generaConsulta(Integer.parseInt(txtNActas.getText())))) {
             //crear el modelo de la tabla.
             String titulos [] = {"Acta","Maquina","Fecha","Operaio","Tipo de Mantenimiento","Tipo de probelma","Operaciones","Piezas Sustituidas","Observaciones","Horas"};
             n = new DefaultTableModel(null,titulos);
@@ -162,11 +145,24 @@ public final class panelActas extends javax.swing.JFrame {
                 fila[9]=r.getString("Horas");                                                              
                 n.addRow(fila);
             }
+            Tabla.setModel(n);
+            Tabla.setDefaultRenderer(Object.class, new RenderActas());
+            Tabla.getColumnModel().getColumn(0).setPreferredWidth(6);
+            Tabla.getColumnModel().getColumn(1).setPreferredWidth(150);
+            Tabla.getColumnModel().getColumn(2).setPreferredWidth(30);
+            Tabla.getColumnModel().getColumn(3).setPreferredWidth(200);
+            Tabla.getColumnModel().getColumn(4).setPreferredWidth(30);
+            Tabla.getColumnModel().getColumn(5).setPreferredWidth(30);
+            Tabla.getColumnModel().getColumn(6).setPreferredWidth(200);
+            Tabla.getColumnModel().getColumn(7).setPreferredWidth(200);
+            Tabla.getColumnModel().getColumn(8).setPreferredWidth(200);
+            Tabla.getColumnModel().getColumn(9).setPreferredWidth(30);
             JTableHeader th;
             th = Tabla.getTableHeader();
-            Font fuente = new Font("3ds Light", Font.BOLD, 16);
+            Font fuente = new Font("3ds Light", Font.BOLD, 14);
+            Color cl = new Color(0,102,102);
+            th.setForeground(cl);
             th.setFont(fuente);
-            Tabla.setModel(n);
             Tabla.setShowHorizontalLines(true);
             Tabla.setShowVerticalLines(true);
         }catch(SQLException e){
@@ -273,11 +269,11 @@ public final class panelActas extends javax.swing.JFrame {
     }
     
     private void preparaReporte(){
-        try {
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet r = stmt.executeQuery(generaConsulta(10))) {
             Proyecto_Report reporte1 = new Proyecto_Report ();
             String historial[]= new String [9];
-            st= con.createStatement();
-            ResultSet r = st.executeQuery(generaConsulta(10));
             while (r.next()){
                 historial[0]=r.getString("Maquina");                                               
                 historial[1]=r.getString("Fecha");
@@ -300,34 +296,35 @@ public final class panelActas extends javax.swing.JFrame {
     /**
      * Pasa las actas del arraylist ya ordenadas a la base de datos y de esta al Jtable.
      */
-    private void ordenaTabla(char ord){   
-        try{ 
-            String query = null;
-            if(ord=='A'){
-               query="SELECT * FROM mantenimiento ORDER BY Fecha ASC";
-            }else{
-                query="SELECT * FROM mantenimiento ORDER BY Fecha DESC";
-            }
-            st= con.createStatement();
-            ResultSet r = st.executeQuery(query);
-            String titulos [] = {"Maquina","Fecha","Operaio","Tipo de Mantenimiento","Tipo de probelma","Operaciones","Piezas Sustituidas","Observaciones","Horas"};
-            n = new DefaultTableModel(null,titulos);
-            String fila [] = new String[9];
-            while (r.next()){
-                fila[0]=r.getString("Maquina");                                               
-                fila[1]=r.getString("Fecha");
-                fila[2]=r.getString("Operario");
-                fila[3]=r.getString("TipoMantenimiento");
-                fila[4]=r.getString("TipoProblema");
-                fila[5]=r.getString("Operaciones");
-                fila[6]=r.getString("PiezasSustituidas");
-                fila[7]=r.getString("Observaciones");
-                fila[8]=r.getString("Horas");                                                              
+    private void ordenaTabla(char ord){ 
+        String query = null;
+        if (ord == 'A') {
+            query = "SELECT * FROM mantenimiento ORDER BY Fecha ASC";
+        } else {
+            query = "SELECT * FROM mantenimiento ORDER BY Fecha DESC";
+        }
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                Statement stmt = conn.createStatement();
+                ResultSet r = stmt.executeQuery(query)) {
+
+            String titulos[] = {"Maquina", "Fecha", "Operaio", "Tipo de Mantenimiento", "Tipo de probelma", "Operaciones", "Piezas Sustituidas", "Observaciones", "Horas"};
+            n = new DefaultTableModel(null, titulos);
+            String fila[] = new String[9];
+            while (r.next()) {
+                fila[0] = r.getString("Maquina");
+                fila[1] = r.getString("Fecha");
+                fila[2] = r.getString("Operario");
+                fila[3] = r.getString("TipoMantenimiento");
+                fila[4] = r.getString("TipoProblema");
+                fila[5] = r.getString("Operaciones");
+                fila[6] = r.getString("PiezasSustituidas");
+                fila[7] = r.getString("Observaciones");
+                fila[8] = r.getString("Horas");
                 n.addRow(fila);
             }
             Tabla.setModel(n);
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error al cargar los datos de la tabla Mantenimiento 1 ");
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al cargar los datos de la tabla Mantenimiento 1 ");
         }
     
     }        
@@ -343,6 +340,45 @@ public final class panelActas extends javax.swing.JFrame {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }       
+    }
+    
+    private void eliminarBorrarActa(){
+        int ax = JOptionPane.showConfirmDialog(null, "Vas a ELIMINAR/MODIFICAR una acta.¿Estas seguro?");
+        if (ax == JOptionPane.YES_OPTION) {
+            n = (DefaultTableModel) Tabla.getModel();
+            n.removeRow(Tabla.getSelectedRow());
+
+            try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                PreparedStatement pst = conn.prepareStatement("DELETE from MANTENIMIENTO")) {
+                pst.executeUpdate();
+            } catch (SQLException | HeadlessException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
+            try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                PreparedStatement pst = conn.prepareStatement("INSERT INTO MANTENIMIENTO(M, F, O, TM, TP, Op, Ps, Ob, H)VALUES(?,?,?,?,?,?,?,?,?)")) {
+                for (int i = 0; i < Tabla.getRowCount(); i++) {
+                    pst.setString(1, Tabla.getValueAt(i, 0).toString());
+                    pst.setString(2, Tabla.getValueAt(i, 1).toString());
+                    pst.setString(3, Tabla.getValueAt(i, 2).toString());
+                    pst.setString(4, Tabla.getValueAt(i, 3).toString());
+                    pst.setString(5, Tabla.getValueAt(i, 4).toString());
+                    pst.setString(6, Tabla.getValueAt(i, 5).toString());
+                    pst.setString(7, Tabla.getValueAt(i, 6).toString());
+                    pst.setString(8, Tabla.getValueAt(i, 7).toString());
+                    pst.setString(9, Tabla.getValueAt(i, 8).toString());
+                    pst.executeUpdate();
+                }
+                JTableHeader th;
+                th = Tabla.getTableHeader();
+                Font fuente = new Font("Arial Narrow", Font.BOLD, 14);
+                th.setFont(fuente);
+                JOptionPane.showMessageDialog(null, "Acta eliminada.");
+            } catch (SQLException | HeadlessException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
+        } else if (ax == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(null, "Has cancelado, NO SE HAN REALIZADO CAMBIOS.");
+        } 
     }
 
     /**
@@ -400,6 +436,7 @@ public final class panelActas extends javax.swing.JFrame {
         rbTodas.setBackground(new java.awt.Color(0, 102, 102));
         buttonGroup1.add(rbTodas);
         rbTodas.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        rbTodas.setForeground(new java.awt.Color(255, 255, 255));
         rbTodas.setText("Todas las máquinas.");
         rbTodas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -410,6 +447,7 @@ public final class panelActas extends javax.swing.JFrame {
         rbIndividual.setBackground(new java.awt.Color(0, 102, 102));
         buttonGroup1.add(rbIndividual);
         rbIndividual.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        rbIndividual.setForeground(new java.awt.Color(255, 255, 255));
         rbIndividual.setText("Elige la máquina a gestionar.");
         rbIndividual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -428,6 +466,7 @@ public final class panelActas extends javax.swing.JFrame {
         rbInicio.setBackground(new java.awt.Color(0, 102, 102));
         buttonGroup2.add(rbInicio);
         rbInicio.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        rbInicio.setForeground(new java.awt.Color(255, 255, 255));
         rbInicio.setText("Desde el inicio.");
         rbInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -438,6 +477,7 @@ public final class panelActas extends javax.swing.JFrame {
         rbNumeroActas.setBackground(new java.awt.Color(0, 102, 102));
         buttonGroup2.add(rbNumeroActas);
         rbNumeroActas.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        rbNumeroActas.setForeground(new java.awt.Color(255, 255, 255));
         rbNumeroActas.setText("Número de actas.");
         rbNumeroActas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -447,6 +487,7 @@ public final class panelActas extends javax.swing.JFrame {
 
         rbPiezasS.setBackground(new java.awt.Color(0, 102, 102));
         rbPiezasS.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        rbPiezasS.setForeground(new java.awt.Color(255, 255, 255));
         rbPiezasS.setText("Solo piezas sustituidas");
         rbPiezasS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -470,6 +511,7 @@ public final class panelActas extends javax.swing.JFrame {
         rbEntreFechas.setBackground(new java.awt.Color(0, 102, 102));
         buttonGroup2.add(rbEntreFechas);
         rbEntreFechas.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        rbEntreFechas.setForeground(new java.awt.Color(255, 255, 255));
         rbEntreFechas.setText("Entre Fechas.");
         rbEntreFechas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -541,7 +583,6 @@ public final class panelActas extends javax.swing.JFrame {
         });
 
         Tabla.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
-        Tabla.setForeground(new java.awt.Color(0, 51, 51));
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -553,12 +594,15 @@ public final class panelActas extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        Tabla.setGridColor(new java.awt.Color(0, 102, 102));
+        Tabla.setGridColor(new java.awt.Color(0, 0, 0));
         Tabla.setRowHeight(25);
         Tabla.setRowMargin(5);
         Tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 clicK_acta(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                TablaMousePressed(evt);
             }
         });
         jScrollPane3.setViewportView(Tabla);
@@ -570,15 +614,10 @@ public final class panelActas extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNActas, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jcFinRango, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcInicioRango, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rbPiezasS, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbNumeroActas, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel14)
                     .addComponent(jbExportaPdf1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -592,7 +631,13 @@ public final class panelActas extends javax.swing.JFrame {
                     .addComponent(rbTodas, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(selectorMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rbIndividual, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbExportaPdf2, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbExportaPdf2, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel9)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtNActas))
+                        .addComponent(rbNumeroActas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE)
                 .addContainerGap())
@@ -658,7 +703,7 @@ public final class panelActas extends javax.swing.JFrame {
 
         jMenu1.setBackground(new java.awt.Color(0, 102, 102));
         jMenu1.setText("Organizar actas");
-        jMenu1.setFont(new java.awt.Font("3ds Light", 0, 14)); // NOI18N
+        jMenu1.setFont(new java.awt.Font("3ds Light", 1, 14)); // NOI18N
 
         jMenuAscendente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         jMenuAscendente.setText("en orden ascendente");
@@ -682,7 +727,7 @@ public final class panelActas extends javax.swing.JFrame {
 
         Opciones.setBackground(new java.awt.Color(0, 51, 51));
         Opciones.setText("Opciones");
-        Opciones.setFont(new java.awt.Font("3ds Light", 0, 14)); // NOI18N
+        Opciones.setFont(new java.awt.Font("3ds Light", 1, 14)); // NOI18N
 
         jRadioButtonElimina.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
         jRadioButtonElimina.setSelected(true);
@@ -759,37 +804,7 @@ public final class panelActas extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuBar1AncestorAdded
 
     private void jRadioButtonEliminaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonEliminaActionPerformed
-       int ax=JOptionPane.showConfirmDialog(null, "Vas a ELIMINAR una acta.¿Estas seguro?");
-        if(ax == JOptionPane.YES_OPTION){
-            n = (DefaultTableModel)Tabla.getModel();
-            n.removeRow(Tabla.getSelectedRow()); 
-            try{
-                PreparedStatement pst= con.prepareStatement("DELETE from MANTENIMIENTO");
-                pst.executeUpdate();
-                for(int i=0;i<Tabla.getRowCount();i++){               
-                    pst= con.prepareStatement("INSERT INTO MANTENIMIENTO(M, F, O, TM, TP, Op, Ps, Ob, H)VALUES(?,?,?,?,?,?,?,?,?)");
-                    pst.setString(1,Tabla.getValueAt(i,0).toString());
-                    pst.setString(2,Tabla.getValueAt(i,1).toString());
-                    pst.setString(3,Tabla.getValueAt(i,2).toString());
-                    pst.setString(4,Tabla.getValueAt(i,3).toString());
-                    pst.setString(5,Tabla.getValueAt(i,4).toString());
-                    pst.setString(6,Tabla.getValueAt(i,5).toString());
-                    pst.setString(7,Tabla.getValueAt(i,6).toString());
-                    pst.setString(8,Tabla.getValueAt(i,7).toString());
-                    pst.setString(9,Tabla.getValueAt(i,8).toString());
-                    pst.executeUpdate();
-                }
-                JTableHeader th; 
-                th = Tabla.getTableHeader(); 
-                Font fuente = new Font("Arial Narrow", Font.BOLD, 14); 
-                th.setFont(fuente); 
-                JOptionPane.showMessageDialog(null, "Acta eliminada.");
-            }catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, e.getMessage());
-            }
-        } else if(ax == JOptionPane.NO_OPTION){
-            JOptionPane.showMessageDialog(null, "Has cancelado, la MODIFICACiÓN NO DE HA REALIZADO.");
-        }   
+        eliminarBorrarActa();
     }//GEN-LAST:event_jRadioButtonEliminaActionPerformed
 
     private void jbExportaPdf1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExportaPdf1ActionPerformed
@@ -798,35 +813,7 @@ public final class panelActas extends javax.swing.JFrame {
     }//GEN-LAST:event_jbExportaPdf1ActionPerformed
 
     private void jRadioButtonModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonModificaActionPerformed
-        int ax=JOptionPane.showConfirmDialog(null, "Vas a modificar un acta.¿Estas seguro?");
-        if(ax == JOptionPane.YES_OPTION){
-            try{
-                PreparedStatement pst= con.prepareStatement("DELETE from mantenimiento");
-                pst.executeUpdate();
-                for(int i=0;i<Tabla.getRowCount();i++){
-                   pst= con.prepareStatement("INSERT INTO mantenimiento(M, F, O, TM, TP, Op, Ps, Ob, H)VALUES(?,?,?,?,?,?,?,?,?)");
-                   pst.setString(1,Tabla.getValueAt(i,0).toString());
-                   pst.setString(2,Tabla.getValueAt(i,1).toString());
-                   pst.setString(3,Tabla.getValueAt(i,2).toString());
-                   pst.setString(4,Tabla.getValueAt(i,3).toString());
-                   pst.setString(5,Tabla.getValueAt(i,4).toString());
-                   pst.setString(6,Tabla.getValueAt(i,5).toString());
-                   pst.setString(7,Tabla.getValueAt(i,6).toString());
-                   pst.setString(8,Tabla.getValueAt(i,7).toString());
-                   pst.setString(9,Tabla.getValueAt(i,8).toString());
-                   pst.executeUpdate();
-                }
-                JTableHeader th; 
-                th = Tabla.getTableHeader(); 
-                Font fuente = new Font("Arial Narrow", Font.BOLD, 16); 
-                th.setFont(fuente); 
-                JOptionPane.showMessageDialog(null, "El acta se ha modificado!!!!.");
-            }catch(SQLException | HeadlessException e){
-                JOptionPane.showMessageDialog(null, e.getMessage());
-            }
-        } else if(ax == JOptionPane.NO_OPTION){
-            JOptionPane.showMessageDialog(null, "Has cancelado, la MODIFICACiÓN NO DE HA REALIZADO.");
-        } 
+         eliminarBorrarActa();
     }//GEN-LAST:event_jRadioButtonModificaActionPerformed
 
     private void rbTodasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbTodasActionPerformed
@@ -917,9 +904,19 @@ public final class panelActas extends javax.swing.JFrame {
     }//GEN-LAST:event_jbExportaPdf2ActionPerformed
 
     private void clicK_acta(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clicK_acta
-        try {
-            st = con.createStatement();
-            ResultSet r = st.executeQuery("SELECT * FROM mantenimiento WHERE NumeroActa=\"" + Tabla.getValueAt(Tabla.getSelectedRow(), 0) + "\"");
+        
+    }//GEN-LAST:event_clicK_acta
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            dispose(); //Método que tienes que crearte
+        }
+    }//GEN-LAST:event_formKeyPressed
+
+    private void TablaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMousePressed
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet r = stmt.executeQuery("SELECT * FROM mantenimiento WHERE NumeroActa=\"" + Tabla.getValueAt(Tabla.getSelectedRow(), 0) + "\"")) {
             while (r.next()) {
                 String h = r.getString("NumeroActa");
                 mod = new Muestra_Acta(h);
@@ -944,13 +941,7 @@ public final class panelActas extends javax.swing.JFrame {
             Logger.getLogger(Tareas_Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
         mostrarTabla();
-    }//GEN-LAST:event_clicK_acta
-
-    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            dispose(); //Método que tienes que crearte
-        }
-    }//GEN-LAST:event_formKeyPressed
+    }//GEN-LAST:event_TablaMousePressed
 
     /**
      * @param args the command line arguments
@@ -973,45 +964,7 @@ public final class panelActas extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {

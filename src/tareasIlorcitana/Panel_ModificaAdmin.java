@@ -5,10 +5,6 @@
  */
 package tareasIlorcitana;
 
-import java.awt.Color;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import satation.Main;
 import satation.Propiedades;
 
 /**
@@ -27,9 +24,6 @@ import satation.Propiedades;
  */
 public class Panel_ModificaAdmin extends javax.swing.JFrame {
     
-    private Connection conexion = null;
-    private Statement st;
-    private ResultSet rs;
     int id_t;
     String id_m;
 
@@ -39,8 +33,7 @@ public class Panel_ModificaAdmin extends javax.swing.JFrame {
      */
     public Panel_ModificaAdmin(String id) {
         initComponents();
-        this.setLocationRelativeTo(null);
-        conectarMy();        
+        this.setLocationRelativeTo(null);  
         muestraTarea(id_t=Integer.parseInt(id));  
         jCMaquina.setEnabled(false);
     }
@@ -49,31 +42,16 @@ public class Panel_ModificaAdmin extends javax.swing.JFrame {
         initComponents();
     }
     
-     /**
-     * Conectar con la base de datos.
-     */
-    public final void conectarMy(){
-        if (conexion == null) {
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                conexion = DriverManager.getConnection("jdbc:mysql://192.168.0.132:3307/ilorcitana", "irobotica", "1233");
-                //conexion = DriverManager.getConnection("jdbc:mysql://nas:3307/ilorcitana", "local", "1233");
-            } catch (ClassNotFoundException | SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Error al realizar la conexion "+ex);
-            } 
-        }
-    }
-    
     /**
      * LLena los combobox.
      */
     public void llenarComboMaquinas(){ 
             String descripcion=null;
-            try {
+            try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT id_maquina,descripcion FROM maquinas")) {
                 jCMaquina.setEnabled(true);
                 jCMaquina.removeAllItems();
-                st= conexion.createStatement();
-                rs=st.executeQuery("SELECT id_maquina,descripcion FROM maquinas");
                 while(rs.next()){
                     jCMaquina.addItem(rs.getString("descripcion"));
                 }
@@ -90,9 +68,9 @@ public class Panel_ModificaAdmin extends javax.swing.JFrame {
     }
     
     private void muestraTarea(int i){
-        try{ 
-            st= conexion.createStatement();
-            ResultSet r = st.executeQuery("SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE  Id_tarea="+i); 
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet r = stmt.executeQuery("SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE  Id_tarea="+i)) {
             while (r.next()){ 
                 tATarea.append(r.getString("tarea"));
                 jlUsuario.setText(r.getString("usuario"));
@@ -118,9 +96,9 @@ public class Panel_ModificaAdmin extends javax.swing.JFrame {
     private void modificaMaquina(){
         String com = jlMaquina.getText();
         String sss=null;
-        try {
-            st=conexion.createStatement();
-            rs=st.executeQuery("SELECT * FROM maquinas WHERE descripcion=\""+com+"\"");
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM maquinas WHERE descripcion=\""+com+"\"")) {
             while(rs.next()){
                  sss=rs.getString("id_maquina");
             }
@@ -399,9 +377,9 @@ public class Panel_ModificaAdmin extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         modificaMaquina();
-        try {
-            st= conexion.createStatement();
-            st.executeUpdate("UPDATE tareas SET tarea=\""+tATarea.getText()+"\",nivel_preferencia=\""+jCNivelPreferencia.getSelectedItem().toString()+"\",estado=\""+jCEstado.getSelectedItem().toString()+"\",id_maquina=\""+id_m+"\",observaciones=\""+tAObservaciones.getText()+"\" WHERE Id_tarea="+id_t);
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+            Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate("UPDATE tareas SET tarea=\""+tATarea.getText()+"\",nivel_preferencia=\""+jCNivelPreferencia.getSelectedItem().toString()+"\",estado=\""+jCEstado.getSelectedItem().toString()+"\",id_maquina=\""+id_m+"\",observaciones=\""+tAObservaciones.getText()+"\" WHERE Id_tarea="+id_t);
             JOptionPane.showMessageDialog(null, "Tarea modificada correctamente.");
             modificaTxt();
         } catch (SQLException ex) {
