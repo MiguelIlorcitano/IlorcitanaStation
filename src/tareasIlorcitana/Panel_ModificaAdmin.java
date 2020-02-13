@@ -67,10 +67,21 @@ public class Panel_ModificaAdmin extends javax.swing.JFrame {
         Propiedades.setPropiedad("modificado", "true");
     }
     
+    private void extraeObservaciones(String ob){
+        String aux [];
+        aux = ob.split("#");
+        for (int i = 0; i<aux.length;i++) {
+            if (!aux[i].contains("#")) {
+                tAObservaciones.append("- "+aux[i]+"\n\n");
+            } 
+        }
+    }
+    
     private void muestraTarea(int i){
         try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
             Statement stmt = conn.createStatement();
             ResultSet r = stmt.executeQuery("SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE  Id_tarea="+i)) {
+            String obser;
             while (r.next()){ 
                 tATarea.append(r.getString("tarea"));
                 jlUsuario.setText(r.getString("usuario"));
@@ -81,7 +92,9 @@ public class Panel_ModificaAdmin extends javax.swing.JFrame {
                 jlFechaTarea.setText(r.getString("fecha_tarea"));
                 jlFechaInicio.setText(r.getString("fecha_inicio"));
                 jlFechaFin.setText(r.getString("fecha_fin"));
-                tAObservaciones.append(r.getString("observaciones")); 
+                obser= r.getString("observaciones");
+                extraeObservaciones(obser);
+                //tAObservaciones.append(r.getString("observaciones")); 
                 jlMaquina.setText(r.getString("descripcion"));
                 id_m=r.getString("id_maquina");
                 String as = r.getString("estado");
@@ -371,7 +384,7 @@ public class Panel_ModificaAdmin extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel14)
                         .addComponent(jlUsuario)))
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();

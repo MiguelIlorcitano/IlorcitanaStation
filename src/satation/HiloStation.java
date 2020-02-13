@@ -174,7 +174,7 @@ public class HiloStation extends Thread {
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT Codigo,Descripcion,Especificacion FROM Operaciones WHERE Periodicidad=\"anual\" AND id_maquina=" + Integer.parseInt(id_m))) {
                     while (rs.next()) {
-                        observaciones = observaciones + rs.getString("Codigo") + "__" + rs.getString("Descripcion") + "__" + rs.getString("Especificacion") + " ||| ";
+                        observaciones = observaciones + rs.getString("Codigo") + "__" + rs.getString("Descripcion") + "__" + rs.getString("Especificacion") + " # ";
                         mantenimiento = "Revisión Anual";
                     }
                 } catch (SQLException e) {
@@ -186,7 +186,7 @@ public class HiloStation extends Thread {
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT Codigo,Descripcion,Especificacion FROM Operaciones WHERE Periodicidad=\"trimestral\" AND id_maquina=" + Integer.parseInt(id_m))) {
                     while (rs.next()) {
-                        observaciones = observaciones + rs.getString("Codigo") + "__" + rs.getString("Descripcion") + "__" + rs.getString("Especificacion") + " ||| ";
+                        observaciones = observaciones + rs.getString("Codigo") + "__" + rs.getString("Descripcion") + "__" + rs.getString("Especificacion") + " # ";
                         mantenimiento = "Revisión Trimestral";
                     }
                 } catch (SQLException e) {
@@ -198,7 +198,7 @@ public class HiloStation extends Thread {
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT Codigo,Descripcion,Especificacion FROM Operaciones WHERE Periodicidad=\"mensual\" AND id_maquina=" + Integer.parseInt(id_m))) {
                     while (rs.next()) {
-                        observaciones = observaciones + rs.getString("Codigo") + "__" + rs.getString("Descripcion") + "__" + rs.getString("Especificacion") + " ||| ";
+                        observaciones = observaciones + rs.getString("Codigo") + "__" + rs.getString("Descripcion") + "__" + rs.getString("Especificacion") + " # ";
                         mantenimiento = "Revisión Mensual";
                     }
                 } catch (SQLException e) {
@@ -210,7 +210,7 @@ public class HiloStation extends Thread {
                     Statement stmt = conn.createStatement();
                     ResultSet rs = stmt.executeQuery("SELECT Codigo,Descripcion,Especificacion FROM Operaciones WHERE Periodicidad=\"semanal\" AND id_maquina=" + Integer.parseInt(id_m))) {
                     while (rs.next()) {
-                        observaciones = observaciones + rs.getString("Codigo") + "__" + rs.getString("Descripcion") + "__" + rs.getString("Especificacion") + " ||| ";
+                        observaciones = observaciones + rs.getString("Codigo") + "__" + rs.getString("Descripcion") + "__" + rs.getString("Especificacion") + " # ";
                         mantenimiento = "Revisión Semanal";
                     }
                 } catch (SQLException e) {
@@ -343,11 +343,11 @@ public class HiloStation extends Thread {
         while (continuar) {
             calendario = Calendar.getInstance();
             hora = calendario.get(Calendar.HOUR_OF_DAY);
-            if (hora == 10 && cont == true || hora == 15 && cont == true || primero==true) {
+            if (hora == 7 && cont == true || hora == 15 && cont == true || primero==true) {
                 primero=false;
                 cont = false;
                 main();
-            } else if (hora != 10 && hora != 15) {
+            } else if (hora != 7 && hora != 15) {
                 cont = true;
             }
         }

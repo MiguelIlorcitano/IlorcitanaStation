@@ -3,7 +3,6 @@ package tareasIlorcitana;
 
 import java.awt.Font;
 import java.sql.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,12 +71,13 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         llenarComboMaquinas();
         jCTarea.setSelectedIndex(muestraTarea(tr));
         jCTarea.setEditable(false);
-        txtIndicaciones.setFont( new Font("Century Gothic",1, 14) );
-        txtIndicaciones.append(tr+":");
-        txtIndicaciones.append("\n");
+        //txtIndicaciones.setFont( new Font("Century Gothic",1, 14) );
+        //txtIndicaciones.append(tr+":");
+        //txtIndicaciones.append("\n");
         txtIndicaciones.setFont( new Font("Century Gothic",0, 14) );
-        txtIndicaciones.append(ob);
+        txtIndicaciones.setText(tr);
         txtIndicaciones.setEditable(false);
+        txtOperaciones.setText(ob);
         tipoProblemaMantenimiento(t_pr);
         this.ob = ob;
         es_tarea=true;

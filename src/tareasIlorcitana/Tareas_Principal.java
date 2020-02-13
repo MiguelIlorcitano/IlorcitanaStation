@@ -162,7 +162,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
      * Extrae el contenido de la base de datos y lo inserta en una jtable.
      */
     public void mostrarTabla() {
-        preparaConsulta();
+        preparaConsulta2();
         switch (filtrado) {
             case "mecánica":
                 try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
@@ -278,7 +278,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                 try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                     Statement stmt = conn.createStatement();
                     ResultSet r = stmt.executeQuery(consulta)) {
-                    String titulos[] = {"Id", "usuario", "Tarea", "Tipo de tarea", "Maquina", "Tipo de problema", "Preferencia", "Estado", "Fecha de tarea", "Fecha de inicio", "Fecha de fin", "Observaciones"};
+                    String titulos[] = {"Id", "usuario", "Tarea", "Tipo de tarea", "Maquina", "Tipo de problema", "Preferencia", "Estado", "Observaciones", "Fecha de tarea", "Fecha de inicio", "Fecha de fin"};
                     n = new DefaultTableModel(null, titulos);
                     String fila[] = new String[12];
                     while (r.next()) {
@@ -290,20 +290,33 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                         fila[5] = r.getString("tipo_problema");
                         fila[6] = r.getString("nivel_preferencia");
                         fila[7] = r.getString("estado");
-                        fila[8] = r.getString("fecha_tarea");
-                        fila[9] = r.getString("fecha_inicio");
-                        fila[10] = r.getString("fecha_fin");
-                        fila[11] = r.getString("observaciones");
+                        fila[8] = r.getString("observaciones");
+                        fila[9] = r.getString("fecha_tarea");
+                        fila[10] = r.getString("fecha_inicio");
+                        fila[11] = r.getString("fecha_fin");
                         n.addRow(fila);
                     }
                     Tabla.setModel(n);
                     Tabla.setDefaultRenderer(Object.class, new Render());
+                    Tabla.getColumnModel().getColumn(0).setPreferredWidth(60);
+                    Tabla.getColumnModel().getColumn(1).setPreferredWidth(60);
+                    Tabla.getColumnModel().getColumn(2).setPreferredWidth(180);
+                    Tabla.getColumnModel().getColumn(3).setPreferredWidth(200);
+                    Tabla.getColumnModel().getColumn(4).setPreferredWidth(200);
+                    Tabla.getColumnModel().getColumn(5).setPreferredWidth(200);
+                    Tabla.getColumnModel().getColumn(6).setPreferredWidth(170);
+                    Tabla.getColumnModel().getColumn(7).setPreferredWidth(170);
+                    Tabla.getColumnModel().getColumn(8).setPreferredWidth(550);
+                    Tabla.getColumnModel().getColumn(9).setPreferredWidth(170);
+                    Tabla.getColumnModel().getColumn(10).setPreferredWidth(170);
+                    Tabla.getColumnModel().getColumn(11).setPreferredWidth(170);
                     JTableHeader th;
                     th = Tabla.getTableHeader();
                     Font fuente = new Font("Century Gothic", Font.BOLD, 14);
+                    th.setFont(fuente);
                     Color cl = new Color(0,102,102);
                     th.setForeground(cl);
-                    th.setFont(fuente);
+                    Tabla.setDefaultRenderer(Object.class, new Render());
                     Tabla.setShowHorizontalLines(true);
                     Tabla.setShowVerticalLines(true);
                 } catch (SQLException e) {
@@ -400,6 +413,45 @@ public final class Tareas_Principal extends javax.swing.JFrame {
         }
     }
     
+    private void preparaConsulta2(){
+        boolean primera = "todos".equals(jCNivelPreferencia.getSelectedItem().toString());
+        boolean segunda = "todos".equals(jCEstado.getSelectedItem().toString());
+        boolean tercera = "Sin descripción".equals(jCMaquina.getSelectedItem().toString());
+        boolean cuarta = "Sin descripción".equals(jCTipoTarea.getSelectedItem().toString());
+        
+        if (primera==true && segunda==true && tercera==true && cuarta==false){
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE tareas.tipo_tarea=\""+jCTipoTarea.getSelectedItem().toString()+"\"";
+        }else if (primera==true && segunda==true && tercera==false && cuarta==false){
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE maquinas.descripcion=\""+jCMaquina.getSelectedItem().toString()+"\" AND tareas.tipo_tarea=\""+jCTipoTarea.getSelectedItem().toString()+"\"";
+        }else if (primera==true && segunda==false && tercera==false && cuarta==false){
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE tareas.estado=\""+jCEstado.getSelectedItem().toString()+"\" AND maquinas.descripcion=\""+jCMaquina.getSelectedItem().toString()+"\" AND tareas.tipo_tarea=\""+jCTipoTarea.getSelectedItem().toString()+"\"";
+        }else if (primera==false && segunda==false && tercera==false && cuarta==false){
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE tareas.nivel_preferencia=\""+jCNivelPreferencia.getSelectedItem().toString()+"\" AND tareas.estado=\""+jCEstado.getSelectedItem().toString()+"\" AND maquinas.descripcion=\""+jCMaquina.getSelectedItem().toString()+"\" AND tareas.tipo_tarea=\""+jCTipoTarea.getSelectedItem().toString()+"\"";
+        }else if (primera==false && segunda==false && tercera==false && cuarta==true){
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE tareas.nivel_preferencia=\""+jCNivelPreferencia.getSelectedItem().toString()+"\" AND tareas.estado=\""+jCEstado.getSelectedItem().toString()+"\" AND maquinas.descripcion=\""+jCMaquina.getSelectedItem().toString()+"\"";
+        }else if (primera==false && segunda==false && tercera==true && cuarta==true){
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE tareas.nivel_preferencia=\""+jCNivelPreferencia.getSelectedItem().toString()+"\" AND tareas.estado=\""+jCEstado.getSelectedItem().toString()+"\"";
+        }else if (primera==false && segunda==true && tercera==true && cuarta==true){
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE tareas.nivel_preferencia=\""+jCNivelPreferencia.getSelectedItem().toString()+"\"";
+        }else if (primera==true && segunda==false && tercera==false && cuarta==true){
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE tareas.estado=\""+jCEstado.getSelectedItem().toString()+"\" AND maquinas.descripcion=\""+jCMaquina.getSelectedItem().toString()+"\"";
+        }else if (primera==true && segunda==false && tercera==true && cuarta==true){
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE tareas.estado=\""+jCEstado.getSelectedItem().toString()+"\"";
+        }else if (primera==true && segunda==false && tercera==true && cuarta==false){
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE tareas.estado=\""+jCEstado.getSelectedItem().toString()+"\" AND tareas.tipo_tarea=\""+jCTipoTarea.getSelectedItem().toString()+"\"";
+        }else if (primera==false && segunda==true && tercera==true && cuarta==false){
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE tareas.nivel_preferencia=\""+jCNivelPreferencia.getSelectedItem().toString()+"\" AND tareas.tipo_tarea=\""+jCTipoTarea.getSelectedItem().toString()+"\"";
+        }else if (primera==false && segunda==true && tercera==false && cuarta==false){
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE tareas.nivel_preferencia=\""+jCNivelPreferencia.getSelectedItem().toString()+"\" AND maquinas.descripcion=\""+jCMaquina.getSelectedItem().toString()+"\" AND tareas.tipo_tarea=\""+jCTipoTarea.getSelectedItem().toString()+"\"";
+        }else if (primera==false && segunda==true && tercera==false && cuarta==true){
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE tareas.nivel_preferencia=\""+jCNivelPreferencia.getSelectedItem().toString()+"\" AND maquinas.descripcion=\""+jCMaquina.getSelectedItem().toString()+"\"";
+        }else if (primera==true && segunda==true && tercera==false && cuarta==true){
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE maquinas.descripcion=\""+jCMaquina.getSelectedItem().toString()+"\"";
+        }else{
+            consulta="SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina)";
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -426,6 +478,8 @@ public final class Tareas_Principal extends javax.swing.JFrame {
         botonMantenimiento = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jlReloj = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jCTipoTarea = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control de tareas");
@@ -435,6 +489,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
         Panel1.setBackground(new java.awt.Color(204, 204, 204));
         Panel1.setPreferredSize(new java.awt.Dimension(1024, 768));
 
+        Tabla.setAutoCreateRowSorter(true);
         Tabla.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         Tabla.setForeground(new java.awt.Color(0, 51, 51));
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
@@ -449,7 +504,9 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                 "Tares", "Preferencia", "Estado", "Fecha", "Observaciones"
             }
         ));
+        Tabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         Tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Tabla.setFillsViewportHeight(true);
         Tabla.setGridColor(new java.awt.Color(0, 0, 0));
         Tabla.setIntercellSpacing(new java.awt.Dimension(10, 10));
         Tabla.setRowHeight(25);
@@ -561,6 +618,18 @@ public final class Tareas_Principal extends javax.swing.JFrame {
         jlReloj.setText("jLabel4");
         jlReloj.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 102), 2, true));
 
+        jLabel5.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(102, 0, 0));
+        jLabel5.setText("Tipo de tarea:");
+
+        jCTipoTarea.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
+        jCTipoTarea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin descripción", "mantenimiento operario", "mecánica", "programación" }));
+        jCTipoTarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCTipoTareaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout Panel1Layout = new javax.swing.GroupLayout(Panel1);
         Panel1.setLayout(Panel1Layout);
         Panel1Layout.setHorizontalGroup(
@@ -581,7 +650,9 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                         .addComponent(jlReloj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jCNivelPreferencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                    .addComponent(jLabel5)
+                    .addComponent(jCTipoTarea, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE))
         );
@@ -606,7 +677,11 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(109, 109, 109)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCTipoTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
                 .addComponent(botonPrincipal)
                 .addGap(18, 18, 18)
                 .addComponent(botonMantenimiento)
@@ -761,6 +836,12 @@ public final class Tareas_Principal extends javax.swing.JFrame {
         Propiedades.setPropiedad("modificado", "true");
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jCTipoTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCTipoTareaActionPerformed
+        llenarComboMaquinas(); 
+        mostrarTabla();
+        contador++;
+    }//GEN-LAST:event_jCTipoTareaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -799,10 +880,12 @@ public final class Tareas_Principal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCEstado;
     public javax.swing.JComboBox<String> jCMaquina;
     private javax.swing.JComboBox<String> jCNivelPreferencia;
+    public javax.swing.JComboBox<String> jCTipoTarea;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jbCreaTarea;
     public javax.swing.JLabel jlReloj;

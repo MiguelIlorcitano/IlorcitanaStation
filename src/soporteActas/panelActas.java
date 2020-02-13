@@ -582,6 +582,7 @@ public final class panelActas extends javax.swing.JFrame {
             }
         });
 
+        Tabla.setAutoCreateRowSorter(true);
         Tabla.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

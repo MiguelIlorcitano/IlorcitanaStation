@@ -7,6 +7,7 @@ package tareasIlorcitana;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -40,8 +41,44 @@ public class Render extends DefaultTableCellRenderer {
                 case "normal":
                     cell.setBackground(Color.LIGHT_GRAY);
                     break;
-                default:
-                    cell.setBackground(Color.white);
+            }
+        }
+        
+        switch (column) {
+            case 4:
+                cell.setBackground(new Color(255,204,204));
+                //cell.setBackground(Color.BLUE);
+                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                break;
+            case 8:
+                cell.setBackground(new Color(255,204,204));
+                //cell.setBackground(Color.ORANGE);
+                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                break;
+            default:
+                cell.setBackground(Color.white);
+                //cell.setForeground(Color.black);
+                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                break;
+        }
+        
+        if (value instanceof String) {
+            String valor = (String) value;
+            switch (valor) {
+                case "urgente":
+                    cell.setBackground(Color.RED);
+                    break;
+                case "en proceso":
+                    cell.setBackground(Color.green);
+                    break;
+                case "finalizado":
+                    cell.setBackground(Color.GREEN);
+                    break;
+                case "prioritaria":
+                    cell.setBackground(Color.YELLOW);
+                    break;
+                case "normal":
+                    cell.setBackground(Color.LIGHT_GRAY);
                     break;
             }
         }

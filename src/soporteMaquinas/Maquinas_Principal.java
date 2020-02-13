@@ -194,7 +194,6 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         botonPrincipal = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jlReloj = new javax.swing.JLabel();
-        jbCreaTarea1 = new javax.swing.JButton();
         txt_numeroMaquina = new javax.swing.JTextField();
         jR_numeroMaquina = new javax.swing.JRadioButton();
         jR_Descripcion = new javax.swing.JRadioButton();
@@ -205,10 +204,11 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         jC_Empresa = new javax.swing.JComboBox<>();
         jC_Ubicacion = new javax.swing.JComboBox<>();
         jR_Ubicacion = new javax.swing.JRadioButton();
-        boton_reemplazar1 = new javax.swing.JButton();
+        boton_documentos = new javax.swing.JButton();
         Boton_Añadir = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
 
@@ -222,6 +222,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
 
         jScrollPane3.setAutoscrolls(true);
 
+        Tabla.setAutoCreateRowSorter(true);
         Tabla.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -277,17 +278,6 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         jlReloj.setForeground(new java.awt.Color(51, 51, 51));
         jlReloj.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlReloj.setText("jLabel4");
-
-        jbCreaTarea1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
-        jbCreaTarea1.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
-        jbCreaTarea1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/domain.png"))); // NOI18N
-        jbCreaTarea1.setText("Registrar Máquina");
-        jbCreaTarea1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jbCreaTarea1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbCreaTarea1ActionPerformed(evt);
-            }
-        });
 
         txt_numeroMaquina.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         txt_numeroMaquina.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -393,14 +383,14 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        boton_reemplazar1.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
-        boton_reemplazar1.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
-        boton_reemplazar1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/folder.png"))); // NOI18N
-        boton_reemplazar1.setText("Documentos");
-        boton_reemplazar1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        boton_reemplazar1.addActionListener(new java.awt.event.ActionListener() {
+        boton_documentos.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        boton_documentos.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
+        boton_documentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/folder.png"))); // NOI18N
+        boton_documentos.setText("Documentos");
+        boton_documentos.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        boton_documentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton_reemplazar1ActionPerformed(evt);
+                boton_documentosActionPerformed(evt);
             }
         });
 
@@ -423,7 +413,6 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jlReloj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(Panel1Layout.createSequentialGroup()
                             .addComponent(jR_numeroMaquina)
@@ -441,22 +430,23 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
                                 .addComponent(jR_Ubicacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(24, 24, 24))
                         .addComponent(botonPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jbCreaTarea1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(boton_reemplazar1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(Boton_Añadir, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(boton_documentos, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Boton_Añadir, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlReloj, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 779, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE))
         );
         Panel1Layout.setVerticalGroup(
             Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Panel1Layout.createSequentialGroup()
-                .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel1Layout.createSequentialGroup()
+                .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Panel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
+                        .addContainerGap()
                         .addComponent(jlReloj)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
-                        .addGap(72, 72, 72)
+                        .addGap(41, 41, 41)
                         .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_numeroMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jR_numeroMaquina))
@@ -479,12 +469,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(Boton_Añadir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(boton_reemplazar1)
+                        .addComponent(boton_documentos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botonPrincipal)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbCreaTarea1))
-                    .addComponent(jScrollPane3))
+                        .addComponent(botonPrincipal)))
                 .addContainerGap())
         );
 
@@ -497,6 +484,16 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
                 jMenu1ActionPerformed(evt);
             }
         });
+
+        jRadioButtonMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.CTRL_MASK));
+        jRadioButtonMenuItem1.setSelected(true);
+        jRadioButtonMenuItem1.setText("Registrar máquina");
+        jRadioButtonMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jRadioButtonMenuItem1);
 
         jMenuItem1.setText("mantenimiento");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -526,9 +523,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(Panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -540,11 +535,6 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_click_tarea
-
-    private void jbCreaTarea1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreaTarea1ActionPerformed
-        PanelMaquinas mod = new PanelMaquinas();
-        mod.setVisible(true);
-    }//GEN-LAST:event_jbCreaTarea1ActionPerformed
 
     private void botonPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPrincipalActionPerformed
         this.dispose();
@@ -655,10 +645,16 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         repaint();
     }//GEN-LAST:event_jC_UbicacionActionPerformed
 
-    private void boton_reemplazar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_reemplazar1ActionPerformed
-        Muestra_Archivos_M m = new Muestra_Archivos_M();
-        m.setVisible(true);
-    }//GEN-LAST:event_boton_reemplazar1ActionPerformed
+    private void boton_documentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_documentosActionPerformed
+        //Muestra_Archivos_M m = new Muestra_Archivos_M();
+        //m.setVisible(true);
+        String rut = "\\\\server\\datos\\GESCIM\\Gescim\\MODFACTUSOL\\DOCUMENTOS\\INFO_MAQUINARIA";
+        try {
+            Runtime.getRuntime().exec("explorer.exe /start," + rut);
+        } catch (IOException ex) {
+            Logger.getLogger(Maquinas_Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_boton_documentosActionPerformed
 
     private void Boton_AñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_AñadirActionPerformed
         Adjunta_Archivos_M m = new Adjunta_Archivos_M("\\\\server\\datos\\GESCIM\\Gescim\\MODFACTUSOL\\DOCUMENTOS\\INFO_MAQUINARIA\\");
@@ -694,6 +690,11 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         mostrarTabla();
     }//GEN-LAST:event_TablaMousePressed
 
+    private void jRadioButtonMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem1ActionPerformed
+        PanelMaquinas mod = new PanelMaquinas();
+        mod.setVisible(true);
+    }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -726,7 +727,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
     public javax.swing.JPanel Panel1;
     private javax.swing.JTable Tabla;
     private javax.swing.JButton botonPrincipal;
-    private javax.swing.JButton boton_reemplazar1;
+    private javax.swing.JButton boton_documentos;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> jC_Empresa;
@@ -741,8 +742,8 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
     private javax.swing.JRadioButton jR_Fabricante;
     private javax.swing.JRadioButton jR_Ubicacion;
     private javax.swing.JRadioButton jR_numeroMaquina;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JButton jbCreaTarea1;
     public javax.swing.JLabel jlReloj;
     private javax.swing.JTextField txt_descripcion;
     private javax.swing.JTextField txt_fabricante;

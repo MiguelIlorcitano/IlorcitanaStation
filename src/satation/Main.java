@@ -94,10 +94,10 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            SERVER_SOCKET = new ServerSocket(1111);
+            SERVER_SOCKET = new ServerSocket(9876);
             Main main = new Main();
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "La aplicación ya está abierta.", "Ilorcitana_Station", 1);
+            JOptionPane.showMessageDialog(null, "La aplicación ya está abierta. "+ex, "Ilorcitana_Station", 1);
         }
     }
 }

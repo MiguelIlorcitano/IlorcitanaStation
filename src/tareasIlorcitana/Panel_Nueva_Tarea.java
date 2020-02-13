@@ -166,6 +166,7 @@ public class Panel_Nueva_Tarea extends javax.swing.JFrame {
         tAObservaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tAObservaciones.setLineWrap(true);
         tAObservaciones.setRows(5);
+        tAObservaciones.setWrapStyleWord(true);
         jScrollPane2.setViewportView(tAObservaciones);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N

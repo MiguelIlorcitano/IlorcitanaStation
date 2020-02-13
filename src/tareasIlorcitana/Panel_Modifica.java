@@ -6,9 +6,6 @@
 package tareasIlorcitana;
 
 import java.awt.Color;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -74,32 +71,50 @@ public class Panel_Modifica extends javax.swing.JFrame {
         Propiedades.setPropiedad("modificado", "true");
     }
     
+    private void extraeObservaciones(String ob){
+        String aux [];
+        aux = ob.split("#");
+        for (int i = 0; i<aux.length;i++) {
+            if (!aux[i].contains("#")) {
+                tAObservaciones.append("- "+aux[i]+"\n\n");
+            } 
+        }
+    }
+    
     private void muestraTarea(int i){
+        
         try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
             Statement stmt = conn.createStatement();
             ResultSet r = stmt.executeQuery("SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE  Id_tarea="+i)) {
+            String obser;
             while (r.next()){ 
                 tATarea.append(r.getString("tarea"));
                 jCNivelPreferencia.setSelectedItem(r.getString("nivel_preferencia"));
-                tAObservaciones.append(r.getString("observaciones")); 
+                //tAObservaciones.append(r.getString("observaciones")); 
+                obser= r.getString("observaciones");
+                extraeObservaciones(obser);
                 jlMaquina.setText(r.getString("descripcion"));
                 id_m=r.getString("id_maquina");
                 String as = r.getString("estado");
-                if("en proceso".equals(as)){
-                    //jButton3.setVisible(false);
-                    jbIniciar.setBackground(Color.gray);
-                    jbIniciar.setEnabled(false);
-                    labelProceso.setVisible(true);
-                }else if("en espera".equals(as)){
-                    jbFinalizar.setBackground(Color.gray);
-                    jbFinalizar.setEnabled(false);
-                    labelProceso.setVisible(false);
-                }else{
-                    jbIniciar.setBackground(Color.gray);
-                    jbIniciar.setEnabled(false);
-                    jbFinalizar.setBackground(Color.gray);
-                    jbFinalizar.setEnabled(false);
-                    labelProceso.setVisible(false);
+                if(null != as)switch (as) {
+                    case "en proceso":
+                        //jButton3.setVisible(false);
+                        jbIniciar.setBackground(Color.gray);
+                        jbIniciar.setEnabled(false);
+                        labelProceso.setVisible(true);
+                        break;
+                    case "en espera":
+                        jbFinalizar.setBackground(Color.gray);
+                        jbFinalizar.setEnabled(false);
+                        labelProceso.setVisible(false);
+                        break;
+                    default:
+                        jbIniciar.setBackground(Color.gray);
+                        jbIniciar.setEnabled(false);
+                        jbFinalizar.setBackground(Color.gray);
+                        jbFinalizar.setEnabled(false);
+                        labelProceso.setVisible(false);
+                        break;
                 }
             }
             
@@ -170,6 +185,7 @@ public class Panel_Modifica extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tATarea = new javax.swing.JTextArea();
@@ -178,28 +194,42 @@ public class Panel_Modifica extends javax.swing.JFrame {
         tAObservaciones = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
         jCNivelPreferencia = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jbFinalizar = new javax.swing.JButton();
-        jbIniciar = new javax.swing.JButton();
         labelProceso = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jlMaquina = new javax.swing.JLabel();
         jCMaquina = new javax.swing.JComboBox<>();
+        jPanel2 = new javax.swing.JPanel();
+        jbIniciar = new javax.swing.JButton();
+        jbFinalizar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tarea");
         setBackground(new java.awt.Color(204, 204, 204));
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/editor.png")).getImage());
         setPreferredSize(new java.awt.Dimension(816, 768));
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(51, 0, 0));
         jLabel1.setText("Tarea:");
 
         tATarea.setColumns(20);
-        tATarea.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        tATarea.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tATarea.setLineWrap(true);
         tATarea.setRows(5);
+        tATarea.setWrapStyleWord(true);
         jScrollPane1.setViewportView(tATarea);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -207,9 +237,10 @@ public class Panel_Modifica extends javax.swing.JFrame {
         jLabel2.setText("Observaciones:");
 
         tAObservaciones.setColumns(20);
-        tAObservaciones.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        tAObservaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tAObservaciones.setLineWrap(true);
         tAObservaciones.setRows(5);
+        tAObservaciones.setWrapStyleWord(true);
         jScrollPane2.setViewportView(tAObservaciones);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -218,33 +249,6 @@ public class Panel_Modifica extends javax.swing.JFrame {
 
         jCNivelPreferencia.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jCNivelPreferencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "urgente", "prioritaria", "normal" }));
-
-        jButton1.setBackground(new java.awt.Color(0, 153, 153));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton1.setText("Modifica tarea");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jbFinalizar.setBackground(new java.awt.Color(204, 0, 0));
-        jbFinalizar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jbFinalizar.setText("Finalizar");
-        jbFinalizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbFinalizarActionPerformed(evt);
-            }
-        });
-
-        jbIniciar.setBackground(new java.awt.Color(51, 255, 51));
-        jbIniciar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jbIniciar.setText("Iniciar");
-        jbIniciar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbIniciarActionPerformed(evt);
-            }
-        });
 
         labelProceso.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         labelProceso.setForeground(new java.awt.Color(255, 0, 0));
@@ -271,6 +275,62 @@ public class Panel_Modifica extends javax.swing.JFrame {
             }
         });
 
+        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
+
+        jbIniciar.setBackground(new java.awt.Color(51, 255, 51));
+        jbIniciar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jbIniciar.setText("Iniciar");
+        jbIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbIniciarActionPerformed(evt);
+            }
+        });
+
+        jbFinalizar.setBackground(new java.awt.Color(204, 0, 0));
+        jbFinalizar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jbFinalizar.setText("Finalizar");
+        jbFinalizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbFinalizarActionPerformed(evt);
+            }
+        });
+
+        jButton1.setBackground(new java.awt.Color(0, 153, 153));
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton1.setText("Modifica tarea");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                    .addComponent(jbFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jbIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jbFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jbIniciar.getAccessibleContext().setAccessibleDescription("");
+        jbFinalizar.getAccessibleContext().setAccessibleDescription("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -278,17 +338,8 @@ public class Panel_Modifica extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelProceso)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbIniciar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jbFinalizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
@@ -299,7 +350,14 @@ public class Panel_Modifica extends javax.swing.JFrame {
                                 .addComponent(jLabel5)
                                 .addGap(253, 253, 253))
                             .addComponent(jlMaquina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jCMaquina, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jCMaquina, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelProceso)
+                            .addComponent(jLabel2)
+                            .addComponent(jScrollPane2))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -322,20 +380,13 @@ public class Panel_Modifica extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
                 .addGap(18, 18, 18)
-                .addComponent(jbIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jbFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelProceso))
+                .addComponent(labelProceso)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        jbFinalizar.getAccessibleContext().setAccessibleDescription("");
-        jbIniciar.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -460,6 +511,8 @@ public class Panel_Modifica extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jbFinalizar;
