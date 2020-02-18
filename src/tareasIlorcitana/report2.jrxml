@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="58636d78-b98b-4ef5-91c6-bcbcaac09338">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="4f299f3f-2ad8-4528-b96c-832efb36a001"/>
+	<queryString>
+		<![CDATA[SELECT
+     tareas.`tipo_tarea` AS tareas_tipo_tarea,
+     tareas.`id_maquina` AS tareas_id_maquina,
+     tareas.`observaciones` AS tareas_observaciones,
+     tareas.`fecha_tarea` AS tareas_fecha_tarea,
+     tareas.`fecha_inicio` AS tareas_fecha_inicio,
+     tareas.`fecha_fin` AS tareas_fecha_fin,
+     maquinas.`id_maquina` AS maquinas_id_maquina,
+     maquinas.`descripcion` AS maquinas_descripcion,
+     tareas.`usuario` AS tareas_usuario,
+     tareas.`estado` AS tareas_estado,
+     tareas.`Id_tarea` AS tareas_Id_tarea
+FROM
+     `tareas` tareas INNER JOIN `maquinas` maquinas ON tareas.`id_maquina` = maquinas.`id_maquina`
+WHERE
+     tareas.estado = "en espera"
+     and tareas.tipo_tarea = "mantenimiento operario"]]>
+	</queryString>
+	<field name="tareas_tipo_tarea" class="java.lang.String"/>
+	<field name="tareas_id_maquina" class="java.lang.Integer"/>
+	<field name="tareas_observaciones" class="java.lang.String"/>
+	<field name="tareas_fecha_tarea" class="java.sql.Timestamp"/>
+	<field name="tareas_fecha_inicio" class="java.sql.Date"/>
+	<field name="tareas_fecha_fin" class="java.sql.Date"/>
+	<field name="maquinas_id_maquina" class="java.lang.Integer"/>
+	<field name="maquinas_descripcion" class="java.lang.String"/>
+	<field name="tareas_usuario" class="java.lang.String"/>
+	<field name="tareas_estado" class="java.lang.String"/>
+	<field name="tareas_Id_tarea" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="21" y="4" width="515" height="71" forecolor="#CC0000" uuid="e7fc457a-58e4-4f92-a7fd-b862441f1f5f"/>
+			</rectangle>
+			<image>
+				<reportElement x="453" y="11" width="75" height="57" uuid="9dbd2f2c-a56c-498a-b2e6-fcca5f29fc8d"/>
+				<imageExpression><![CDATA["C:\\Users\\Diseño\\Desktop\\LogoCIM.JPG"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="107" y="12" width="329" height="55" forecolor="#CC0000" uuid="8358f05c-b00a-4d34-b2b7-e7ff9dac4c3f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="3ds Light" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tareas pendientes operario]]></text>
+			</staticText>
+			<image>
+				<reportElement x="29" y="10" width="60" height="58" uuid="d697b786-1c8c-4c9c-a295-063cd0abfca1"/>
+				<imageExpression><![CDATA["C:\\Users\\Diseño\\Desktop\\encuesta.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="220" splitType="Stretch">
+			<line>
+				<reportElement x="21" y="206" width="515" height="1" forecolor="#CC0000" uuid="cf93d4df-f5be-49f5-a0ad-917ba35b0430"/>
+			</line>
+			<staticText>
+				<reportElement x="23" y="26" width="58" height="20" forecolor="#006699" uuid="11aab66e-01ca-4f10-adde-df8ca40a78cf"/>
+				<box>
+					<pen lineWidth="1.0" lineColor="#006699"/>
+					<topPen lineWidth="1.0" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="3ds Light" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="86" y="26" width="64" height="20" uuid="388eaf0a-c7e3-4cae-8187-f98e86c46782"/>
+				<box>
+					<pen lineWidth="1.0" lineColor="#666666"/>
+					<topPen lineWidth="1.0" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineColor="#666666"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="3ds Light" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tareas_usuario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="179" y="26" width="58" height="20" forecolor="#006699" uuid="e08517ee-a5fc-45e9-b4e2-833ee0cf1090"/>
+				<box>
+					<pen lineWidth="1.0" lineColor="#006699"/>
+					<topPen lineWidth="1.0" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="3ds Light" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Máquina:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="245" y="26" width="100" height="20" uuid="b2c23777-f5c8-4a3e-8138-39031288bdc1"/>
+				<box>
+					<pen lineWidth="1.0" lineColor="#666666"/>
+					<topPen lineWidth="1.0" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineColor="#666666"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="3ds Light" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{maquinas_descripcion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="58" width="85" height="20" forecolor="#006699" uuid="9c56ec30-2f14-46d3-a47b-fdd879a1e7ea"/>
+				<box>
+					<pen lineWidth="1.0" lineColor="#006699"/>
+					<topPen lineWidth="1.0" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="3ds Light" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Indicaciones:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="20" y="87" width="513" height="103" uuid="1dee614a-a33f-48cb-b663-52266eb56feb"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+					<pen lineWidth="1.0" lineColor="#666666"/>
+					<topPen lineWidth="1.0" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineColor="#666666"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="3ds Light" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tareas_observaciones}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="374" y="27" width="46" height="20" forecolor="#006699" uuid="db49c9ce-b72a-489a-b914-c3332a2eb293"/>
+				<box>
+					<pen lineWidth="1.0" lineColor="#006699"/>
+					<topPen lineWidth="1.0" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineColor="#006699"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="3ds Light" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="425" y="27" width="107" height="20" uuid="8975ec1e-ffac-423c-9963-bf6b95a5b0a7"/>
+				<box>
+					<pen lineWidth="1.0" lineColor="#666666"/>
+					<topPen lineWidth="1.0" lineColor="#666666"/>
+					<leftPen lineWidth="1.0" lineColor="#666666"/>
+					<bottomPen lineWidth="1.0" lineColor="#666666"/>
+					<rightPen lineWidth="1.0" lineColor="#666666"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="3ds Light" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tareas_fecha_tarea}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="21" y="9" width="515" height="1" forecolor="#006699" uuid="1205fe29-a574-4680-a472-0b8fbb3a1474"/>
+			</line>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement x="495" y="3" width="40" height="22" uuid="aff6f9e1-9c4d-4b2a-92ad-d246a06f8d8b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="3ds Light"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="409" y="2" width="80" height="23" uuid="570d4995-b832-4f69-9475-2d6c4fad3a9a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="3ds Light"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
