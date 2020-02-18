@@ -47,11 +47,11 @@ WHERE
 				<imageExpression><![CDATA["C:\\Users\\Diseño\\Desktop\\LogoCIM.JPG"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="107" y="12" width="329" height="55" uuid="8358f05c-b00a-4d34-b2b7-e7ff9dac4c3f"/>
+				<reportElement x="107" y="12" width="329" height="55" forecolor="#CC0000" uuid="8358f05c-b00a-4d34-b2b7-e7ff9dac4c3f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="3ds Light" size="36" isBold="true"/>
+					<font fontName="3ds Light" size="24" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Tareas pendientes]]></text>
+				<text><![CDATA[Tareas pendientes mecánica]]></text>
 			</staticText>
 			<image>
 				<reportElement x="29" y="10" width="60" height="58" uuid="d697b786-1c8c-4c9c-a295-063cd0abfca1"/>
@@ -65,13 +65,13 @@ WHERE
 				<reportElement x="19" y="205" width="515" height="1" forecolor="#CC0000" uuid="cf93d4df-f5be-49f5-a0ad-917ba35b0430"/>
 			</line>
 			<staticText>
-				<reportElement x="23" y="26" width="58" height="20" uuid="11aab66e-01ca-4f10-adde-df8ca40a78cf"/>
+				<reportElement x="23" y="26" width="58" height="20" forecolor="#006699" uuid="11aab66e-01ca-4f10-adde-df8ca40a78cf"/>
 				<box>
-					<pen lineWidth="1.0" lineColor="#666666"/>
-					<topPen lineWidth="1.0" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineColor="#666666"/>
+					<pen lineWidth="1.0" lineColor="#006699"/>
+					<topPen lineWidth="1.0" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineColor="#006699"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="3ds Light" size="12" isBold="true"/>
@@ -93,13 +93,13 @@ WHERE
 				<textFieldExpression><![CDATA[$F{tareas_usuario}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="179" y="26" width="58" height="20" uuid="e08517ee-a5fc-45e9-b4e2-833ee0cf1090"/>
+				<reportElement x="179" y="26" width="58" height="20" forecolor="#006699" uuid="e08517ee-a5fc-45e9-b4e2-833ee0cf1090"/>
 				<box>
-					<pen lineWidth="1.0" lineColor="#666666"/>
-					<topPen lineWidth="1.0" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineColor="#666666"/>
+					<pen lineWidth="1.0" lineColor="#006699"/>
+					<topPen lineWidth="1.0" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineColor="#006699"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="3ds Light" size="12" isBold="true"/>
@@ -121,13 +121,13 @@ WHERE
 				<textFieldExpression><![CDATA[$F{maquinas_descripcion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="21" y="58" width="85" height="20" uuid="9c56ec30-2f14-46d3-a47b-fdd879a1e7ea"/>
+				<reportElement x="21" y="58" width="85" height="20" forecolor="#006699" uuid="9c56ec30-2f14-46d3-a47b-fdd879a1e7ea"/>
 				<box>
-					<pen lineWidth="1.0" lineColor="#666666"/>
-					<topPen lineWidth="1.0" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineColor="#666666"/>
+					<pen lineWidth="1.0" lineColor="#006699"/>
+					<topPen lineWidth="1.0" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineColor="#006699"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="3ds Light" size="12" isBold="true"/>
@@ -149,13 +149,13 @@ WHERE
 				<textFieldExpression><![CDATA[$F{tareas_observaciones}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="374" y="27" width="46" height="20" uuid="db49c9ce-b72a-489a-b914-c3332a2eb293"/>
+				<reportElement x="374" y="27" width="46" height="20" forecolor="#006699" uuid="db49c9ce-b72a-489a-b914-c3332a2eb293"/>
 				<box>
-					<pen lineWidth="1.0" lineColor="#666666"/>
-					<topPen lineWidth="1.0" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineColor="#666666"/>
+					<pen lineWidth="1.0" lineColor="#006699"/>
+					<topPen lineWidth="1.0" lineColor="#006699"/>
+					<leftPen lineWidth="1.0" lineColor="#006699"/>
+					<bottomPen lineWidth="1.0" lineColor="#006699"/>
+					<rightPen lineWidth="1.0" lineColor="#006699"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="3ds Light" size="12" isBold="true"/>

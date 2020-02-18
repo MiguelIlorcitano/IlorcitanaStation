@@ -46,7 +46,7 @@ public class Proyecto_Report1 {
         
         try {
             if(i==1){
-                inputStream = new FileInputStream("src\\tareasIlorcitana\\report1.jrxml");
+                inputStream = new FileInputStream("src\\tareasIlorcitana\\report2.jrxml");
             }else if(i==2){
                 inputStream = new FileInputStream("src\\tareasIlorcitana\\report1.jrxml");
             }
