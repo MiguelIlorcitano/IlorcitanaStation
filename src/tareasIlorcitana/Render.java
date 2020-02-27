@@ -46,12 +46,12 @@ public class Render extends DefaultTableCellRenderer {
         
         switch (column) {
             case 4:
-                cell.setBackground(new Color(255,204,204));
+                cell.setBackground(new Color(180,230,230));
                 //cell.setBackground(Color.BLUE);
                 cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
                 break;
             case 8:
-                cell.setBackground(new Color(255,204,204));
+                cell.setBackground(new Color(180,230,230));
                 //cell.setBackground(Color.ORANGE);
                 cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
                 break;

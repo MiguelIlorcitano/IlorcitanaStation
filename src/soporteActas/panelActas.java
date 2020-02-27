@@ -172,6 +172,7 @@ public final class panelActas extends javax.swing.JFrame {
     
     private String generaConsulta(int num){
         String parte[]= new String [3];
+        
         if (rbTodas.isSelected()){
                 if (rbInicio.isSelected()){
                         if(rbPiezasS.isSelected()){
@@ -195,7 +196,7 @@ public final class panelActas extends javax.swing.JFrame {
                         parte[2]="ORDER BY NumeroActa DESC LIMIT="+num;
                         //prepara consulta para saber si vamos a mostrar piezas sustituidas o no
                         if(rbPiezasS.isSelected()){
-                                return "SELECT * FROM mantenimiento WHERE PiezasSustituidas !=\"Sin operación.\" ORDER BY Fecha DESC LIMIT="+num;
+                                return "SELECT * FROM mantenimiento WHERE PiezasSustituidas !=\"Sin operación\" ORDER BY Fecha DESC LIMIT="+num;
                         }else{
                                 return "SELECT * FROM mantenimiento ORDER BY Fecha DESC LIMIT="+num;
                         }
@@ -204,14 +205,14 @@ public final class panelActas extends javax.swing.JFrame {
         if (rbIndividual.isSelected()){
                 if (rbInicio.isSelected()==false&&rbEntreFechas.isSelected()==false&&rbNumeroActas.isSelected()==false){
                         if(rbPiezasS.isSelected()){
-                                return "SELECT * FROM mantenimiento WHERE Maquina=\""+selectorMaquina.getSelectedItem()+"\" AND PiezasSustituidas !=\"Sin operación.\" ORDER BY Fecha DESC";
+                                return "SELECT * FROM mantenimiento WHERE Maquina=\""+selectorMaquina.getSelectedItem()+"\" AND PiezasSustituidas !=\"Sin operación\" ORDER BY Fecha DESC";
                         }else{
                                 return "SELECT * FROM mantenimiento WHERE Maquina=\""+selectorMaquina.getSelectedItem()+"\" ORDER BY Fecha DESC";
                         }
                 }
                 if (rbInicio.isSelected()){
                         if(rbPiezasS.isSelected()){
-                                return "SELECT * FROM mantenimiento WHERE Maquina=\""+selectorMaquina.getSelectedItem()+"\" AND PiezasSustituidas !=\"Sin operación.\" ORDER BY Fecha DESC";
+                                return "SELECT * FROM mantenimiento WHERE Maquina=\""+selectorMaquina.getSelectedItem()+"\" AND PiezasSustituidas !=\"Sin operación\" ORDER BY Fecha DESC";
                         }else{
                                 return "SELECT * FROM mantenimiento WHERE Maquina=\""+selectorMaquina.getSelectedItem()+"\" ORDER BY Fecha DESC";
                         }
@@ -222,14 +223,14 @@ public final class panelActas extends javax.swing.JFrame {
                         Date ini = Date.valueOf(new SimpleDateFormat("yyyy-MM-dd").format(inicio.getTime()));
                         Date fn = Date.valueOf(new SimpleDateFormat("yyyy-MM-dd").format(fin.getTime()));
                         if(rbPiezasS.isSelected()){
-                                return "SELECT * FROM mantenimiento WHERE Maquina=\""+selectorMaquina.getSelectedItem()+"\" AND Fecha BETWEEN \""+ini+"\" AND \""+fn+"\" AND PiezasSustituidas !=\"Sin operación.\"ORDER BY Fecha DESC";
+                                return "SELECT * FROM mantenimiento WHERE Maquina=\""+selectorMaquina.getSelectedItem()+"\" AND Fecha BETWEEN \""+ini+"\" AND \""+fn+"\" AND PiezasSustituidas !=\"Sin operación\" ORDER BY Fecha DESC";
                         }else{
-                                return "SELECT * FROM mantenimiento WHERE Maquina=\""+selectorMaquina.getSelectedItem()+"\" AND Fecha BETWEEN \""+ini+"\" AND \""+fn+"\"ORDER BY Fecha DESC";
+                                return "SELECT * FROM mantenimiento WHERE Maquina=\""+selectorMaquina.getSelectedItem()+"\" AND Fecha BETWEEN \""+ini+"\" AND \""+fn+"\" ORDER BY Fecha DESC";
                         }
                 }
                 if (rbNumeroActas.isSelected()){
                         if(rbPiezasS.isSelected()){
-                                return "SELECT * FROM mantenimiento WHERE Maquina=\""+selectorMaquina.getSelectedItem()+"\" AND PiezasSustituidas !=\"Sin operación.\"ORDER BY Fecha DESC LIMIT "+num;
+                                return "SELECT * FROM mantenimiento WHERE Maquina=\""+selectorMaquina.getSelectedItem()+"\" AND PiezasSustituidas !=\"Sin operación\" ORDER BY Fecha DESC LIMIT "+num;
                         }else{
                                 return "SELECT * FROM mantenimiento WHERE Maquina=\""+selectorMaquina.getSelectedItem()+"\" ORDER BY Fecha DESC LIMIT "+num;
                         }
@@ -261,6 +262,11 @@ public final class panelActas extends javax.swing.JFrame {
                 return "SELECT * FROM mantenimiento ORDER BY Fecha DESC LIMIT " + num;
             }
         }
+        
+        if (rbPiezasS.isSelected()){
+            return "SELECT * FROM mantenimiento WHERE PiezasSustituidas !=\"Sin operación\" ORDER BY Fecha DESC";
+        }
+        
         return "SELECT * FROM mantenimiento ORDER BY Fecha DESC";
     }
     

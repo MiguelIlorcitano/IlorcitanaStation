@@ -42,10 +42,6 @@ WHERE
 			<rectangle radius="10">
 				<reportElement x="21" y="4" width="515" height="71" forecolor="#CC0000" uuid="e7fc457a-58e4-4f92-a7fd-b862441f1f5f"/>
 			</rectangle>
-			<image>
-				<reportElement x="453" y="11" width="75" height="57" uuid="9dbd2f2c-a56c-498a-b2e6-fcca5f29fc8d"/>
-				<imageExpression><![CDATA["C:\\Users\\Diseño\\Desktop\\LogoCIM.JPG"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="107" y="12" width="329" height="55" forecolor="#CC0000" uuid="8358f05c-b00a-4d34-b2b7-e7ff9dac4c3f"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -53,10 +49,6 @@ WHERE
 				</textElement>
 				<text><![CDATA[Tareas pendientes operario]]></text>
 			</staticText>
-			<image>
-				<reportElement x="29" y="10" width="60" height="58" uuid="d697b786-1c8c-4c9c-a295-063cd0abfca1"/>
-				<imageExpression><![CDATA["C:\\Users\\Diseño\\Desktop\\encuesta.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<detail>
@@ -65,7 +57,7 @@ WHERE
 				<reportElement x="21" y="206" width="515" height="1" forecolor="#CC0000" uuid="cf93d4df-f5be-49f5-a0ad-917ba35b0430"/>
 			</line>
 			<staticText>
-				<reportElement x="23" y="26" width="58" height="20" forecolor="#006699" uuid="11aab66e-01ca-4f10-adde-df8ca40a78cf"/>
+				<reportElement x="21" y="25" width="58" height="20" forecolor="#006699" uuid="11aab66e-01ca-4f10-adde-df8ca40a78cf"/>
 				<box>
 					<pen lineWidth="1.0" lineColor="#006699"/>
 					<topPen lineWidth="1.0" lineColor="#006699"/>
@@ -149,7 +141,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{tareas_observaciones}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="374" y="27" width="46" height="20" forecolor="#006699" uuid="db49c9ce-b72a-489a-b914-c3332a2eb293"/>
+				<reportElement x="372" y="27" width="46" height="20" forecolor="#006699" uuid="db49c9ce-b72a-489a-b914-c3332a2eb293"/>
 				<box>
 					<pen lineWidth="1.0" lineColor="#006699"/>
 					<topPen lineWidth="1.0" lineColor="#006699"/>
@@ -177,7 +169,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{tareas_fecha_tarea}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="21" y="9" width="515" height="1" forecolor="#006699" uuid="1205fe29-a574-4680-a472-0b8fbb3a1474"/>
+				<reportElement x="21" y="9" width="515" height="1" forecolor="#CC0000" uuid="1205fe29-a574-4680-a472-0b8fbb3a1474"/>
 			</line>
 		</band>
 	</detail>

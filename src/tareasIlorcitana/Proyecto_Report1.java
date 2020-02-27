@@ -45,9 +45,9 @@ public class Proyecto_Report1 {
         JasperPrint jasperPrint = null;
         
         try {
-            if(i==1){
+            if(i==2){
                 inputStream = new FileInputStream("src\\tareasIlorcitana\\report2.jrxml");
-            }else if(i==2){
+            }else if(i==1){
                 inputStream = new FileInputStream("src\\tareasIlorcitana\\report1.jrxml");
             }
         } catch (FileNotFoundException ex) {

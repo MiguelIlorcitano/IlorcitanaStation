@@ -278,7 +278,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                 try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                     Statement stmt = conn.createStatement();
                     ResultSet r = stmt.executeQuery(consulta)) {
-                    String titulos[] = {"Id", "usuario", "Tarea", "Tipo de tarea", "Maquina", "Tipo de problema", "Preferencia", "Estado", "Observaciones", "Fecha de tarea", "Fecha de inicio", "Fecha de fin"};
+                    String titulos[] = {"I", "U", "Tarea", "Tipo de tarea", "Maquina", "Tipo de problema", "Preferencia", "Estado", "Observaciones", "Fecha de tarea", "Fecha de inicio", "Fecha de fin"};
                     n = new DefaultTableModel(null, titulos);
                     String fila[] = new String[12];
                     while (r.next()) {
@@ -299,7 +299,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                     Tabla.setModel(n);
                     Tabla.setDefaultRenderer(Object.class, new Render());
                     Tabla.getColumnModel().getColumn(0).setPreferredWidth(0);
-                    Tabla.getColumnModel().getColumn(1).setPreferredWidth(100);
+                    Tabla.getColumnModel().getColumn(1).setPreferredWidth(0);
                     Tabla.getColumnModel().getColumn(2).setPreferredWidth(180);
                     Tabla.getColumnModel().getColumn(3).setPreferredWidth(200);
                     Tabla.getColumnModel().getColumn(4).setPreferredWidth(200);
@@ -615,7 +615,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jlReloj.setBackground(new java.awt.Color(102, 102, 0));
+        jlReloj.setBackground(new java.awt.Color(180, 230, 230));
         jlReloj.setFont(new java.awt.Font("Agency FB", 1, 24)); // NOI18N
         jlReloj.setForeground(new java.awt.Color(0, 153, 102));
         jlReloj.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
