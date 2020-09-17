@@ -2,7 +2,7 @@
  * Esta clase selecciona despliega un JFileChooser en el cual puedes selecionar un archivo y enviarlo
  * a una ruta ya especificada.
  */
-package tareasIlorcitana;
+package reparaciones;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -11,33 +11,31 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author IlorcitanaRobotica
  */
-public class Adjunta_Archivos extends javax.swing.JFrame {
+public class Adjunta_ArchivosEnvio extends javax.swing.JFrame {
     
-    String maquina;     //ruta donde se guardará el archivo seleccionado.
-     String id_tarea;     //ruta donde se guardará el archivo seleccionado.
+    String ruta;
 
     /**
-     * Construvtor donde se recoge la ruta donde se van a guardar los archivos Muestra_Archivos
-     * @param maquina 
-     * @param id_tarea 
+     * Construvtor donde se recoge la ruta donde se van a guardar los archivos Muestra_Archivosd_tarea 
+     * @param ruta
      */
-    public Adjunta_Archivos(String maquina, String id_tarea) {
+    public Adjunta_ArchivosEnvio(String ruta) {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.maquina = maquina;
-        this.id_tarea=id_tarea;
+        this.ruta = ruta;
     }
    
     /**
      * Constructor del 
      */
-    public Adjunta_Archivos() {
+    public Adjunta_ArchivosEnvio() {
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -58,10 +56,13 @@ public class Adjunta_Archivos extends javax.swing.JFrame {
         setBackground(new java.awt.Color(102, 255, 102));
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
 
+        jFileChooserGuardar.setAcceptAllFileFilterUsed(false);
         jFileChooserGuardar.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        jFileChooserGuardar.setBackground(new java.awt.Color(0, 0, 0));
+        jFileChooserGuardar.setApproveButtonToolTipText("");
+        jFileChooserGuardar.setBackground(new java.awt.Color(0, 153, 204));
         jFileChooserGuardar.setCurrentDirectory(new java.io.File("C:\\Users\\Diseño\\Desktop"));
         jFileChooserGuardar.setDialogTitle("Abrir ");
+        jFileChooserGuardar.setFileHidingEnabled(true);
         jFileChooserGuardar.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
         jFileChooserGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,13 +89,12 @@ public class Adjunta_Archivos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jFileChooserGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserGuardarActionPerformed
-        
+        //jFileChooserGuardar.cancelSelection();
         File origen = jFileChooserGuardar.getSelectedFile();    //fichero origen.
         String a = jFileChooserGuardar.getName(origen);         //ruta del fichero origen.
         String b = jFileChooserGuardar.getTypeDescription(origen);
-        String [] cambio = a.split(".");
         if (jFileChooserGuardar.accept(origen)){    
-            File destino = new File("Y:\\maquinas\\"+maquina+"\\"+id_tarea+"_"+a);  //nuevo destino del fichero
+            File destino = new File(ruta+"\\"+a);  //nuevo destino del fichero
             //se realiza la copia del fichero origen en destino.
             try {
                 InputStream in = new FileInputStream(origen);
@@ -109,11 +109,11 @@ public class Adjunta_Archivos extends javax.swing.JFrame {
 
                 in.close();
                 out.close();
-                JOptionPane.showMessageDialog(null, "El archivo se ha adjuntado correctamente en "+maquina,"Resultado", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "El archivo se ha adjuntado correctamente.","Resultado", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
             }catch (IOException ioe){
                 ioe.printStackTrace();
             }
-
         }
     }//GEN-LAST:event_jFileChooserGuardarActionPerformed
 
@@ -134,25 +134,14 @@ public class Adjunta_Archivos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Adjunta_Archivos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Adjunta_ArchivosEnvio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Adjunta_Archivos().setVisible(true);
+            new Adjunta_ArchivosEnvio().setVisible(true);
         });
     }
 

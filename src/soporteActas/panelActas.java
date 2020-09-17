@@ -128,7 +128,7 @@ public final class panelActas extends javax.swing.JFrame {
             Statement stmt = conn.createStatement();
             ResultSet r = stmt.executeQuery(generaConsulta(Integer.parseInt(txtNActas.getText())))) {
             //crear el modelo de la tabla.
-            String titulos [] = {"Acta","Maquina","Fecha","Operaio","Tipo de Mantenimiento","Tipo de probelma","Operaciones","Piezas Sustituidas","Observaciones","Horas"};
+            String titulos [] = {"Acta","Maquina","Fecha","Operario","Tipo de Mantenimiento","Tipo de probelma","Operaciones","Piezas Sustituidas","Observaciones","Horas"};
             n = new DefaultTableModel(null,titulos);
             //Pasa el resultado de la consulta a la trabla.
             String fila [] = new String[10];
@@ -147,21 +147,21 @@ public final class panelActas extends javax.swing.JFrame {
             }
             Tabla.setModel(n);
             Tabla.setDefaultRenderer(Object.class, new RenderActas());
-            Tabla.getColumnModel().getColumn(0).setPreferredWidth(6);
-            Tabla.getColumnModel().getColumn(1).setPreferredWidth(150);
-            Tabla.getColumnModel().getColumn(2).setPreferredWidth(30);
-            Tabla.getColumnModel().getColumn(3).setPreferredWidth(200);
-            Tabla.getColumnModel().getColumn(4).setPreferredWidth(30);
-            Tabla.getColumnModel().getColumn(5).setPreferredWidth(30);
-            Tabla.getColumnModel().getColumn(6).setPreferredWidth(200);
-            Tabla.getColumnModel().getColumn(7).setPreferredWidth(200);
-            Tabla.getColumnModel().getColumn(8).setPreferredWidth(200);
-            Tabla.getColumnModel().getColumn(9).setPreferredWidth(30);
+            Tabla.getColumnModel().getColumn(0).setPreferredWidth(100);
+            Tabla.getColumnModel().getColumn(1).setPreferredWidth(300);
+            Tabla.getColumnModel().getColumn(2).setPreferredWidth(150);
+            Tabla.getColumnModel().getColumn(3).setPreferredWidth(300);
+            Tabla.getColumnModel().getColumn(4).setPreferredWidth(200);
+            Tabla.getColumnModel().getColumn(5).setPreferredWidth(200);
+            Tabla.getColumnModel().getColumn(6).setPreferredWidth(500);
+            Tabla.getColumnModel().getColumn(7).setPreferredWidth(500);
+            Tabla.getColumnModel().getColumn(8).setPreferredWidth(300);
+            Tabla.getColumnModel().getColumn(9).setPreferredWidth(300);
             JTableHeader th;
             th = Tabla.getTableHeader();
-            Font fuente = new Font("Century Gothic", Font.BOLD, 14);
-            Color cl = new Color(0,102,102);
-            th.setForeground(cl);
+            Font fuente = new Font("3ds Light", Font.BOLD, 14);
+            //Color cl = new Color(0,102,102);
+            //th.setForeground(cl);
             th.setFont(fuente);
             Tabla.setShowHorizontalLines(true);
             Tabla.setShowVerticalLines(true);
@@ -313,22 +313,42 @@ public final class panelActas extends javax.swing.JFrame {
                 Statement stmt = conn.createStatement();
                 ResultSet r = stmt.executeQuery(query)) {
 
-            String titulos[] = {"Maquina", "Fecha", "Operaio", "Tipo de Mantenimiento", "Tipo de probelma", "Operaciones", "Piezas Sustituidas", "Observaciones", "Horas"};
+            String titulos [] = {"Acta","Máquina","Fecha","Operario","Tipo de Mantenimiento","Tipo de probelma","Operaciones","Piezas Sustituidas","Observaciones","Horas"};
             n = new DefaultTableModel(null, titulos);
             String fila[] = new String[9];
             while (r.next()) {
-                fila[0] = r.getString("Maquina");
-                fila[1] = r.getString("Fecha");
-                fila[2] = r.getString("Operario");
-                fila[3] = r.getString("TipoMantenimiento");
-                fila[4] = r.getString("TipoProblema");
-                fila[5] = r.getString("Operaciones");
-                fila[6] = r.getString("PiezasSustituidas");
-                fila[7] = r.getString("Observaciones");
-                fila[8] = r.getString("Horas");
+                fila[0]=r.getString("NumeroActa");
+                fila[1]=r.getString("Maquina");                                               
+                fila[2]=r.getString("Fecha");
+                fila[3]=r.getString("Operario");
+                fila[4]=r.getString("TipoMantenimiento");
+                fila[5]=r.getString("TipoProblema");
+                fila[6]=r.getString("Operaciones");
+                fila[7]=r.getString("PiezasSustituidas");
+                fila[8]=r.getString("Observaciones");
+                fila[9]=r.getString("Horas");                                                              
                 n.addRow(fila);
             }
             Tabla.setModel(n);
+            Tabla.setDefaultRenderer(Object.class, new RenderActas());
+            Tabla.getColumnModel().getColumn(0).setPreferredWidth(100);
+            Tabla.getColumnModel().getColumn(1).setPreferredWidth(300);
+            Tabla.getColumnModel().getColumn(2).setPreferredWidth(150);
+            Tabla.getColumnModel().getColumn(3).setPreferredWidth(300);
+            Tabla.getColumnModel().getColumn(4).setPreferredWidth(200);
+            Tabla.getColumnModel().getColumn(5).setPreferredWidth(200);
+            Tabla.getColumnModel().getColumn(6).setPreferredWidth(500);
+            Tabla.getColumnModel().getColumn(7).setPreferredWidth(500);
+            Tabla.getColumnModel().getColumn(8).setPreferredWidth(300);
+            Tabla.getColumnModel().getColumn(9).setPreferredWidth(300);
+            JTableHeader th;
+            th = Tabla.getTableHeader();
+            Font fuente = new Font("3ds Light", Font.BOLD, 14);
+            //Color cl = new Color(0,102,102);
+            //th.setForeground(cl);
+            th.setFont(fuente);
+            Tabla.setShowHorizontalLines(true);
+            Tabla.setShowVerticalLines(true);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al cargar los datos de la tabla Mantenimiento 1 ");
         }
@@ -376,7 +396,7 @@ public final class panelActas extends javax.swing.JFrame {
                 }
                 JTableHeader th;
                 th = Tabla.getTableHeader();
-                Font fuente = new Font("Arial Narrow", Font.BOLD, 14);
+                Font fuente = new Font("3ds Light", Font.BOLD, 14);
                 th.setFont(fuente);
                 JOptionPane.showMessageDialog(null, "Acta eliminada.");
             } catch (SQLException | HeadlessException e) {
@@ -430,7 +450,7 @@ public final class panelActas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Informe de tareas");
         setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/editor.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
@@ -441,7 +461,7 @@ public final class panelActas extends javax.swing.JFrame {
 
         rbTodas.setBackground(new java.awt.Color(0, 102, 102));
         buttonGroup1.add(rbTodas);
-        rbTodas.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        rbTodas.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         rbTodas.setForeground(new java.awt.Color(255, 255, 255));
         rbTodas.setText("Todas las máquinas.");
         rbTodas.addActionListener(new java.awt.event.ActionListener() {
@@ -452,7 +472,7 @@ public final class panelActas extends javax.swing.JFrame {
 
         rbIndividual.setBackground(new java.awt.Color(0, 102, 102));
         buttonGroup1.add(rbIndividual);
-        rbIndividual.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        rbIndividual.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         rbIndividual.setForeground(new java.awt.Color(255, 255, 255));
         rbIndividual.setText("Elige la máquina a gestionar.");
         rbIndividual.addActionListener(new java.awt.event.ActionListener() {
@@ -461,8 +481,7 @@ public final class panelActas extends javax.swing.JFrame {
             }
         });
 
-        selectorMaquina.setFont(new java.awt.Font("Century Gothic", 2, 14)); // NOI18N
-        selectorMaquina.setForeground(new java.awt.Color(0, 51, 51));
+        selectorMaquina.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         selectorMaquina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 selectorMaquinaActionPerformed(evt);
@@ -471,7 +490,7 @@ public final class panelActas extends javax.swing.JFrame {
 
         rbInicio.setBackground(new java.awt.Color(0, 102, 102));
         buttonGroup2.add(rbInicio);
-        rbInicio.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        rbInicio.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         rbInicio.setForeground(new java.awt.Color(255, 255, 255));
         rbInicio.setText("Desde el inicio.");
         rbInicio.addActionListener(new java.awt.event.ActionListener() {
@@ -482,7 +501,7 @@ public final class panelActas extends javax.swing.JFrame {
 
         rbNumeroActas.setBackground(new java.awt.Color(0, 102, 102));
         buttonGroup2.add(rbNumeroActas);
-        rbNumeroActas.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        rbNumeroActas.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         rbNumeroActas.setForeground(new java.awt.Color(255, 255, 255));
         rbNumeroActas.setText("Número de actas.");
         rbNumeroActas.addActionListener(new java.awt.event.ActionListener() {
@@ -492,7 +511,7 @@ public final class panelActas extends javax.swing.JFrame {
         });
 
         rbPiezasS.setBackground(new java.awt.Color(0, 102, 102));
-        rbPiezasS.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        rbPiezasS.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         rbPiezasS.setForeground(new java.awt.Color(255, 255, 255));
         rbPiezasS.setText("Solo piezas sustituidas");
         rbPiezasS.addActionListener(new java.awt.event.ActionListener() {
@@ -501,11 +520,10 @@ public final class panelActas extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel9.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel9.setText("Nº de actas a imprimir:");
 
-        txtNActas.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        txtNActas.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         txtNActas.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtNActas.setText("10");
         txtNActas.addActionListener(new java.awt.event.ActionListener() {
@@ -516,7 +534,7 @@ public final class panelActas extends javax.swing.JFrame {
 
         rbEntreFechas.setBackground(new java.awt.Color(0, 102, 102));
         buttonGroup2.add(rbEntreFechas);
-        rbEntreFechas.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        rbEntreFechas.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         rbEntreFechas.setForeground(new java.awt.Color(255, 255, 255));
         rbEntreFechas.setText("Entre Fechas.");
         rbEntreFechas.addActionListener(new java.awt.event.ActionListener() {
@@ -525,50 +543,49 @@ public final class panelActas extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel1.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel1.setText("Fecha de inicio:");
 
-        jLabel14.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(0, 51, 51));
+        jLabel14.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel14.setText("Fecha final:");
 
-        jLabel3.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(102, 0, 0));
+        jLabel3.setBackground(new java.awt.Color(102, 0, 0));
+        jLabel3.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Elije máquina a mostrar:");
+        jLabel3.setOpaque(true);
 
-        jLabel4.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(102, 0, 0));
+        jLabel4.setBackground(new java.awt.Color(102, 0, 0));
+        jLabel4.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Elije que actas quieres mostrar :");
+        jLabel4.setOpaque(true);
 
-        jLabel5.setBackground(new java.awt.Color(204, 204, 204));
-        jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(102, 0, 0));
+        jLabel5.setBackground(new java.awt.Color(102, 0, 0));
+        jLabel5.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Solo muestra piezas sustituidas:");
+        jLabel5.setOpaque(true);
 
-        jcInicioRango.setForeground(new java.awt.Color(0, 51, 51));
-        jcInicioRango.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jcInicioRango.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         jcInicioRango.addDateListener(new org.freixas.jcalendar.DateListener() {
             public void dateChanged(org.freixas.jcalendar.DateEvent evt) {
                 jcInicioRangoDateChanged(evt);
             }
         });
 
-        jcFinRango.setForeground(new java.awt.Color(0, 51, 51));
-        jcFinRango.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        jcFinRango.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         jcFinRango.addDateListener(new org.freixas.jcalendar.DateListener() {
             public void dateChanged(org.freixas.jcalendar.DateEvent evt) {
                 jcFinRangoDateChanged(evt);
             }
         });
 
-        jbExportaPdf1.setBackground(new java.awt.Color(0, 102, 102));
-        jbExportaPdf1.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
-        jbExportaPdf1.setForeground(new java.awt.Color(255, 255, 255));
+        jbExportaPdf1.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
         jbExportaPdf1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/editor_boton.png"))); // NOI18N
         jbExportaPdf1.setText("Panel Principal");
+        jbExportaPdf1.setToolTipText("Ir a panel principal");
+        jbExportaPdf1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbExportaPdf1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jbExportaPdf1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -576,11 +593,11 @@ public final class panelActas extends javax.swing.JFrame {
             }
         });
 
-        jbExportaPdf2.setBackground(new java.awt.Color(0, 102, 102));
-        jbExportaPdf2.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
-        jbExportaPdf2.setForeground(new java.awt.Color(255, 255, 255));
-        jbExportaPdf2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/muestra.png"))); // NOI18N
-        jbExportaPdf2.setText("Mostrar Actas");
+        jbExportaPdf2.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
+        jbExportaPdf2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/pdf_1.png"))); // NOI18N
+        jbExportaPdf2.setText("Ver Tareas");
+        jbExportaPdf2.setToolTipText("Muestra actas en pdf");
+        jbExportaPdf2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbExportaPdf2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jbExportaPdf2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -589,7 +606,7 @@ public final class panelActas extends javax.swing.JFrame {
         });
 
         Tabla.setAutoCreateRowSorter(true);
-        Tabla.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        Tabla.setFont(new java.awt.Font("3ds Light", 0, 14)); // NOI18N
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -601,10 +618,10 @@ public final class panelActas extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        Tabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        Tabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         Tabla.setGridColor(new java.awt.Color(0, 0, 0));
+        Tabla.setIntercellSpacing(new java.awt.Dimension(10, 10));
         Tabla.setRowHeight(25);
-        Tabla.setRowMargin(5);
         Tabla.setSelectionBackground(new java.awt.Color(0, 102, 102));
         Tabla.setSelectionForeground(new java.awt.Color(0, 0, 0));
         Tabla.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -624,82 +641,81 @@ public final class panelActas extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbTodas, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(selectorMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(rbIndividual, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jbExportaPdf1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                        .addComponent(jbExportaPdf2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jcFinRango, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jcInicioRango, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbPiezasS, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel14)
-                    .addComponent(jbExportaPdf1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(rbInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(rbEntreFechas, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbTodas, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(selectorMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbIndividual, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbExportaPdf2, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel9)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(txtNActas))
-                        .addComponent(rbNumeroActas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(rbNumeroActas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(rbPiezasS, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 793, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rbTodas)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbIndividual)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(selectorMaquina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rbInicio)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbEntreFechas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcInicioRango, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcFinRango, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbNumeroActas)
-                        .addGap(2, 2, 2)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(txtNActas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rbPiezasS)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
-                        .addComponent(jbExportaPdf2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbExportaPdf1))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbTodas)
+                .addGap(18, 18, 18)
+                .addComponent(rbIndividual)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(selectorMaquina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbInicio)
+                .addGap(18, 18, 18)
+                .addComponent(rbEntreFechas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jcInicioRango, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jcFinRango, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(rbNumeroActas)
+                .addGap(2, 2, 2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtNActas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbPiezasS)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
+                .addComponent(jbExportaPdf2)
+                .addGap(18, 18, 18)
+                .addComponent(jbExportaPdf1)
                 .addContainerGap())
+            .addComponent(jScrollPane3)
         );
 
         rbIndividual.getAccessibleContext().setAccessibleName("Elige la máquina a gestionar:");
 
-        jMenuBar1.setBackground(new java.awt.Color(204, 204, 204));
+        jMenuBar1.setBackground(new java.awt.Color(255, 255, 255));
         jMenuBar1.setForeground(new java.awt.Color(51, 51, 51));
         jMenuBar1.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
@@ -711,7 +727,6 @@ public final class panelActas extends javax.swing.JFrame {
             }
         });
 
-        jMenu1.setBackground(new java.awt.Color(0, 102, 102));
         jMenu1.setText("Organizar actas");
         jMenu1.setFont(new java.awt.Font("3ds Light", 1, 14)); // NOI18N
 
@@ -735,7 +750,6 @@ public final class panelActas extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        Opciones.setBackground(new java.awt.Color(0, 51, 51));
         Opciones.setText("Opciones");
         Opciones.setFont(new java.awt.Font("3ds Light", 1, 14)); // NOI18N
 

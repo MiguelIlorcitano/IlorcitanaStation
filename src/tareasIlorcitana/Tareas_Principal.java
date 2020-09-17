@@ -112,13 +112,6 @@ public final class Tareas_Principal extends javax.swing.JFrame {
         return (x.matches("[+-]?\\d*(\\.\\d+)?") && x.equals("")==false);
     }
     
-    public void actualiza(String fech){
-        jlReloj.setText(fech);
-        repaint();
-        if(fech.split(":")[2].split(" ")[1].equals("00")){
-        }
-    }
-    
     /**
      * Lee el archivo filtrado para saber a que usuario va destinado el panel.
      */
@@ -201,17 +194,17 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                     Tabla.setDefaultRenderer(Object.class, new Render());
                     Tabla.getColumnModel().getColumn(0).setPreferredWidth(50);
                     Tabla.getColumnModel().getColumn(1).setPreferredWidth(180);
-                    Tabla.getColumnModel().getColumn(2).setPreferredWidth(180);
+                    Tabla.getColumnModel().getColumn(2).setPreferredWidth(200);
                     Tabla.getColumnModel().getColumn(3).setPreferredWidth(200);
                     Tabla.getColumnModel().getColumn(4).setPreferredWidth(150);
                     Tabla.getColumnModel().getColumn(5).setPreferredWidth(150);
                     Tabla.getColumnModel().getColumn(6).setPreferredWidth(170);
-                    Tabla.getColumnModel().getColumn(7).setPreferredWidth(450);
+                    Tabla.getColumnModel().getColumn(7).setPreferredWidth(550);
                     JTableHeader th;
                     th = Tabla.getTableHeader();
-                    Font fuente = new Font("Century Gothic", Font.BOLD, 14);
-                    Color cl = new Color(0,102,102);
-                    th.setForeground(cl);
+                    Font fuente = new Font("3ds Light", Font.BOLD, 14);
+                    //Color cl = new Color(0,102,102);
+                    //th.setForeground(cl);
                     th.setFont(fuente);
                     Tabla.setShowHorizontalLines(true);
                     Tabla.setShowVerticalLines(true);
@@ -256,17 +249,17 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                     Tabla.setDefaultRenderer(Object.class, new Render());
                     Tabla.getColumnModel().getColumn(0).setPreferredWidth(50);
                     Tabla.getColumnModel().getColumn(1).setPreferredWidth(180);
-                    Tabla.getColumnModel().getColumn(2).setPreferredWidth(180);
+                    Tabla.getColumnModel().getColumn(2).setPreferredWidth(200);
                     Tabla.getColumnModel().getColumn(3).setPreferredWidth(200);
                     Tabla.getColumnModel().getColumn(4).setPreferredWidth(150);
                     Tabla.getColumnModel().getColumn(5).setPreferredWidth(150);
                     Tabla.getColumnModel().getColumn(6).setPreferredWidth(170);
-                    Tabla.getColumnModel().getColumn(7).setPreferredWidth(450);
+                    Tabla.getColumnModel().getColumn(7).setPreferredWidth(550);
                     JTableHeader th;
                     th = Tabla.getTableHeader();
-                    Font fuente = new Font("Century Gothic", Font.BOLD, 14);
-                    Color cl = new Color(0,102,102);
-                    th.setForeground(cl);
+                    Font fuente = new Font("3ds Light", Font.BOLD, 14);
+                    //Color cl = new Color(0,102,102);
+                    //th.setForeground(cl);
                     th.setFont(fuente);
                     Tabla.setShowHorizontalLines(true);
                     Tabla.setShowVerticalLines(true);
@@ -278,7 +271,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                 try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                     Statement stmt = conn.createStatement();
                     ResultSet r = stmt.executeQuery(consulta)) {
-                    String titulos[] = {"I", "U", "Tarea", "Tipo de tarea", "Maquina", "Tipo de problema", "Preferencia", "Estado", "Observaciones", "Fecha de tarea", "Fecha de inicio", "Fecha de fin"};
+                    String titulos[] = {"Id", "Usuario", "Tarea", "Tipo de tarea", "Maquina", "Tipo de problema", "Preferencia", "Estado", "Observaciones", "Fecha de tarea", "Fecha de inicio", "Fecha de fin"};
                     n = new DefaultTableModel(null, titulos);
                     String fila[] = new String[12];
                     while (r.next()) {
@@ -298,24 +291,24 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                     }
                     Tabla.setModel(n);
                     Tabla.setDefaultRenderer(Object.class, new Render());
-                    Tabla.getColumnModel().getColumn(0).setPreferredWidth(0);
-                    Tabla.getColumnModel().getColumn(1).setPreferredWidth(0);
+                    Tabla.getColumnModel().getColumn(0).setPreferredWidth(50);
+                    Tabla.getColumnModel().getColumn(1).setPreferredWidth(80);
                     Tabla.getColumnModel().getColumn(2).setPreferredWidth(180);
                     Tabla.getColumnModel().getColumn(3).setPreferredWidth(200);
                     Tabla.getColumnModel().getColumn(4).setPreferredWidth(200);
                     Tabla.getColumnModel().getColumn(5).setPreferredWidth(200);
-                    Tabla.getColumnModel().getColumn(6).setPreferredWidth(170);
-                    Tabla.getColumnModel().getColumn(7).setPreferredWidth(170);
+                    Tabla.getColumnModel().getColumn(6).setPreferredWidth(150);
+                    Tabla.getColumnModel().getColumn(7).setPreferredWidth(150);
                     Tabla.getColumnModel().getColumn(8).setPreferredWidth(550);
                     Tabla.getColumnModel().getColumn(9).setPreferredWidth(170);
-                    Tabla.getColumnModel().getColumn(10).setPreferredWidth(170);
-                    Tabla.getColumnModel().getColumn(11).setPreferredWidth(170);
+                    Tabla.getColumnModel().getColumn(10).setPreferredWidth(150);
+                    Tabla.getColumnModel().getColumn(11).setPreferredWidth(150);
                     JTableHeader th;
                     th = Tabla.getTableHeader();
-                    Font fuente = new Font("Century Gothic", Font.BOLD, 14);
+                    Font fuente = new Font("3ds Light", Font.BOLD, 14);
                     th.setFont(fuente);
-                    Color cl = new Color(0,102,102);
-                    th.setForeground(cl);
+                    //Color cl = new Color(0,102,102);
+                    //th.setForeground(cl);
                     Tabla.setDefaultRenderer(Object.class, new Render());
                     Tabla.setShowHorizontalLines(true);
                     Tabla.setShowVerticalLines(true);
@@ -360,15 +353,15 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                     Tabla.setDefaultRenderer(Object.class, new Render());
                     Tabla.getColumnModel().getColumn(0).setPreferredWidth(50);
                     Tabla.getColumnModel().getColumn(1).setPreferredWidth(180);
-                    Tabla.getColumnModel().getColumn(2).setPreferredWidth(180);
+                    Tabla.getColumnModel().getColumn(2).setPreferredWidth(200);
                     Tabla.getColumnModel().getColumn(3).setPreferredWidth(200);
                     Tabla.getColumnModel().getColumn(4).setPreferredWidth(150);
                     Tabla.getColumnModel().getColumn(5).setPreferredWidth(150);
                     Tabla.getColumnModel().getColumn(6).setPreferredWidth(170);
-                    Tabla.getColumnModel().getColumn(7).setPreferredWidth(450);
+                    Tabla.getColumnModel().getColumn(7).setPreferredWidth(550);
                     JTableHeader th;
                     th = Tabla.getTableHeader();
-                    Font fuente = new Font("Century Gothic", Font.BOLD, 14);
+                    Font fuente = new Font("3ds Light", Font.BOLD, 14);
                     th.setFont(fuente);
                     Tabla.setDefaultRenderer(Object.class, new Render());
                     Tabla.setShowHorizontalLines(true);
@@ -477,7 +470,6 @@ public final class Tareas_Principal extends javax.swing.JFrame {
         botonPrincipal = new javax.swing.JButton();
         botonMantenimiento = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jlReloj = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jCTipoTarea = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -488,13 +480,13 @@ public final class Tareas_Principal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Control de tareas");
         setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/editor.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
 
         Panel1.setBackground(new java.awt.Color(204, 204, 204));
         Panel1.setPreferredSize(new java.awt.Dimension(1024, 768));
 
         Tabla.setAutoCreateRowSorter(true);
-        Tabla.setFont(new java.awt.Font("Century Gothic", 0, 12)); // NOI18N
+        Tabla.setFont(new java.awt.Font("3ds Light", 0, 14)); // NOI18N
         Tabla.setForeground(new java.awt.Color(0, 51, 51));
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -508,7 +500,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                 "Tares", "Preferencia", "Estado", "Fecha", "Observaciones"
             }
         ));
-        Tabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        Tabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         Tabla.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         Tabla.setFillsViewportHeight(true);
         Tabla.setGridColor(new java.awt.Color(0, 0, 0));
@@ -548,11 +540,10 @@ public final class Tareas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jbCreaTarea.setBackground(new java.awt.Color(0, 102, 102));
         jbCreaTarea.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
-        jbCreaTarea.setForeground(new java.awt.Color(255, 255, 255));
-        jbCreaTarea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/muestra.png"))); // NOI18N
+        jbCreaTarea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/z_tarea.png"))); // NOI18N
         jbCreaTarea.setText("Crea Tarea");
+        jbCreaTarea.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jbCreaTarea.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jbCreaTarea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -560,17 +551,23 @@ public final class Tareas_Principal extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setBackground(new java.awt.Color(0, 102, 102));
         jLabel1.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(102, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Nivel de preferencia:");
+        jLabel1.setOpaque(true);
 
+        jLabel3.setBackground(new java.awt.Color(0, 102, 102));
         jLabel3.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(102, 0, 0));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Estado:");
+        jLabel3.setOpaque(true);
 
+        jLabel4.setBackground(new java.awt.Color(0, 102, 102));
         jLabel4.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(102, 0, 0));
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Máquina");
+        jLabel4.setOpaque(true);
 
         jCMaquina.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jCMaquina.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin descripcion" }));
@@ -580,11 +577,10 @@ public final class Tareas_Principal extends javax.swing.JFrame {
             }
         });
 
-        botonPrincipal.setBackground(new java.awt.Color(0, 102, 102));
         botonPrincipal.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
-        botonPrincipal.setForeground(new java.awt.Color(255, 255, 255));
         botonPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/editor_boton.png"))); // NOI18N
         botonPrincipal.setText("Panel principal");
+        botonPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonPrincipal.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         botonPrincipal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -592,11 +588,10 @@ public final class Tareas_Principal extends javax.swing.JFrame {
             }
         });
 
-        botonMantenimiento.setBackground(new java.awt.Color(0, 102, 102));
         botonMantenimiento.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
-        botonMantenimiento.setForeground(new java.awt.Color(255, 255, 255));
-        botonMantenimiento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/mantenimiento.png"))); // NOI18N
+        botonMantenimiento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/z_mantenimiento.png"))); // NOI18N
         botonMantenimiento.setText("Mantenimiento");
+        botonMantenimiento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonMantenimiento.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         botonMantenimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -604,9 +599,10 @@ public final class Tareas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Agency FB", 1, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/updated.png"))); // NOI18N
         jButton1.setText("Actualizar");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -615,16 +611,11 @@ public final class Tareas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jlReloj.setBackground(new java.awt.Color(180, 230, 230));
-        jlReloj.setFont(new java.awt.Font("Agency FB", 1, 24)); // NOI18N
-        jlReloj.setForeground(new java.awt.Color(0, 153, 102));
-        jlReloj.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlReloj.setText("jLabel4");
-        jlReloj.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 102), 2, true));
-
+        jLabel5.setBackground(new java.awt.Color(0, 102, 102));
         jLabel5.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(102, 0, 0));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Tipo de tarea:");
+        jLabel5.setOpaque(true);
 
         jCTipoTarea.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jCTipoTarea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin descripción", "mantenimiento operario", "mecánica", "programación" }));
@@ -641,22 +632,19 @@ public final class Tareas_Principal extends javax.swing.JFrame {
             .addGroup(Panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botonPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jCMaquina, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jCEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(botonMantenimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbCreaTarea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(Panel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jlReloj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jCNivelPreferencia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                    .addComponent(jLabel5)
-                    .addComponent(jCTipoTarea, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jCTipoTarea, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 769, Short.MAX_VALUE))
         );
@@ -666,23 +654,21 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jlReloj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCNivelPreferencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel3)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel5)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCTipoTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
@@ -929,7 +915,6 @@ public final class Tareas_Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jbCreaTarea;
-    public javax.swing.JLabel jlReloj;
     // End of variables declaration//GEN-END:variables
 }
 

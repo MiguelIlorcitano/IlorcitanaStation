@@ -297,7 +297,7 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Parte de Mantenimiento");
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/mantenimiento.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
@@ -313,72 +313,72 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         jLabel3.setBackground(new java.awt.Color(51, 153, 255));
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Tipo de mantenimiento:");
         jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
         jLabel3.setOpaque(true);
 
         rbPreventivo.setBackground(new java.awt.Color(226, 236, 247));
-        rbPreventivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rbPreventivo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         rbPreventivo.setText("Preventivo ");
 
         rbCorrectivo.setBackground(new java.awt.Color(226, 236, 247));
-        rbCorrectivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rbCorrectivo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         rbCorrectivo.setText("Correctivo");
 
         jLabel4.setBackground(new java.awt.Color(51, 153, 255));
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Tipo de problema:");
         jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
         jLabel4.setOpaque(true);
 
         rbMecanico.setBackground(new java.awt.Color(226, 236, 247));
-        rbMecanico.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rbMecanico.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         rbMecanico.setText("Mecanico");
 
         rbHidraulico.setBackground(new java.awt.Color(226, 236, 247));
-        rbHidraulico.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rbHidraulico.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         rbHidraulico.setText("Hidráulico");
 
         rbNeumatico.setBackground(new java.awt.Color(226, 236, 247));
-        rbNeumatico.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rbNeumatico.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         rbNeumatico.setText("Neumático");
 
         rbElectrico.setBackground(new java.awt.Color(226, 236, 247));
-        rbElectrico.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        rbElectrico.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         rbElectrico.setText("Eléctrico");
 
         jLabel5.setBackground(new java.awt.Color(51, 153, 255));
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Operaciones:");
         jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
         jLabel5.setOpaque(true);
 
         jLabel6.setBackground(new java.awt.Color(51, 153, 255));
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Piezas sustituidas:");
         jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
         jLabel6.setOpaque(true);
 
         jLabel7.setBackground(new java.awt.Color(51, 153, 255));
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Horas:");
         jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
         jLabel7.setOpaque(true);
 
         jLabel8.setBackground(new java.awt.Color(51, 153, 255));
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Operario:");
         jLabel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
         jLabel8.setOpaque(true);
 
-        boxOperario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        boxOperario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         boxOperario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 boxOperarioActionPerformed(evt);
@@ -386,15 +386,15 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         });
 
         jLabel9.setBackground(new java.awt.Color(51, 153, 255));
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Máquina:");
         jLabel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
         jLabel9.setOpaque(true);
 
-        jCMaquina.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jCMaquina.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/archivar.png"))); // NOI18N
         jButton1.setText("Finalizar");
         jButton1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -406,13 +406,13 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         });
 
         jLabel10.setBackground(new java.awt.Color(51, 153, 255));
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Indicaciones:");
         jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
         jLabel10.setOpaque(true);
 
-        boxHoras.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        boxHoras.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         boxHoras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30" }));
         boxHoras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -421,30 +421,30 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         });
 
         jLabel11.setBackground(new java.awt.Color(51, 153, 255));
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Minutos:");
         jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
         jLabel11.setOpaque(true);
 
-        boxMinutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        boxMinutos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         boxMinutos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00", "15", "30", "45" }));
 
         jLabel12.setBackground(new java.awt.Color(51, 153, 255));
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Fecha:");
         jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
         jLabel12.setOpaque(true);
 
         jLabel13.setBackground(new java.awt.Color(51, 153, 255));
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Especifica tarea:");
         jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
         jLabel13.setOpaque(true);
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/adjuntar.png"))); // NOI18N
         jButton2.setText("Adjuntar documento");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -453,7 +453,7 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
             }
         });
 
-        jCTarea.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jCTarea.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jCTarea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin tarea", "Reparación", "Revisión", "Revisión semanal", "Revisión mensual", "Revisión semestral", "Elaboración", "Modificación", "Cambio de herramienta", "Montaje de nueva herramienta" }));
         jCTarea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -462,37 +462,37 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         });
 
         jLabel14.setBackground(new java.awt.Color(51, 153, 255));
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Observaciones:");
         jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
         jLabel14.setOpaque(true);
 
-        jCalendarCombo1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jCalendarCombo1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         txtIndicaciones.setColumns(20);
-        txtIndicaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtIndicaciones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtIndicaciones.setLineWrap(true);
         txtIndicaciones.setRows(5);
         txtIndicaciones.setWrapStyleWord(true);
         jScrollPane3.setViewportView(txtIndicaciones);
 
         txtObservaciones.setColumns(20);
-        txtObservaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtObservaciones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtObservaciones.setLineWrap(true);
         txtObservaciones.setRows(5);
         txtObservaciones.setWrapStyleWord(true);
         jScrollPane4.setViewportView(txtObservaciones);
 
         txtOperaciones.setColumns(20);
-        txtOperaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtOperaciones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtOperaciones.setLineWrap(true);
         txtOperaciones.setRows(5);
         txtOperaciones.setWrapStyleWord(true);
         jScrollPane5.setViewportView(txtOperaciones);
 
         txtPiezasSustituidas.setColumns(20);
-        txtPiezasSustituidas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtPiezasSustituidas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtPiezasSustituidas.setLineWrap(true);
         txtPiezasSustituidas.setRows(5);
         txtPiezasSustituidas.setWrapStyleWord(true);
@@ -549,7 +549,7 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
                                         .addComponent(rbNeumatico)
                                         .addGap(18, 18, 18)
                                         .addComponent(rbElectrico)))
-                                .addGap(0, 109, Short.MAX_VALUE))))
+                                .addGap(0, 99, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
@@ -616,20 +616,19 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
                             .addComponent(rbHidraulico)
                             .addComponent(rbNeumatico)
                             .addComponent(rbElectrico))))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(jCTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel14))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

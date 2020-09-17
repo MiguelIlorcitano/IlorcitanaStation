@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package soporteActas;
+package reparaciones;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -17,15 +17,15 @@ import satation.Propiedades;
  *
  * @author Diseño
  */
-public class hilosActas extends Thread{
+public class hilosEnvios extends Thread{
     // boolean que pondremos a false cuando queramos parar el hilo
    private boolean continuar = true;
    private boolean cont = true;
-   panelActas p;
+   Envios_Principal p;
    boolean actualiza;
 
-    public hilosActas() throws SQLException {
-        this.p = new panelActas();
+    public hilosEnvios() throws SQLException {
+        this.p = new Envios_Principal();
     }
     
    // metodo para poner el boolean a false.
@@ -81,9 +81,9 @@ public class hilosActas extends Thread{
                     modificaTxt();
                     p.mostrarTabla();
                 } catch (IOException ex) {
-                    Logger.getLogger(hilosActas.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(hilosEnvios.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                p.actualiza();
+                //p.actualiza();
             }
             //p.actualiza(CogerFecha());
         }

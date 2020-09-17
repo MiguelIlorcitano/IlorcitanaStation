@@ -134,23 +134,24 @@ public class Muestra_Acta extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tarea");
         setBackground(new java.awt.Color(255, 255, 255));
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/editor.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
         setResizable(false);
         setType(java.awt.Window.Type.POPUP);
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel1.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Número de acta:");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel1.setOpaque(true);
 
-        jButton1.setBackground(new java.awt.Color(0, 102, 102));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton1.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Modifica tarea");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/z_modificar.png"))); // NOI18N
+        jButton1.setToolTipText("Modifica tarea");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -158,7 +159,7 @@ public class Muestra_Acta extends javax.swing.JFrame {
         });
 
         lActa.setBackground(new java.awt.Color(255, 255, 255));
-        lActa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lActa.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         lActa.setForeground(new java.awt.Color(51, 51, 51));
         lActa.setText("jLabel3");
         lActa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
@@ -170,14 +171,14 @@ public class Muestra_Acta extends javax.swing.JFrame {
         });
 
         jLabel3.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Id de tarea:");
-        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel3.setOpaque(true);
 
         lTarea.setBackground(new java.awt.Color(255, 255, 255));
-        lTarea.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lTarea.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         lTarea.setForeground(new java.awt.Color(51, 51, 51));
         lTarea.setText("jLabel3");
         lTarea.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
@@ -189,7 +190,7 @@ public class Muestra_Acta extends javax.swing.JFrame {
         });
 
         lMaquina.setBackground(new java.awt.Color(255, 255, 255));
-        lMaquina.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lMaquina.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         lMaquina.setForeground(new java.awt.Color(51, 51, 51));
         lMaquina.setText("jLabel3");
         lMaquina.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
@@ -201,14 +202,14 @@ public class Muestra_Acta extends javax.swing.JFrame {
         });
 
         jLabel6.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Maquina:");
-        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel6.setOpaque(true);
 
         lFecha.setBackground(new java.awt.Color(255, 255, 255));
-        lFecha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lFecha.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         lFecha.setForeground(new java.awt.Color(51, 51, 51));
         lFecha.setText("jLabel3");
         lFecha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
@@ -220,21 +221,21 @@ public class Muestra_Acta extends javax.swing.JFrame {
         });
 
         jLabel7.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Fecha:");
-        jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel7.setOpaque(true);
 
         jLabel8.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Operario:");
-        jLabel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel8.setOpaque(true);
 
         lOperario.setBackground(new java.awt.Color(255, 255, 255));
-        lOperario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lOperario.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         lOperario.setForeground(new java.awt.Color(51, 51, 51));
         lOperario.setText("jLabel3");
         lOperario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
@@ -246,14 +247,14 @@ public class Muestra_Acta extends javax.swing.JFrame {
         });
 
         jLabel9.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Tipo de mantenimiento:");
-        jLabel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel9.setOpaque(true);
 
         lMantenimiento.setBackground(new java.awt.Color(255, 255, 255));
-        lMantenimiento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lMantenimiento.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         lMantenimiento.setForeground(new java.awt.Color(51, 51, 51));
         lMantenimiento.setText("jLabel3");
         lMantenimiento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
@@ -265,14 +266,14 @@ public class Muestra_Acta extends javax.swing.JFrame {
         });
 
         jLabel10.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Tipo de problema:");
-        jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel10.setOpaque(true);
 
         lProblema.setBackground(new java.awt.Color(255, 255, 255));
-        lProblema.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lProblema.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         lProblema.setForeground(new java.awt.Color(51, 51, 51));
         lProblema.setText("jLabel3");
         lProblema.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
@@ -284,35 +285,35 @@ public class Muestra_Acta extends javax.swing.JFrame {
         });
 
         jLabel11.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Observaciones:");
-        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel11.setOpaque(true);
 
         jLabel12.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Operaciones:");
-        jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel12.setOpaque(true);
 
         jLabel13.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Piezas sustituidas:");
-        jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel13.setOpaque(true);
 
         jLabel14.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Horas:");
-        jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel14.setOpaque(true);
 
         lHoras.setBackground(new java.awt.Color(255, 255, 255));
-        lHoras.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lHoras.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         lHoras.setForeground(new java.awt.Color(51, 51, 51));
         lHoras.setText("jLabel3");
         lHoras.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
@@ -324,32 +325,32 @@ public class Muestra_Acta extends javax.swing.JFrame {
         });
 
         jLabel15.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("3ds Light", 1, 16)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Indicaciones:");
-        jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 51)));
+        jLabel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel15.setOpaque(true);
 
         taObservaciones.setColumns(20);
-        taObservaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        taObservaciones.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         taObservaciones.setLineWrap(true);
         taObservaciones.setRows(5);
         jScrollPane5.setViewportView(taObservaciones);
 
         taIndicaciones.setColumns(20);
-        taIndicaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        taIndicaciones.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         taIndicaciones.setLineWrap(true);
         taIndicaciones.setRows(5);
         jScrollPane6.setViewportView(taIndicaciones);
 
         taOperaciones.setColumns(20);
-        taOperaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        taOperaciones.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         taOperaciones.setLineWrap(true);
         taOperaciones.setRows(5);
         jScrollPane7.setViewportView(taOperaciones);
 
         taSustituidas.setColumns(20);
-        taSustituidas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        taSustituidas.setFont(new java.awt.Font("3ds Light", 0, 16)); // NOI18N
         taSustituidas.setLineWrap(true);
         taSustituidas.setRows(5);
         jScrollPane8.setViewportView(taSustituidas);
@@ -370,9 +371,6 @@ public class Muestra_Acta extends javax.swing.JFrame {
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lMantenimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -406,7 +404,10 @@ public class Muestra_Acta extends javax.swing.JFrame {
                             .addComponent(jLabel11)
                             .addComponent(jLabel15)
                             .addComponent(jLabel13))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -415,48 +416,48 @@ public class Muestra_Acta extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel6)
-                        .addComponent(lMaquina)
-                        .addComponent(jLabel3)
-                        .addComponent(lTarea))
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(lActa)))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lActa, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lHoras)
-                        .addComponent(jLabel14))
+                        .addComponent(lHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel8)
-                        .addComponent(lOperario)
-                        .addComponent(jLabel7)
-                        .addComponent(lFecha)))
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lOperario, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(lMantenimiento))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lMantenimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(lProblema))
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lProblema, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel11)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel15)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel12)
+                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel13)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );

@@ -5,7 +5,7 @@
     <Property name="defaultCloseOperation" type="int" value="2"/>
     <Property name="title" type="java.lang.String" value="Operaciones de mantenimineto"/>
     <Property name="iconImage" type="java.awt.Image" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-      <Connection code="new ImageIcon(getClass().getResource(&quot;/imagenes/editor.png&quot;)).getImage()" type="code"/>
+      <Connection code="new ImageIcon(getClass().getResource(&quot;/imagenes/satelite_p.png&quot;)).getImage()" type="code"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -100,13 +100,14 @@
         <Component class="javax.swing.JComboBox" name="jComboBox_maquinas">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="0"/>
+              <Font name="Arial" size="14" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
           </Properties>
           <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jComboBox_maquinasItemStateChanged"/>
             <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="jComboBox_maquinasInputMethodTextChanged"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jComboBox_maquinasKeyPressed"/>
           </Events>
@@ -117,7 +118,7 @@
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="1"/>
+              <Font name="Arial" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="El&#xed;ge m&#xe1;quina:"/>
           </Properties>
@@ -125,7 +126,7 @@
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="1"/>
+              <Font name="Arial" size="14" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/imagenes/printer.png"/>
@@ -157,7 +158,7 @@
               </Border>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="0"/>
+              <Font name="Arial" size="14" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="5" rowCount="0">
@@ -246,7 +247,7 @@
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextField_descripcion" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="18" max="32767" attributes="0"/>
+                  <EmptySpace pref="24" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButton_añadir" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton_modificar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -260,7 +261,7 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="1"/>
+              <Font name="Arial" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="C&#xf3;digo:"/>
           </Properties>
@@ -268,7 +269,7 @@
         <Component class="javax.swing.JTextField" name="jTextField_codigo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="0"/>
+              <Font name="Arial" size="14" style="0"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Tres primeros (n&#xfa;mero de m&#xe1;quina), dos siguientes (especificaci&#xf3;n), dos &#xfa;ltimos (operaci&#xf3;n). "/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
@@ -280,7 +281,7 @@
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="1"/>
+              <Font name="Arial" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Periodicidad:"/>
           </Properties>
@@ -288,7 +289,7 @@
         <Component class="javax.swing.JComboBox" name="jComboBox_periodo">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="0"/>
+              <Font name="Arial" size="14" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="5">
@@ -308,7 +309,7 @@
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="1"/>
+              <Font name="Arial" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Especificaci&#xf3;n:"/>
           </Properties>
@@ -316,7 +317,7 @@
         <Component class="javax.swing.JComboBox" name="jComboBox_especificacion">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="0"/>
+              <Font name="Arial" size="14" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="6">
@@ -337,7 +338,7 @@
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="1"/>
+              <Font name="Arial" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Descripci&#xf3;n:"/>
           </Properties>
@@ -345,7 +346,7 @@
         <Component class="javax.swing.JTextField" name="jTextField_descripcion">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="0"/>
+              <Font name="Arial" size="14" style="0"/>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
@@ -353,7 +354,7 @@
         <Component class="javax.swing.JButton" name="jButton_a&#xf1;adir">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="1"/>
+              <Font name="Arial" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="A&#xf1;adir operarci&#xf3;n"/>
             <Property name="enabled" type="boolean" value="false"/>
@@ -365,7 +366,7 @@
         <Component class="javax.swing.JButton" name="jButton_modificar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="3ds Light" size="14" style="1"/>
+              <Font name="Arial" size="14" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Modificar operaci&#xf3;n"/>
             <Property name="enabled" type="boolean" value="false"/>

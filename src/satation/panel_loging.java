@@ -10,7 +10,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import tareasIlorcitana.principalTareas;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
@@ -20,6 +19,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import tareasIlorcitana.hilosTareas;
 
 /**
  *
@@ -28,6 +28,7 @@ import java.sql.Statement;
 public class panel_loging extends javax.swing.JFrame {
     
     private static ServerSocket SERVER_SOCKET;
+    private boolean cont = true;
 
     /**
      * Creates new form pnael_loging
@@ -79,7 +80,7 @@ public class panel_loging extends javax.swing.JFrame {
     
     private boolean buscaUsuario() {
         boolean existe = false;
-
+        
         char[] us2 = "2".toCharArray();
         if (Arrays.equals(jPassword.getPassword(), us2)) {
             existe = true;
@@ -111,15 +112,29 @@ public class panel_loging extends javax.swing.JFrame {
         char passM[] = {'0', '0', '1'};
         char passA[] = {'a', 'd', 'm', 'i', 'n'};
         char passI[] = {'i', 'n', 'f', 'o', 'r'};
+        hilosTareas mihilo = null;
+        
         if (buscaUsuario()) {
             if(jComboBox1.getSelectedItem().equals("Mantenimiento Operario")){
                 ecribe("mantenimiento operario");
-                principalTareas prin = new principalTareas();
+                //principalTareas prin = new principalTareas();
+                try {
+                    mihilo = new hilosTareas();
+                    mihilo.start();
+                } catch (SQLException ex) {
+                    Logger.getLogger(hilosTareas.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 dispose();
             } else if (jComboBox1.getSelectedItem().equals("Mecánica")) {
                 if (Arrays.equals(jPassword1.getPassword(), passM)) {
                     ecribe("mecanica");
-                    principalTareas prin = new principalTareas();
+                    //principalTareas prin = new principalTareas();
+                    try {
+                        mihilo = new hilosTareas();
+                        mihilo.start();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(hilosTareas.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
@@ -127,7 +142,13 @@ public class panel_loging extends javax.swing.JFrame {
             } else if (jComboBox1.getSelectedItem().equals("Programación")) {
                 if (Arrays.equals(jPassword1.getPassword(), passI)) {
                     ecribe("programacion");
-                    principalTareas prin = new principalTareas();
+                    //principalTareas prin = new principalTareas();
+                    try {
+                        mihilo = new hilosTareas();
+                        mihilo.start();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(hilosTareas.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
@@ -163,56 +184,56 @@ public class panel_loging extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jPassword = new javax.swing.JPasswordField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jPassword1 = new javax.swing.JPasswordField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Loging");
         setBackground(java.awt.SystemColor.info);
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
+        setUndecorated(true);
+        setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("3ds Light", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(46, 125, 176));
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/autorizacion.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/z_login.png"))); // NOI18N
         jLabel1.setText("Control de acceso");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jLabel1.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
-        jLabel3.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel3.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(23, 77, 113));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/blanco.jpg"))); // NOI18N
-        jLabel3.setText("Código de usuario:");
-        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(46, 125, 176)));
-        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        jPassword.setFont(new java.awt.Font("3ds Light", 0, 18)); // NOI18N
-        jPassword.setForeground(new java.awt.Color(23, 77, 113));
+        jPassword.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(46, 125, 176)));
+        jPassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jComboBox1.setFont(new java.awt.Font("3ds Light", 1, 18)); // NOI18N
+        jComboBox1.setBackground(new java.awt.Color(204, 204, 204));
+        jComboBox1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mantenimiento Operario", "Mecánica", "Programación", "Administrador" }));
-        jComboBox1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(46, 125, 176)));
+        jComboBox1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jComboBox1.setOpaque(false);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
             }
         });
 
-        jPassword1.setFont(new java.awt.Font("3ds Light", 0, 18)); // NOI18N
-        jPassword1.setForeground(new java.awt.Color(23, 77, 113));
+        jPassword1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         jPassword1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPassword1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(46, 125, 176)));
+        jPassword1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPassword1.setEnabled(false);
+
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Código de usuario:");
+        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        jLabel2.setOpaque(true);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -220,45 +241,45 @@ public class panel_loging extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(77, 77, 77)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPassword1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(81, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, 0, 278, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPassword1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPassword1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -314,7 +335,7 @@ public class panel_loging extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPassword;
     private javax.swing.JPasswordField jPassword1;

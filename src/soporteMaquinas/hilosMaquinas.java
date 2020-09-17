@@ -5,7 +5,6 @@
  */
 package soporteMaquinas;
 
-import tareasIlorcitana.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -70,6 +69,9 @@ public class hilosMaquinas extends Thread{
     public void run() {
         p.setVisible(true);
         while (cont) {
+            if (p.isVisible() == false) {
+                    cont = false;
+            }
             if (leeActual() == true) {
                 try {
                     modificaTxt();
@@ -78,10 +80,6 @@ public class hilosMaquinas extends Thread{
                 } catch (IOException ex) {
                     Logger.getLogger(hilosMaquinas.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            p.actualiza(CogerFecha());
-            if(p.isVisible()==false){
-                cont=false;
             }
         }
     }

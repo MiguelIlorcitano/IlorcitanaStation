@@ -70,13 +70,13 @@ public class Muestra_Archivos_M extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Mostrar");
         setBackground(new java.awt.Color(204, 204, 204));
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/editor.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
 
         jFileChooserAbrir.setApproveButtonText("Aceptar");
         jFileChooserAbrir.setBackground(new java.awt.Color(153, 204, 255));
         jFileChooserAbrir.setCurrentDirectory(new java.io.File("\\\\server\\DATOS\\GESCIM\\Gescim\\MODFACTUSOL\\DOCUMENTOS\\INFO_MAQUINARIA"));
         jFileChooserAbrir.setDialogTitle("Abrir ");
-        jFileChooserAbrir.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
+        jFileChooserAbrir.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jFileChooserAbrir.setForeground(new java.awt.Color(255, 0, 51));
         jFileChooserAbrir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

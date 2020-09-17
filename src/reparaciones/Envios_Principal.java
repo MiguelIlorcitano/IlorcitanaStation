@@ -3,9 +3,9 @@
  * llamadas a las distintas clases.
  */
 
-package soporteMaquinas;
+package reparaciones;
 
-import java.awt.Color;
+import soporteMaquinas.*;;
 import java.awt.Font;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
@@ -34,18 +34,18 @@ import satation.Main;
  *
  * @author Miguel Angel Carrillo Garcia
  */
-public final class Maquinas_Principal extends javax.swing.JFrame {
+public final class Envios_Principal extends javax.swing.JFrame {
     
     private static ServerSocket SERVER_SOCKET;
     
     DefaultTableModel n;
-    PanelMaquinas mod;
+    Panel_Reparaciones_Mod mod;
     
     /**
      * Constructo
      * @throws java.sql.SQLException
      */
-    public Maquinas_Principal() throws SQLException {
+    public Envios_Principal() throws SQLException {
         initComponents();
         KeyboardFocusManager.getCurrentKeyboardFocusManager().
                 addKeyEventDispatcher(new KeyEventDispatcher() {
@@ -74,19 +74,20 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
     }
     
     private String generaConsulta(){
-        if(jR_numeroMaquina.isSelected()){
-            return "SELECT * FROM maquinas WHERE numero_maquina="+Integer.parseInt(txt_numeroMaquina.getText());
-        }else if(jR_Descripcion.isSelected()){
-            return "SELECT * FROM maquinas WHERE descripcion LIKE \"%"+txt_descripcion.getText()+"%\"";
-        }else if(jR_Fabricante.isSelected()){
-            return "SELECT * FROM maquinas WHERE fabricante LIKE \"%"+txt_fabricante.getText()+"%\"";
-        }else if(jR_Empresa.isSelected()&&jR_Ubicacion.isSelected()==false){
-            return "SELECT * FROM maquinas WHERE Empresa=\""+jC_Empresa.getSelectedItem().toString()+"\"";
-        }else if(jR_Empresa.isSelected()&&jR_Ubicacion.isSelected()==true){
-            return "SELECT * FROM maquinas WHERE Empresa=\""+jC_Empresa.getSelectedItem().toString()+"\" AND ubicacion=\""+jC_Ubicacion.getSelectedItem().toString()+"\"";
-        }else{
-            return "SELECT * FROM maquinas";
-        }
+        return "SELECT * FROM envioReparaciones";
+//        if(jR_Estado.isSelected()){
+//            return "SELECT * FROM envioReparaciones WHERE numero_maquina="+Integer.parseInt(txt_numeroMaquina.getText());
+//        }else if(jR_Descripcion.isSelected()){
+//            return "SELECT * FROM maquinas WHERE descripcion LIKE \"%"+txt_descripcion.getText()+"%\"";
+//        }else if(jR_Fabricante.isSelected()){
+//            return "SELECT * FROM maquinas WHERE fabricante LIKE \"%"+txt_fabricante.getText()+"%\"";
+//        }else if(jR_Producto.isSelected()&&jR_Ubicacion.isSelected()==false){
+//            return "SELECT * FROM maquinas WHERE Empresa=\""+jC_Empresa.getSelectedItem().toString()+"\"";
+//        }else if(jR_Producto.isSelected()&&jR_Ubicacion.isSelected()==true){
+//            return "SELECT * FROM maquinas WHERE Empresa=\""+jC_Empresa.getSelectedItem().toString()+"\" AND ubicacion=\""+jC_Ubicacion.getSelectedItem().toString()+"\"";
+//        }else{
+//            return "SELECT * FROM maquinas";
+//        }
     }
    
     /**
@@ -97,31 +98,31 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
             Statement stmt = conn.createStatement();
             ResultSet r = stmt.executeQuery(consulta)) {
-            String titulos[] = {"Modelo", "Descripción", "Número de máquina", "Fabricante", "Empresa", "Ubicación", "M_semanal", "M_mensual", "M_trimestral", "M_anual"};
+            String titulos[] = {"Id", "Tipo Producto", "Modelo", "Fabricante", "Descripción", "Lugar de envio", "Responsable de envio", "Estado", "Fecha de envio", "Fecha de recibo"};
             n = new DefaultTableModel(null, titulos);
             String fila[] = new String[10];
             while (r.next()) {
-                fila[0] = r.getString("modelo");
-                fila[1] = r.getString("descripcion");
-                fila[2] = r.getString("numero_maquina");
+                fila[0] = r.getString("id");
+                fila[1] = r.getString("tipo_producto");
+                fila[2] = r.getString("modelo");
                 fila[3] = r.getString("fabricante");
-                fila[4] = r.getString("Empresa");
-                fila[5] = r.getString("ubicacion");
-                fila[6] = r.getString("M_Semanal");
-                fila[7] = r.getString("M_Mensual");
-                fila[8] = r.getString("M_Trimestral");
-                fila[9] = r.getString("M_Anual");
+                fila[4] = r.getString("descripcion");
+                fila[5] = r.getString("lugar_envio");
+                fila[6] = r.getString("persona_envio");
+                fila[7] = r.getString("estado");
+                fila[8] = r.getString("fecha_envio");
+                fila[9] = r.getString("fecha_recibido");
                 n.addRow(fila);
             }
             Tabla.setModel(n);
-            Tabla.setDefaultRenderer(Object.class, new RenderM());
-            Tabla.getColumnModel().getColumn(0).setPreferredWidth(250);
-            Tabla.getColumnModel().getColumn(1).setPreferredWidth(250);
-            Tabla.getColumnModel().getColumn(2).setPreferredWidth(150);
-            Tabla.getColumnModel().getColumn(3).setPreferredWidth(250);
-            Tabla.getColumnModel().getColumn(4).setPreferredWidth(250);
-            Tabla.getColumnModel().getColumn(5).setPreferredWidth(250);
-            Tabla.getColumnModel().getColumn(6).setPreferredWidth(150);
+            Tabla.setDefaultRenderer(Object.class, new RenderEnvios());
+            Tabla.getColumnModel().getColumn(0).setPreferredWidth(30);
+            Tabla.getColumnModel().getColumn(1).setPreferredWidth(200);
+            Tabla.getColumnModel().getColumn(2).setPreferredWidth(200);
+            Tabla.getColumnModel().getColumn(3).setPreferredWidth(200);
+            Tabla.getColumnModel().getColumn(4).setPreferredWidth(350);
+            Tabla.getColumnModel().getColumn(5).setPreferredWidth(200);
+            Tabla.getColumnModel().getColumn(6).setPreferredWidth(300);
             Tabla.getColumnModel().getColumn(7).setPreferredWidth(150);
             Tabla.getColumnModel().getColumn(8).setPreferredWidth(150);
             Tabla.getColumnModel().getColumn(9).setPreferredWidth(150);
@@ -186,20 +187,19 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         Panel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
-        botonPrincipal = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        txt_numeroMaquina = new javax.swing.JTextField();
-        jR_numeroMaquina = new javax.swing.JRadioButton();
+        jR_Estado = new javax.swing.JRadioButton();
         jR_Descripcion = new javax.swing.JRadioButton();
         txt_descripcion = new javax.swing.JTextField();
         jR_Fabricante = new javax.swing.JRadioButton();
         txt_fabricante = new javax.swing.JTextField();
-        jR_Empresa = new javax.swing.JRadioButton();
+        jR_Producto = new javax.swing.JRadioButton();
         jC_Empresa = new javax.swing.JComboBox<>();
-        jC_Ubicacion = new javax.swing.JComboBox<>();
-        jR_Ubicacion = new javax.swing.JRadioButton();
-        boton_documentos = new javax.swing.JButton();
         Boton_Añadir = new javax.swing.JButton();
+        jR_Modelo = new javax.swing.JRadioButton();
+        txt_fabricante1 = new javax.swing.JTextField();
+        jR_Producto1 = new javax.swing.JRadioButton();
+        jC_Empresa1 = new javax.swing.JComboBox<>();
+        jC_Empresa2 = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
@@ -220,14 +220,16 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         Tabla.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Tares", "Preferencia", "Estado", "Fecha", "Observaciones"
+                "Id", "Producto", "Modelo", "Fabricante", "Descripción de error", "Lugar de envío", "Gestiona", "Estado", "Fecha de envio", "Fecha recibido"
             }
         ));
         Tabla.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
@@ -248,56 +250,14 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(Tabla);
 
-        botonPrincipal.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
-        botonPrincipal.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        botonPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/editor_boton.png"))); // NOI18N
-        botonPrincipal.setText("Panel Principal");
-        botonPrincipal.setToolTipText("Ir a panel principal");
-        botonPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonPrincipal.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        botonPrincipal.addActionListener(new java.awt.event.ActionListener() {
+        jR_Estado.setBackground(new java.awt.Color(0, 102, 102));
+        jR_Estado.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jR_Estado.setForeground(new java.awt.Color(255, 255, 255));
+        jR_Estado.setText("Estado:");
+        jR_Estado.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jR_Estado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonPrincipalActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(153, 0, 0));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/z_robot_1.png"))); // NOI18N
-        jLabel2.setText("Gestión de máquinas");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-
-        txt_numeroMaquina.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        txt_numeroMaquina.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        txt_numeroMaquina.setText("0");
-        txt_numeroMaquina.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-                txt_numeroMaquinaAncestorRemoved(evt);
-            }
-        });
-        txt_numeroMaquina.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_numeroMaquinaActionPerformed(evt);
-            }
-        });
-
-        jR_numeroMaquina.setBackground(new java.awt.Color(0, 102, 102));
-        jR_numeroMaquina.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jR_numeroMaquina.setForeground(new java.awt.Color(255, 255, 255));
-        jR_numeroMaquina.setText("Nº de máquina:");
-        jR_numeroMaquina.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jR_numeroMaquina.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jR_numeroMaquinaActionPerformed(evt);
+                jR_EstadoActionPerformed(evt);
             }
         });
 
@@ -337,68 +297,79 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jR_Empresa.setBackground(new java.awt.Color(0, 102, 102));
-        jR_Empresa.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jR_Empresa.setForeground(new java.awt.Color(255, 255, 255));
-        jR_Empresa.setText("Empresa:");
-        jR_Empresa.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jR_Empresa.addActionListener(new java.awt.event.ActionListener() {
+        jR_Producto.setBackground(new java.awt.Color(0, 102, 102));
+        jR_Producto.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jR_Producto.setForeground(new java.awt.Color(255, 255, 255));
+        jR_Producto.setText("Producto:");
+        jR_Producto.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jR_Producto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jR_EmpresaActionPerformed(evt);
+                jR_ProductoActionPerformed(evt);
             }
         });
 
         jC_Empresa.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jC_Empresa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comercial Ilorcitana", "Canela Spring" }));
+        jC_Empresa.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Regulador", "Tarjeta", "Fuente de alimentación", "Motor", "Máquina", "Ordenador", "Impresora", "Otros" }));
         jC_Empresa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jC_EmpresaActionPerformed(evt);
             }
         });
 
-        jC_Ubicacion.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
-        jC_Ubicacion.setEnabled(false);
-        jC_Ubicacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jC_UbicacionActionPerformed(evt);
-            }
-        });
-
-        jR_Ubicacion.setBackground(new java.awt.Color(0, 102, 102));
-        jR_Ubicacion.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
-        jR_Ubicacion.setForeground(new java.awt.Color(255, 255, 255));
-        jR_Ubicacion.setText("Ubicación:");
-        jR_Ubicacion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jR_Ubicacion.setEnabled(false);
-        jR_Ubicacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jR_UbicacionActionPerformed(evt);
-            }
-        });
-
-        boton_documentos.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
-        boton_documentos.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        boton_documentos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/z_buscar documentos.png"))); // NOI18N
-        boton_documentos.setText("Ver Documentos");
-        boton_documentos.setToolTipText("Ver documentos");
-        boton_documentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        boton_documentos.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        boton_documentos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton_documentosActionPerformed(evt);
-            }
-        });
-
         Boton_Añadir.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
         Boton_Añadir.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        Boton_Añadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/z_add documentos.png"))); // NOI18N
-        Boton_Añadir.setText("Add Documentos");
+        Boton_Añadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/camion-de-mudanzas.png"))); // NOI18N
+        Boton_Añadir.setText("Nuevo envio");
         Boton_Añadir.setToolTipText("Add documentos");
         Boton_Añadir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         Boton_Añadir.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         Boton_Añadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Boton_AñadirActionPerformed(evt);
+            }
+        });
+
+        jR_Modelo.setBackground(new java.awt.Color(0, 102, 102));
+        jR_Modelo.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jR_Modelo.setForeground(new java.awt.Color(255, 255, 255));
+        jR_Modelo.setText("Modelo:");
+        jR_Modelo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jR_Modelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jR_ModeloActionPerformed(evt);
+            }
+        });
+
+        txt_fabricante1.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        txt_fabricante1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_fabricante1ActionPerformed(evt);
+            }
+        });
+
+        jR_Producto1.setBackground(new java.awt.Color(0, 102, 102));
+        jR_Producto1.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jR_Producto1.setForeground(new java.awt.Color(255, 255, 255));
+        jR_Producto1.setText("Responsable:");
+        jR_Producto1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jR_Producto1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jR_Producto1ActionPerformed(evt);
+            }
+        });
+
+        jC_Empresa1.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jC_Empresa1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jC_Empresa1ActionPerformed(evt);
+            }
+        });
+
+        jC_Empresa2.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jC_Empresa2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "enviado", "recibido", "desechado" }));
+        jC_Empresa2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jC_Empresa2ActionPerformed(evt);
             }
         });
 
@@ -409,62 +380,54 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             .addGroup(Panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(Panel1Layout.createSequentialGroup()
-                        .addComponent(jR_numeroMaquina)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_numeroMaquina))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel1Layout.createSequentialGroup()
-                        .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jC_Ubicacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jR_Ubicacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24))
-                    .addComponent(botonPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Boton_Añadir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Boton_Añadir, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                     .addComponent(jR_Descripcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txt_descripcion)
                     .addComponent(jR_Fabricante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txt_fabricante)
-                    .addComponent(jR_Empresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jR_Producto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jC_Empresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(boton_documentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jR_Estado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jR_Modelo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_fabricante1)
+                    .addComponent(jR_Producto1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jC_Empresa1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jC_Empresa2, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 755, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE))
         );
         Panel1Layout.setVerticalGroup(
             Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 721, Short.MAX_VALUE)
                     .addGroup(Panel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txt_numeroMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jR_numeroMaquina))
-                        .addGap(18, 18, 18)
-                        .addComponent(jR_Descripcion)
+                        .addComponent(jR_Producto, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jC_Empresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jR_Modelo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_fabricante1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jR_Fabricante)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_fabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jR_Empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jC_Empresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jR_Ubicacion)
+                        .addComponent(jR_Estado)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jC_Ubicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-                        .addComponent(Boton_Añadir)
+                        .addComponent(jC_Empresa2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21)
+                        .addComponent(jR_Descripcion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(boton_documentos)
+                        .addComponent(txt_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jR_Producto1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botonPrincipal)))
+                        .addComponent(jC_Empresa1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Boton_Añadir)))
                 .addContainerGap())
         );
 
@@ -528,27 +491,22 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_click_tarea
 
-    private void botonPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonPrincipalActionPerformed
-        this.dispose();
-        mod.dispose();
-    }//GEN-LAST:event_botonPrincipalActionPerformed
-
-    private void jR_numeroMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jR_numeroMaquinaActionPerformed
-        if(jR_numeroMaquina.isSelected()){
+    private void jR_EstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jR_EstadoActionPerformed
+        if(jR_Estado.isSelected()){
             jR_Descripcion.setSelected(false);
             jR_Fabricante.setSelected(false);
-            jR_Empresa.setSelected(false);
+            jR_Producto.setSelected(false);
         }else{
             mostrarTabla();
             repaint();
         }
-    }//GEN-LAST:event_jR_numeroMaquinaActionPerformed
+    }//GEN-LAST:event_jR_EstadoActionPerformed
 
     private void jR_DescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jR_DescripcionActionPerformed
         if(jR_Descripcion.isSelected()){
-            jR_numeroMaquina.setSelected(false);
+            jR_Estado.setSelected(false);
             jR_Fabricante.setSelected(false);
-            jR_Empresa.setSelected(false);
+            jR_Producto.setSelected(false);
         }else{
             mostrarTabla();
             repaint();
@@ -558,64 +516,24 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
     private void jR_FabricanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jR_FabricanteActionPerformed
         if(jR_Fabricante.isSelected()){
             jR_Descripcion.setSelected(false);
-            jR_numeroMaquina.setSelected(false);
-            jR_Empresa.setSelected(false);
+            jR_Estado.setSelected(false);
+            jR_Producto.setSelected(false);
         }else{
             mostrarTabla();
             repaint();
         }
     }//GEN-LAST:event_jR_FabricanteActionPerformed
 
-    private void jR_EmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jR_EmpresaActionPerformed
-        if (jR_Empresa.isSelected()) {
+    private void jR_ProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jR_ProductoActionPerformed
+        if (jR_Producto.isSelected()) {
             jR_Descripcion.setSelected(false);
             jR_Fabricante.setSelected(false);
-            jR_numeroMaquina.setSelected(false);
-            jR_Ubicacion.setEnabled(true);
-            jC_Ubicacion.setEnabled(true);
-            if (jC_Empresa.getSelectedItem().equals("Comercial Ilorcitana")) {
-                jC_Ubicacion.addItem("Nave 1");
-                jC_Ubicacion.addItem("Nave 2");
-                jC_Ubicacion.addItem("Nave 3");
-                jC_Ubicacion.addItem("Nave 4");
-                jC_Ubicacion.addItem("Pasillo 1");
-                jC_Ubicacion.addItem("Pasillo 2");
-                jC_Ubicacion.addItem("Pasillo 3");
-                jC_Ubicacion.addItem("Altillo 1");
-                jC_Ubicacion.addItem("Altillo 2");
-                jC_Ubicacion.addItem("Altillo 3");
-                jC_Ubicacion.addItem("Nave 5_A");
-                jC_Ubicacion.addItem("Nave 5_B");
-            } else if (jC_Empresa.getSelectedItem().equals("Canela Spring")) {
-                jC_Ubicacion.addItem("Nave 1");
-                jC_Ubicacion.addItem("Nave 2");
-                jC_Ubicacion.addItem("Nave 3");
-                jC_Ubicacion.addItem("Nave 4");
-                jC_Ubicacion.addItem("Nave 5");
-                jC_Ubicacion.addItem("Pasillo");
-                jC_Ubicacion.addItem("Exterior 1");
-            }
+            jR_Estado.setSelected(false);
         }else{
             mostrarTabla();
             repaint();
         }
-    }//GEN-LAST:event_jR_EmpresaActionPerformed
-
-    private void txt_numeroMaquinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_numeroMaquinaActionPerformed
-        mostrarTabla();
-        repaint();
-    }//GEN-LAST:event_txt_numeroMaquinaActionPerformed
-
-    private void jR_UbicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jR_UbicacionActionPerformed
-        
-            mostrarTabla();
-            repaint();
-    }//GEN-LAST:event_jR_UbicacionActionPerformed
-
-    private void txt_numeroMaquinaAncestorRemoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_txt_numeroMaquinaAncestorRemoved
-       mostrarTabla();
-       repaint();
-    }//GEN-LAST:event_txt_numeroMaquinaAncestorRemoved
+    }//GEN-LAST:event_jR_ProductoActionPerformed
 
     private void txt_descripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_descripcionActionPerformed
         mostrarTabla();
@@ -632,25 +550,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         repaint();
     }//GEN-LAST:event_jC_EmpresaActionPerformed
 
-    private void jC_UbicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jC_UbicacionActionPerformed
-        mostrarTabla();
-        repaint();
-    }//GEN-LAST:event_jC_UbicacionActionPerformed
-
-    private void boton_documentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_documentosActionPerformed
-        //Muestra_Archivos_M m = new Muestra_Archivos_M();
-        //m.setVisible(true);
-        String rut = "\\\\server\\datos\\GESCIM\\Gescim\\MODFACTUSOL\\DOCUMENTOS\\INFO_MAQUINARIA";
-        try {
-            Runtime.getRuntime().exec("explorer.exe /start," + rut);
-        } catch (IOException ex) {
-            Logger.getLogger(Maquinas_Principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_boton_documentosActionPerformed
-
     private void Boton_AñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_AñadirActionPerformed
-        Adjunta_Archivos_M m = new Adjunta_Archivos_M("\\\\server\\datos\\GESCIM\\Gescim\\MODFACTUSOL\\DOCUMENTOS\\INFO_MAQUINARIA\\");
-        m.setVisible(true);
+        Panel_Reparaciones p = new Panel_Reparaciones();
+        p.setVisible(true);
     }//GEN-LAST:event_Boton_AñadirActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
@@ -669,15 +571,15 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
     private void TablaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaMousePressed
         try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
             Statement stmt = conn.createStatement();
-            ResultSet r = stmt.executeQuery("SELECT * FROM maquinas WHERE descripcion=\"" + Tabla.getValueAt(Tabla.getSelectedRow(), 1) + "\"")) {
+            ResultSet r = stmt.executeQuery("SELECT * FROM envioReparaciones WHERE id=\"" + Tabla.getValueAt(Tabla.getSelectedRow(), 0) + "\"")) {
             while (r.next()) {
-                String h = r.getString("descripcion");
-                mod = new PanelMaquinas(h);
+                String h = r.getString("id");
+                mod = new Panel_Reparaciones_Mod(h);
                 mod.setVisible(true);
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(Maquinas_Principal.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Envios_Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
         mostrarTabla();
     }//GEN-LAST:event_TablaMousePressed
@@ -686,6 +588,26 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         PanelMaquinas mod = new PanelMaquinas();
         mod.setVisible(true);
     }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
+
+    private void jR_ModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jR_ModeloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jR_ModeloActionPerformed
+
+    private void txt_fabricante1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_fabricante1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_fabricante1ActionPerformed
+
+    private void jR_Producto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jR_Producto1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jR_Producto1ActionPerformed
+
+    private void jC_Empresa1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jC_Empresa1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jC_Empresa1ActionPerformed
+
+    private void jC_Empresa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jC_Empresa2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jC_Empresa2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -699,7 +621,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Maquinas_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Envios_Principal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         
 
@@ -707,9 +629,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> {
             try {
                 SERVER_SOCKET = new ServerSocket(1332);
-                new Maquinas_Principal().setVisible(true);
+                new Envios_Principal().setVisible(true);
             } catch (SQLException | IOException ex) {
-                Logger.getLogger(Maquinas_Principal.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Envios_Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -718,27 +640,26 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
     private javax.swing.JButton Boton_Añadir;
     public javax.swing.JPanel Panel1;
     private javax.swing.JTable Tabla;
-    private javax.swing.JButton botonPrincipal;
-    private javax.swing.JButton boton_documentos;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> jC_Empresa;
-    private javax.swing.JComboBox<String> jC_Ubicacion;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JComboBox<String> jC_Empresa1;
+    private javax.swing.JComboBox<String> jC_Empresa2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JRadioButton jR_Descripcion;
-    private javax.swing.JRadioButton jR_Empresa;
+    private javax.swing.JRadioButton jR_Estado;
     private javax.swing.JRadioButton jR_Fabricante;
-    private javax.swing.JRadioButton jR_Ubicacion;
-    private javax.swing.JRadioButton jR_numeroMaquina;
+    private javax.swing.JRadioButton jR_Modelo;
+    private javax.swing.JRadioButton jR_Producto;
+    private javax.swing.JRadioButton jR_Producto1;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField txt_descripcion;
     private javax.swing.JTextField txt_fabricante;
-    private javax.swing.JTextField txt_numeroMaquina;
+    private javax.swing.JTextField txt_fabricante1;
     // End of variables declaration//GEN-END:variables
 }
 

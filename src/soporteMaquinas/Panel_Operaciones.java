@@ -126,7 +126,7 @@ public class Panel_Operaciones extends javax.swing.JFrame {
             Tabla.getColumnModel().getColumn(4).setPreferredWidth(100);
             JTableHeader th;
             th = Tabla.getTableHeader();
-            Font fuente = new Font("3ds Light", Font.BOLD, 14);
+            Font fuente = new Font("Arial", Font.BOLD, 14);
             Color cl = new Color(14, 70, 126);
             th.setForeground(cl);
             th.setFont(fuente);
@@ -230,12 +230,17 @@ public class Panel_Operaciones extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Operaciones de mantenimineto");
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/editor.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
 
         jPanel1.setBackground(new java.awt.Color(213, 213, 233));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 255)));
 
-        jComboBox_maquinas.setFont(new java.awt.Font("3ds Light", 0, 14)); // NOI18N
+        jComboBox_maquinas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jComboBox_maquinas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox_maquinasItemStateChanged(evt);
+            }
+        });
         jComboBox_maquinas.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
@@ -249,10 +254,10 @@ public class Panel_Operaciones extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("3ds Light", 1, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setText("Elíge máquina:");
 
-        jButton1.setFont(new java.awt.Font("3ds Light", 1, 14)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/printer.png"))); // NOI18N
         jButton1.setText("Imprimir");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -292,7 +297,7 @@ public class Panel_Operaciones extends javax.swing.JFrame {
 
         Tabla.setAutoCreateRowSorter(true);
         Tabla.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        Tabla.setFont(new java.awt.Font("3ds Light", 0, 14)); // NOI18N
+        Tabla.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -310,35 +315,35 @@ public class Panel_Operaciones extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 233, 233));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 204, 204)));
 
-        jLabel1.setFont(new java.awt.Font("3ds Light", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel1.setText("Código:");
 
-        jTextField_codigo.setFont(new java.awt.Font("3ds Light", 0, 14)); // NOI18N
+        jTextField_codigo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jTextField_codigo.setToolTipText("Tres primeros (número de máquina), dos siguientes (especificación), dos últimos (operación). ");
         jTextField_codigo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField_codigo.setEnabled(false);
 
-        jLabel2.setFont(new java.awt.Font("3ds Light", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel2.setText("Periodicidad:");
 
-        jComboBox_periodo.setFont(new java.awt.Font("3ds Light", 0, 14)); // NOI18N
+        jComboBox_periodo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jComboBox_periodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "diaria", "semanal", "mensual", "trimestral", "anual" }));
         jComboBox_periodo.setEnabled(false);
 
-        jLabel3.setFont(new java.awt.Font("3ds Light", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setText("Especificación:");
 
-        jComboBox_especificacion.setFont(new java.awt.Font("3ds Light", 0, 14)); // NOI18N
+        jComboBox_especificacion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jComboBox_especificacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CNC/ Robot/ Máquina", "Bomba de vacio", "Brazo manipulador", "Mesa de trabajo", "Cuadro eléctrico", "Bomba de presión (W-J)" }));
         jComboBox_especificacion.setEnabled(false);
 
-        jLabel4.setFont(new java.awt.Font("3ds Light", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel4.setText("Descripción:");
 
-        jTextField_descripcion.setFont(new java.awt.Font("3ds Light", 0, 14)); // NOI18N
+        jTextField_descripcion.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jTextField_descripcion.setEnabled(false);
 
-        jButton_añadir.setFont(new java.awt.Font("3ds Light", 1, 14)); // NOI18N
+        jButton_añadir.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton_añadir.setText("Añadir operarción");
         jButton_añadir.setEnabled(false);
         jButton_añadir.addActionListener(new java.awt.event.ActionListener() {
@@ -347,7 +352,7 @@ public class Panel_Operaciones extends javax.swing.JFrame {
             }
         });
 
-        jButton_modificar.setFont(new java.awt.Font("3ds Light", 1, 14)); // NOI18N
+        jButton_modificar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jButton_modificar.setText("Modificar operación");
         jButton_modificar.setEnabled(false);
         jButton_modificar.addActionListener(new java.awt.event.ActionListener() {
@@ -401,7 +406,7 @@ public class Panel_Operaciones extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jTextField_descripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_añadir)
                     .addComponent(jButton_modificar))
@@ -466,6 +471,17 @@ public class Panel_Operaciones extends javax.swing.JFrame {
             jButton_añadir.setEnabled(true);
             jButton_modificar.setEnabled(true);
     }//GEN-LAST:event_jComboBox_maquinasInputMethodTextChanged
+
+    private void jComboBox_maquinasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_maquinasItemStateChanged
+        int i = extraeID();
+        mostrarTabla(i);
+        jTextField_codigo.setEnabled(true);
+        jComboBox_periodo.setEnabled(true);
+        jComboBox_especificacion.setEnabled(true);
+        jTextField_descripcion.setEnabled(true);
+        jButton_añadir.setEnabled(true);
+        jButton_modificar.setEnabled(true);
+    }//GEN-LAST:event_jComboBox_maquinasItemStateChanged
 
     /**
      * @param args the command line arguments

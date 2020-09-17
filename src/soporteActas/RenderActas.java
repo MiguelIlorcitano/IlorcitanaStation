@@ -25,25 +25,25 @@ public class RenderActas extends DefaultTableCellRenderer {
 
         switch (column) {
             case 6:
-                cell.setBackground(new Color(255,204,204));
-                //cell.setForeground(Color.black);
-                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
-                break;
-            case 1:
                 cell.setBackground(new Color(204,255,204));
                 //cell.setForeground(Color.black);
-                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                cell.setFont(new Font("3ds Light", Font.PLAIN, 14));
+                break;
+            case 1:
+                cell.setBackground(new Color(204,204,255));
+                //cell.setForeground(Color.black);
+                cell.setFont(new Font("3ds Light", Font.PLAIN, 14));
                 break;
            
             case 3:
-                cell.setBackground(new Color(255,255,204));
+                cell.setBackground(new Color(255,204,204));
                 //cell.setForeground(Color.black);
-                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                cell.setFont(new Font("3ds Light", Font.PLAIN, 14));
                 break;
             default:
                 cell.setBackground(Color.white);
                 //cell.setForeground(Color.black);
-                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                cell.setFont(new Font("3ds Light", Font.PLAIN, 14));
                 break;
         }
 

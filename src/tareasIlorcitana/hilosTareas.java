@@ -83,18 +83,6 @@ public class hilosTareas extends Thread {
                 }
             }
             
-            if (fecha.get(Calendar.SECOND)==0 && primer0 == true) {
-                p.mostrarTabla();
-                primer0 = false;
-
-            }
-            
-            if(fecha.get(Calendar.SECOND)==1){
-                primer0 = true;
-            }
-            
-            p.actualiza(CogerFecha());
-            
             if(p.isVisible()==false){
                 cont=false;
             }

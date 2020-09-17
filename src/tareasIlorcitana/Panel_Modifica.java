@@ -217,7 +217,7 @@ public class Panel_Modifica extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tarea");
         setBackground(new java.awt.Color(204, 204, 204));
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/editor.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
         setPreferredSize(new java.awt.Dimension(816, 768));
         setResizable(false);
 

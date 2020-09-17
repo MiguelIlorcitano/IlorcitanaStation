@@ -86,13 +86,13 @@ public class Adjunta_Archivos_M extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Adjuntar");
         setBackground(new java.awt.Color(102, 255, 102));
-        setIconImage(new ImageIcon(getClass().getResource("/imagenes/editor.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
 
         jFileChooserGuardar.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         jFileChooserGuardar.setBackground(new java.awt.Color(0, 0, 0));
         jFileChooserGuardar.setCurrentDirectory(new java.io.File("C:\\Users\\jesus portatil\\Desktop"));
         jFileChooserGuardar.setDialogTitle("Abrir ");
-        jFileChooserGuardar.setFont(new java.awt.Font("Century", 0, 14)); // NOI18N
+        jFileChooserGuardar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jFileChooserGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFileChooserGuardarActionPerformed(evt);

@@ -8,7 +8,6 @@ package satation;
 import soporteActas.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import static java.sql.JDBCType.NULL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,13 +16,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import tareasIlorcitana.Tareas_Principal;
 
 /**
  *
@@ -104,7 +99,7 @@ public class HiloStation extends Thread {
                 semanal.add(rs.getString("M_Semanal"));
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cargar los valores de la tabla maquinas extraeMaquinas. "+e);
+            JOptionPane.showMessageDialog(null, "Error al cargar los valores de la tabla maquinas extraeMaquinas kkkkkkkkkkkk. "+e);
         }
     }
 
@@ -242,7 +237,7 @@ public class HiloStation extends Thread {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT estado FROM tareas WHERE id_maquina=\"" + id_m + "\" AND tarea=\"" + tm + "\"")) {
             while (rs.next()) {
-                if (!"en espera".equals(rs.getString("estado")) || !"en proceso".equals(rs.getString("estado"))) {
+                if ("en espera".equals(rs.getString("estado")) || "en proceso".equals(rs.getString("estado"))) {
                     com = true;
                 }
             }

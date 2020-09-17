@@ -27,37 +27,37 @@ public class RenderM extends DefaultTableCellRenderer {
             case 1:
                 cell.setBackground(new Color(204,204,255));
                 //cell.setForeground(Color.WHITE);
-                cell.setFont(new Font("Century Gothic", Font.BOLD, 12));
+                cell.setFont(new Font("3ds Light", Font.BOLD, 14));
                 break;
             case 2:
                 cell.setBackground(new Color(255,204,204));
                 //cell.setForeground(Color.black);
-                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                cell.setFont(new Font("3ds Light", Font.PLAIN, 14));
                 break;
             case 6:
                 cell.setBackground(new Color(204,255,204));
                 //cell.setForeground(Color.black);
-                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                cell.setFont(new Font("3ds Light", Font.PLAIN, 14));
                 break;
             case 7:
                 cell.setBackground(new Color(204,255,255));
                 //cell.setForeground(Color.black);
-                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                cell.setFont(new Font("3ds Light", Font.PLAIN, 14));
                 break;
             case 8:
                 cell.setBackground(new Color(255,255,204));
                 //cell.setForeground(Color.black);
-                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                cell.setFont(new Font("3ds Light", Font.PLAIN, 14));
                 break;
             case 9:
                 cell.setBackground(new Color(204,204,204));
                 //cell.setForeground(Color.black);
-                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                cell.setFont(new Font("3ds Light", Font.PLAIN, 14));
                 break;
             default:
                 cell.setBackground(Color.white);
                 //cell.setForeground(Color.black);
-                cell.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+                cell.setFont(new Font("3ds Light", Font.PLAIN, 14));
                 break;
         }
         

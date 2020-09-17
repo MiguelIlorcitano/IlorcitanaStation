@@ -117,31 +117,22 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jLabel2" alignment="0" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jR_numeroMaquina" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="txt_numeroMaquina" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jC_Ubicacion" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Component id="jR_Ubicacion" alignment="1" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="botonPrincipal" alignment="0" max="32767" attributes="0"/>
-                      <Component id="Boton_Añadir" alignment="0" max="32767" attributes="0"/>
+                      <Component id="Boton_Añadir" alignment="0" pref="249" max="32767" attributes="0"/>
                       <Component id="jR_Descripcion" alignment="0" max="32767" attributes="0"/>
                       <Component id="txt_descripcion" alignment="0" max="32767" attributes="0"/>
                       <Component id="jR_Fabricante" alignment="0" max="32767" attributes="0"/>
                       <Component id="txt_fabricante" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jR_Empresa" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jR_Producto" alignment="0" max="32767" attributes="0"/>
                       <Component id="jC_Empresa" alignment="0" max="32767" attributes="0"/>
-                      <Component id="boton_documentos" max="32767" attributes="0"/>
+                      <Component id="jR_Estado" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jR_Modelo" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txt_fabricante1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jR_Producto1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jC_Empresa1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jC_Empresa2" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane3" pref="755" max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" pref="759" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -150,36 +141,33 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jScrollPane3" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="721" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="txt_numeroMaquina" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jR_numeroMaquina" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jR_Descripcion" min="-2" max="-2" attributes="0"/>
+                          <Component id="jR_Producto" min="-2" pref="25" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="txt_descripcion" min="-2" max="-2" attributes="0"/>
+                          <Component id="jC_Empresa" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jR_Modelo" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="txt_fabricante1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jR_Fabricante" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="txt_fabricante" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jR_Empresa" min="-2" pref="25" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jC_Empresa" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jR_Ubicacion" min="-2" max="-2" attributes="0"/>
+                          <Component id="jR_Estado" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jC_Ubicacion" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="21" max="32767" attributes="0"/>
+                          <Component id="jC_Empresa2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                          <Component id="jR_Descripcion" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="txt_descripcion" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jR_Producto1" min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jC_Empresa1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="Boton_Añadir" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="boton_documentos" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="botonPrincipal" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -205,12 +193,17 @@
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="5" rowCount="5">
-                    <Column editable="true" title="Tares" type="java.lang.Object"/>
-                    <Column editable="true" title="Preferencia" type="java.lang.Object"/>
+                  <Table columnCount="10" rowCount="7">
+                    <Column editable="true" title="Id" type="java.lang.Object"/>
+                    <Column editable="true" title="Producto" type="java.lang.Object"/>
+                    <Column editable="true" title="Modelo" type="java.lang.Object"/>
+                    <Column editable="true" title="Fabricante" type="java.lang.Object"/>
+                    <Column editable="true" title="Descripci&#xf3;n de error" type="java.lang.Object"/>
+                    <Column editable="true" title="Lugar de env&#xed;o" type="java.lang.Object"/>
+                    <Column editable="true" title="Gestiona" type="java.lang.Object"/>
                     <Column editable="true" title="Estado" type="java.lang.Object"/>
-                    <Column editable="true" title="Fecha" type="java.lang.Object"/>
-                    <Column editable="true" title="Observaciones" type="java.lang.Object"/>
+                    <Column editable="true" title="Fecha de envio" type="java.lang.Object"/>
+                    <Column editable="true" title="Fecha recibido" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="autoResizeMode" type="int" value="0"/>
@@ -239,70 +232,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="botonPrincipal">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="e3" green="e3" id="Button.light" palette="3" red="e3" type="palette"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="18" style="1"/>
-            </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenes/editor_boton.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Panel Principal"/>
-            <Property name="toolTipText" type="java.lang.String" value="Ir a panel principal"/>
-            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor de Mano"/>
-            </Property>
-            <Property name="horizontalTextPosition" type="int" value="2"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonPrincipalActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel2">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="e3" green="e3" id="Button.light" palette="3" red="e3" type="palette"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="24" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="0" green="0" red="99" type="rgb"/>
-            </Property>
-            <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenes/z_robot_1.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de m&#xe1;quinas"/>
-            <Property name="verticalAlignment" type="int" value="3"/>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder thickness="2">
-                  <Color PropertyName="color" blue="ff" green="ff" red="ff" type="rgb"/>
-                </LineBorder>
-              </Border>
-            </Property>
-            <Property name="horizontalTextPosition" type="int" value="0"/>
-            <Property name="verticalTextPosition" type="int" value="1"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txt_numeroMaquina">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="16" style="0"/>
-            </Property>
-            <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" value="0"/>
-          </Properties>
-          <Events>
-            <EventHandler event="ancestorRemoved" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="txt_numeroMaquinaAncestorRemoved"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_numeroMaquinaActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JRadioButton" name="jR_numeroMaquina">
+        <Component class="javax.swing.JRadioButton" name="jR_Estado">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="0" type="rgb"/>
@@ -313,7 +243,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="N&#xba; de m&#xe1;quina:"/>
+            <Property name="text" type="java.lang.String" value="Estado:"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
                 <BevelBorder/>
@@ -321,7 +251,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jR_numeroMaquinaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jR_EstadoActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jR_Descripcion">
@@ -388,7 +318,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_fabricanteActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jR_Empresa">
+        <Component class="javax.swing.JRadioButton" name="jR_Producto">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="0" type="rgb"/>
@@ -399,7 +329,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Empresa:"/>
+            <Property name="text" type="java.lang.String" value="Producto:"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
                 <BevelBorder/>
@@ -407,7 +337,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jR_EmpresaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jR_ProductoActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="jC_Empresa">
@@ -416,9 +346,15 @@
               <Font name="Arial" size="16" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="2">
-                <StringItem index="0" value="Comercial Ilorcitana"/>
-                <StringItem index="1" value="Canela Spring"/>
+              <StringArray count="8">
+                <StringItem index="0" value="Regulador"/>
+                <StringItem index="1" value="Tarjeta"/>
+                <StringItem index="2" value="Fuente de alimentaci&#xf3;n"/>
+                <StringItem index="3" value="Motor"/>
+                <StringItem index="4" value="M&#xe1;quina"/>
+                <StringItem index="5" value="Ordenador"/>
+                <StringItem index="6" value="Impresora"/>
+                <StringItem index="7" value="Otros"/>
               </StringArray>
             </Property>
           </Properties>
@@ -429,24 +365,29 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jC_Ubicacion">
+        <Component class="javax.swing.JButton" name="Boton_A&#xf1;adir">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e3" green="e3" id="Button.light" palette="3" red="e3" type="palette"/>
+            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="16" style="0"/>
+              <Font name="Arial" size="18" style="1"/>
             </Property>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagenes/camion-de-mudanzas.png"/>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
+            <Property name="text" type="java.lang.String" value="Nuevo envio"/>
+            <Property name="toolTipText" type="java.lang.String" value="Add documentos"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor de Mano"/>
+            </Property>
+            <Property name="horizontalTextPosition" type="int" value="2"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jC_UbicacionActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Boton_A&#xf1;adirActionPerformed"/>
           </Events>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
         </Component>
-        <Component class="javax.swing.JRadioButton" name="jR_Ubicacion">
+        <Component class="javax.swing.JRadioButton" name="jR_Modelo">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="66" green="66" red="0" type="rgb"/>
@@ -457,61 +398,84 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Ubicaci&#xf3;n:"/>
+            <Property name="text" type="java.lang.String" value="Modelo:"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
                 <BevelBorder/>
               </Border>
             </Property>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jR_UbicacionActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jR_ModeloActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="boton_documentos">
+        <Component class="javax.swing.JTextField" name="txt_fabricante1">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="e3" green="e3" id="Button.light" palette="3" red="e3" type="palette"/>
-            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="18" style="1"/>
+              <Font name="Arial" size="16" style="0"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenes/z_buscar documentos.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Ver Documentos"/>
-            <Property name="toolTipText" type="java.lang.String" value="Ver documentos"/>
-            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor de Mano"/>
-            </Property>
-            <Property name="horizontalTextPosition" type="int" value="2"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boton_documentosActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_fabricante1ActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="Boton_A&#xf1;adir">
+        <Component class="javax.swing.JRadioButton" name="jR_Producto1">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="e3" green="e3" id="Button.light" palette="3" red="e3" type="palette"/>
+              <Color blue="66" green="66" red="0" type="rgb"/>
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="18" style="1"/>
+              <Font name="Arial" size="16" style="1"/>
             </Property>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/imagenes/z_add documentos.png"/>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Add Documentos"/>
-            <Property name="toolTipText" type="java.lang.String" value="Add documentos"/>
-            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Cursor de Mano"/>
+            <Property name="text" type="java.lang.String" value="Responsable:"/>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
+                <BevelBorder/>
+              </Border>
             </Property>
-            <Property name="horizontalTextPosition" type="int" value="2"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Boton_A&#xf1;adirActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jR_Producto1ActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jC_Empresa1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="16" style="0"/>
+            </Property>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jC_Empresa1ActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jC_Empresa2">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Arial" size="16" style="0"/>
+            </Property>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="3">
+                <StringItem index="0" value="enviado"/>
+                <StringItem index="1" value="recibido"/>
+                <StringItem index="2" value="desechado"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jC_Empresa2ActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
