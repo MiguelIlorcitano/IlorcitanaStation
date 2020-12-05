@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import static java.text.DateFormat.DEFAULT;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -97,14 +98,16 @@ public class Panel_Reparaciones_Mod extends javax.swing.JFrame {
         date = new Date();
         String fecha = new SimpleDateFormat("yyyy-MM-dd").format(date);
         String query = "";
-        if (combo_estado.getSelectedItem().toString().equals("recivido")){
-            query = "UPDATE envioReparaciones SET tipo_porducto=\""+combo_estado.getSelectedItem().toString()+"\",modelo=\""+txt_modelo.getText()+"\",fabricante=\""+txt_fabricante.getText()+"\",descripcion=\""+area_problema.getText()+"\",lugar_envio=\""+txt_envio.getText()+"\",persona_envio=\""+combo_responsable.getSelectedItem().toString()+"\",estado=\""+combo_estado.getSelectedItem().toString()+"\" ,fecha_recibido='"+fecha+"' WHERE id ="+id;
+        if (combo_estado.getSelectedItem().toString().equals("recibido")){
+            query = "UPDATE envioReparaciones SET tipo_producto=\""+combo_producto.getSelectedItem().toString()+"\",modelo=\""+txt_modelo.getText()+"\",fabricante=\""+txt_fabricante.getText()+"\",descripcion=\""+area_problema.getText()+"\",lugar_envio=\""+txt_envio.getText()+"\",persona_envio=\""+combo_responsable.getSelectedItem().toString()+"\",estado=\""+combo_estado.getSelectedItem().toString()+"\" ,fecha_recibido='"+fecha+"' WHERE id ="+Integer.parseInt(id);
         }else{
-            query = "UPDATE envioReparaciones SET tipo_porducto=\""+combo_estado.getSelectedItem().toString()+"\",modelo=\""+txt_modelo.getText()+"\",fabricante=\""+txt_fabricante.getText()+"\",descripcion=\""+area_problema.getText()+"\",lugar_envio=\""+txt_envio.getText()+"\",persona_envio=\""+combo_responsable.getSelectedItem().toString()+"\",estado=\""+combo_estado.getSelectedItem().toString()+"\" WHERE id ="+id;
+            Date d = new Date();
+            String fecha1 = new SimpleDateFormat("yyyy-MM-dd").format(d);
+            query = "UPDATE envioReparaciones SET tipo_producto=\""+combo_producto.getSelectedItem().toString()+"\",modelo=\""+txt_modelo.getText()+"\",fabricante=\""+txt_fabricante.getText()+"\",descripcion=\""+area_problema.getText()+"\",lugar_envio=\""+txt_envio.getText()+"\",persona_envio=\""+combo_responsable.getSelectedItem().toString()+"\",estado=\""+combo_estado.getSelectedItem().toString()+"\",fecha_recibido='"+fecha1+"' WHERE id ="+Integer.parseInt(id);
         }
         try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
             Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate(query);
+             stmt.executeUpdate(query);
             modificaTxt();
             JOptionPane.showMessageDialog(null,"Máquina MODIFICADA correctamente.");   
             dispose();
@@ -144,7 +147,7 @@ public class Panel_Reparaciones_Mod extends javax.swing.JFrame {
         lavel_fecha1 = new javax.swing.JLabel();
         lavel_responsable1 = new javax.swing.JLabel();
         combo_estado = new javax.swing.JComboBox<>();
-        boton_adjunta1 = new javax.swing.JButton();
+        boton_mostrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de reparaciones");
@@ -273,12 +276,12 @@ public class Panel_Reparaciones_Mod extends javax.swing.JFrame {
             }
         });
 
-        boton_adjunta1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        boton_adjunta1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/z_buscar documentos.png"))); // NOI18N
-        boton_adjunta1.setToolTipText("Mostrar documentos");
-        boton_adjunta1.addActionListener(new java.awt.event.ActionListener() {
+        boton_mostrar.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        boton_mostrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/z_buscar documentos.png"))); // NOI18N
+        boton_mostrar.setToolTipText("Mostrar documentos");
+        boton_mostrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boton_adjunta1ActionPerformed(evt);
+                boton_mostrarActionPerformed(evt);
             }
         });
 
@@ -312,7 +315,7 @@ public class Panel_Reparaciones_Mod extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(boton_adjunta)
                                 .addGap(18, 18, 18)
-                                .addComponent(boton_adjunta1))
+                                .addComponent(boton_mostrar))
                             .addComponent(lavel_responsable, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 271, Short.MAX_VALUE)
                         .addComponent(boton_modifica))
@@ -376,7 +379,7 @@ public class Panel_Reparaciones_Mod extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(boton_adjunta, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(boton_modifica, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(boton_adjunta1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(boton_mostrar, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
 
@@ -407,9 +410,14 @@ public class Panel_Reparaciones_Mod extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_combo_estadoActionPerformed
 
-    private void boton_adjunta1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_adjunta1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_boton_adjunta1ActionPerformed
+    private void boton_mostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_mostrarActionPerformed
+        String rut = "\\\\server\\datos\\GESCIM\\Gescim\\MODFACTUSOL\\DOCUMENTOS\\INFO_MAQUINARIA\\ENVIO_REPARACIONES\\" + id;
+        try {
+            Runtime.getRuntime().exec("explorer.exe /start," + rut);
+        } catch (IOException ex) {
+            Logger.getLogger(Panel_Reparaciones_Mod.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_boton_mostrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -440,8 +448,8 @@ public class Panel_Reparaciones_Mod extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea area_problema;
     private javax.swing.JButton boton_adjunta;
-    private javax.swing.JButton boton_adjunta1;
     private javax.swing.JButton boton_modifica;
+    private javax.swing.JButton boton_mostrar;
     private javax.swing.JComboBox<String> combo_estado;
     private javax.swing.JComboBox<String> combo_producto;
     private javax.swing.JComboBox<String> combo_responsable;

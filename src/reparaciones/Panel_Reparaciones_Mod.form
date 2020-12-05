@@ -79,7 +79,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="boton_adjunta" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="boton_adjunta1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="boton_mostrar" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="lavel_responsable" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
                           </Group>
@@ -162,7 +162,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="boton_adjunta" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="boton_modifica" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="boton_adjunta1" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="boton_mostrar" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -534,7 +534,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="boton_adjunta1">
+        <Component class="javax.swing.JButton" name="boton_mostrar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Dialog" size="18" style="1"/>
@@ -545,7 +545,7 @@
             <Property name="toolTipText" type="java.lang.String" value="Mostrar documentos"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boton_adjunta1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boton_mostrarActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

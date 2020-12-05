@@ -151,6 +151,20 @@ public class Panel_Operaciones extends javax.swing.JFrame {
         mostrarTabla(Integer.parseInt(id_maquina));
     }
     
+    private void borrarOperacion(){
+        for (int i = 0; i < Tabla.getRowCount(); i++) {
+            String query = "DELETE Operaciones  WHERE IdOperacion =" + Integer.parseInt(Tabla.getValueAt(i, 0).toString());
+            try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                    Statement stmt = conn.createStatement()) {
+                stmt.executeUpdate(query);
+            } catch (SQLException ex) {
+                Logger.getLogger(PanelMaquinas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Operación modificada.");
+        mostrarTabla(Integer.parseInt(id_maquina));
+    }
+    
     private void insertarOperacion() {
         String esp = String.valueOf(jComboBox_especificacion.getSelectedIndex());
         if (esp.length() == 1) {
@@ -227,6 +241,7 @@ public class Panel_Operaciones extends javax.swing.JFrame {
         jTextField_descripcion = new javax.swing.JTextField();
         jButton_añadir = new javax.swing.JButton();
         jButton_modificar = new javax.swing.JButton();
+        jButton_borrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Operaciones de mantenimineto");
@@ -361,6 +376,15 @@ public class Panel_Operaciones extends javax.swing.JFrame {
             }
         });
 
+        jButton_borrar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jButton_borrar.setText("Borrar operación");
+        jButton_borrar.setEnabled(false);
+        jButton_borrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_borrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -388,6 +412,8 @@ public class Panel_Operaciones extends javax.swing.JFrame {
                         .addComponent(jButton_añadir)
                         .addGap(18, 18, 18)
                         .addComponent(jButton_modificar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton_borrar)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -409,7 +435,8 @@ public class Panel_Operaciones extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_añadir)
-                    .addComponent(jButton_modificar))
+                    .addComponent(jButton_modificar)
+                    .addComponent(jButton_borrar))
                 .addContainerGap())
         );
 
@@ -446,6 +473,7 @@ public class Panel_Operaciones extends javax.swing.JFrame {
             jTextField_descripcion.setEnabled(true);
             jButton_añadir.setEnabled(true);
             jButton_modificar.setEnabled(true);
+            jButton_borrar.setEnabled(true);
         }
     }//GEN-LAST:event_jComboBox_maquinasKeyPressed
 
@@ -463,13 +491,14 @@ public class Panel_Operaciones extends javax.swing.JFrame {
 
     private void jComboBox_maquinasInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jComboBox_maquinasInputMethodTextChanged
         int i = extraeID();
-            mostrarTabla(i);
-            jTextField_codigo.setEnabled(true);
-            jComboBox_periodo.setEnabled(true);
-            jComboBox_especificacion.setEnabled(true);
-            jTextField_descripcion.setEnabled(true);
-            jButton_añadir.setEnabled(true);
-            jButton_modificar.setEnabled(true);
+        mostrarTabla(i);
+        jTextField_codigo.setEnabled(true);
+        jComboBox_periodo.setEnabled(true);
+        jComboBox_especificacion.setEnabled(true);
+        jTextField_descripcion.setEnabled(true);
+        jButton_añadir.setEnabled(true);
+        jButton_modificar.setEnabled(true);
+        jButton_borrar.setEnabled(true);
     }//GEN-LAST:event_jComboBox_maquinasInputMethodTextChanged
 
     private void jComboBox_maquinasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_maquinasItemStateChanged
@@ -481,7 +510,12 @@ public class Panel_Operaciones extends javax.swing.JFrame {
         jTextField_descripcion.setEnabled(true);
         jButton_añadir.setEnabled(true);
         jButton_modificar.setEnabled(true);
+        jButton_borrar.setEnabled(true);
     }//GEN-LAST:event_jComboBox_maquinasItemStateChanged
+
+    private void jButton_borrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_borrarActionPerformed
+        borrarOperacion();
+    }//GEN-LAST:event_jButton_borrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -520,6 +554,7 @@ public class Panel_Operaciones extends javax.swing.JFrame {
     private javax.swing.JTable Tabla;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton_añadir;
+    private javax.swing.JButton jButton_borrar;
     private javax.swing.JButton jButton_modificar;
     private javax.swing.JComboBox<String> jComboBox_especificacion;
     private javax.swing.JComboBox<String> jComboBox_maquinas;

@@ -7,7 +7,6 @@ package reparaciones;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -43,8 +42,7 @@ public class RenderEnvios extends DefaultTableCellRenderer {
                             cell.setBackground(Color.red);
                             break;
                         case "desechado":
-                            cell.setBackground(Color.black);
-                            cell.setForeground(Color.white);
+                            cell.setBackground(Color.GRAY);
                             break;
                         default:
                             cell.setBackground(Color.white);
@@ -52,14 +50,14 @@ public class RenderEnvios extends DefaultTableCellRenderer {
                     }
                 }
                 break;
-            case 8:
-                cell.setBackground(new Color(204,255,255));
-                //cell.setFont(new Font("3ds Light", Font.PLAIN, 14));
-                break;
-            case 9:
-                cell.setBackground(new Color(204,204,204));
-                //cell.setFont(new Font("3ds Light", Font.PLAIN, 14));
-                break;
+//            case 8:
+//                cell.setBackground(new Color(204,255,255));
+//                //cell.setFont(new Font("3ds Light", Font.PLAIN, 14));
+//                break;
+//            case 9:
+//                cell.setBackground(new Color(204,204,204));
+//                //cell.setFont(new Font("3ds Light", Font.PLAIN, 14));
+//                break;
             default:
                 cell.setBackground(Color.white);
                 //cell.setFont(new Font("3ds Light", Font.PLAIN, 14));

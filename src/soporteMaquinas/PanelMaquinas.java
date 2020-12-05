@@ -5,6 +5,7 @@
  */
 package soporteMaquinas;
 
+import java.awt.Color;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
@@ -21,7 +22,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import satation.Main;
 import satation.Propiedades;
-import tareasIlorcitana.Tareas_Principal;
 
 /**
  *
@@ -94,6 +94,17 @@ public class PanelMaquinas extends javax.swing.JFrame {
                 txt_man_mensual.setText(rs.getString("M_Mensual"));
                 txt_man_trimestral.setText(rs.getString("M_Trimestral"));
                 txt_man_anual.setText(rs.getString("M_Anual"));
+                if(rs.getString("estado").equals("deshabilitada")){
+                    jRadio_deshabilitada.setBackground(Color.red);
+                    jRadio_deshabilitada.setSelected(true);
+                }
+                if(rs.getString("sala")!=null){
+                    jRadioButton_sala.setBackground(Color.red);
+                    jRadioButton_sala.setSelected(true);
+                    jC_sala.setSelectedItem(rs.getString("sala"));
+                }else{
+                    jC_sala.setVisible(false);
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(PanelMaquinas.class.getName()).log(Level.SEVERE, null, ex);
@@ -101,7 +112,17 @@ public class PanelMaquinas extends javax.swing.JFrame {
     }
     
     private void reemplazaMaquina() {
-        String query = "UPDATE maquinas SET modelo=\""+txt_modelo.getText()+"\",ano_fabricacion=\""+txt_año.getText()+"\",numero_referencia=\""+txt_referencia.getText()+"\",descripcion=\""+txt_descripcion.getText()+"\",numero_maquina="+Integer.parseInt(txt_numero_maquina.getText())+",fabricante=\""+txt_fabricante.getText()+"\",telefono=\""+txt_telefono.getText()+"\",movil=\""+txt_movil.getText()+"\",email=\""+txt_email.getText()+"\",Empresa=\""+jC_Empresa.getSelectedItem()+"\",ubicacion=\""+jC_Ubicacion.getSelectedItem()+"\",M_Semanal=\""+txt_man_semanal.getText()+"\",M_Mensual=\""+txt_man_mensual.getText()+"\",M_Trimestral=\""+txt_man_trimestral.getText()+"\",M_Anual=\""+txt_man_anual.getText()+"\" WHERE id_maquina ="+id_maquina;
+        String query = "";
+        if(jRadio_deshabilitada.isSelected()){
+            query = "UPDATE maquinas SET modelo=\""+txt_modelo.getText()+"\",ano_fabricacion=\""+txt_año.getText()+"\",numero_referencia=\""+txt_referencia.getText()+"\",descripcion=\""+txt_descripcion.getText()+"\",numero_maquina="+Integer.parseInt(txt_numero_maquina.getText())+",fabricante=\""+txt_fabricante.getText()+"\",telefono=\""+txt_telefono.getText()+"\",movil=\""+txt_movil.getText()+"\",email=\""+txt_email.getText()+"\",Empresa=\""+jC_Empresa.getSelectedItem()+"\",ubicacion=\""+jC_Ubicacion.getSelectedItem()+"\",M_Semanal=\""+txt_man_semanal.getText()+"\",M_Mensual=\""+txt_man_mensual.getText()+"\",M_Trimestral=\""+txt_man_trimestral.getText()+"\",M_Anual=\""+txt_man_anual.getText()+"\",estado=\"deshabilitada\",sala=null WHERE id_maquina ="+id_maquina;
+        }else{
+            if (jRadioButton_sala.isSelected()){
+                query = "UPDATE maquinas SET modelo=\""+txt_modelo.getText()+"\",ano_fabricacion=\""+txt_año.getText()+"\",numero_referencia=\""+txt_referencia.getText()+"\",descripcion=\""+txt_descripcion.getText()+"\",numero_maquina="+Integer.parseInt(txt_numero_maquina.getText())+",fabricante=\""+txt_fabricante.getText()+"\",telefono=\""+txt_telefono.getText()+"\",movil=\""+txt_movil.getText()+"\",email=\""+txt_email.getText()+"\",Empresa=\""+jC_Empresa.getSelectedItem()+"\",ubicacion=\""+jC_Ubicacion.getSelectedItem()+"\",M_Semanal=\""+txt_man_semanal.getText()+"\",M_Mensual=\""+txt_man_mensual.getText()+"\",M_Trimestral=\""+txt_man_trimestral.getText()+"\",M_Anual=\""+txt_man_anual.getText()+"\",estado=\"habilitada\",sala=\""+jC_sala.getSelectedItem()+"\" WHERE id_maquina ="+id_maquina;
+            }else{
+                query = "UPDATE maquinas SET modelo=\""+txt_modelo.getText()+"\",ano_fabricacion=\""+txt_año.getText()+"\",numero_referencia=\""+txt_referencia.getText()+"\",descripcion=\""+txt_descripcion.getText()+"\",numero_maquina="+Integer.parseInt(txt_numero_maquina.getText())+",fabricante=\""+txt_fabricante.getText()+"\",telefono=\""+txt_telefono.getText()+"\",movil=\""+txt_movil.getText()+"\",email=\""+txt_email.getText()+"\",Empresa=\""+jC_Empresa.getSelectedItem()+"\",ubicacion=\""+jC_Ubicacion.getSelectedItem()+"\",M_Semanal=\""+txt_man_semanal.getText()+"\",M_Mensual=\""+txt_man_mensual.getText()+"\",M_Trimestral=\""+txt_man_trimestral.getText()+"\",M_Anual=\""+txt_man_anual.getText()+"\",estado=\"habilitada\",sala=null WHERE id_maquina ="+id_maquina;
+            }
+        }
+   
         try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
             Statement stmt = conn.createStatement()) {
             stmt.executeUpdate(query);
@@ -215,6 +236,9 @@ public class PanelMaquinas extends javax.swing.JFrame {
         Boton_Añadir = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         txt_man_mensual = new javax.swing.JTextField();
+        jRadio_deshabilitada = new javax.swing.JRadioButton();
+        jRadioButton_sala = new javax.swing.JRadioButton();
+        jC_sala = new javax.swing.JComboBox<>();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -440,69 +464,97 @@ public class PanelMaquinas extends javax.swing.JFrame {
         txt_man_mensual.setToolTipText("");
         txt_man_mensual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
 
+        jRadio_deshabilitada.setBackground(new java.awt.Color(204, 204, 204));
+        jRadio_deshabilitada.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jRadio_deshabilitada.setText("Deshabilitada");
+        jRadio_deshabilitada.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jRadio_deshabilitada.setBorderPainted(true);
+        jRadio_deshabilitada.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jRadio_deshabilitada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadio_deshabilitadaActionPerformed(evt);
+            }
+        });
+
+        jRadioButton_sala.setBackground(new java.awt.Color(204, 204, 204));
+        jRadioButton_sala.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jRadioButton_sala.setText("Componente compresores");
+        jRadioButton_sala.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jRadioButton_sala.setBorderPainted(true);
+        jRadioButton_sala.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton_salaActionPerformed(evt);
+            }
+        });
+
+        jC_sala.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jC_sala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin sala", "Sala 1A (CIM, N1)", "Sala 1B (CIM, N1)", "Sala 2 (CIM, N3)", "Sala 3 (5A)", "Sala 4 (CS)" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(boton_reemplazar1)
                         .addGap(18, 18, 18)
                         .addComponent(Boton_Añadir)
-                        .addGap(208, 208, 208)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(boton_reemplazar)
                         .addGap(18, 18, 18)
                         .addComponent(boton_registrar))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txt_man_mensual))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jC_Empresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_telefono)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_movil))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_referencia, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_año, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jRadio_deshabilitada, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jC_Empresa, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_telefono)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_movil))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_referencia, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_año))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txt_modelo)
-                                    .addComponent(txt_email)
-                                    .addComponent(txt_fabricante)
-                                    .addComponent(txt_descripcion)
-                                    .addComponent(txt_man_semanal, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txt_man_trimestral)
-                                    .addComponent(txt_man_anual, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jC_Ubicacion, 0, 425, Short.MAX_VALUE)
-                                    .addComponent(txt_numero_maquina))))))
+                            .addComponent(jRadioButton_sala, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                            .addComponent(jC_sala, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_modelo)
+                            .addComponent(txt_email)
+                            .addComponent(txt_fabricante)
+                            .addComponent(txt_man_trimestral)
+                            .addComponent(jC_Ubicacion, 0, 425, Short.MAX_VALUE)
+                            .addComponent(txt_descripcion, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txt_numero_maquina, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txt_man_semanal, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txt_man_mensual, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txt_man_anual, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -564,7 +616,14 @@ public class PanelMaquinas extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_man_anual, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jRadioButton_sala, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jC_sala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jRadio_deshabilitada, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(boton_reemplazar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(Boton_Añadir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -577,11 +636,13 @@ public class PanelMaquinas extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -671,6 +732,25 @@ public class PanelMaquinas extends javax.swing.JFrame {
         m.setVisible(true);
     }//GEN-LAST:event_Boton_AñadirActionPerformed
 
+    private void jRadio_deshabilitadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadio_deshabilitadaActionPerformed
+        if(jRadio_deshabilitada.isSelected()){
+            jRadio_deshabilitada.setBackground(Color.red);
+        }else{
+            jRadio_deshabilitada.setBackground(Color.LIGHT_GRAY);
+            jC_sala.setVisible(false);
+        }
+    }//GEN-LAST:event_jRadio_deshabilitadaActionPerformed
+
+    private void jRadioButton_salaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton_salaActionPerformed
+        if(jRadioButton_sala.isSelected()){
+            jRadioButton_sala.setBackground(Color.red);
+            jC_sala.setVisible(true);
+        }else{
+            jRadioButton_sala.setBackground(Color.LIGHT_GRAY);
+            jC_sala.setVisible(false);
+        }
+    }//GEN-LAST:event_jRadioButton_salaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -711,6 +791,7 @@ public class PanelMaquinas extends javax.swing.JFrame {
     private javax.swing.JButton boton_registrar;
     private javax.swing.JComboBox<String> jC_Empresa;
     private javax.swing.JComboBox<String> jC_Ubicacion;
+    private javax.swing.JComboBox<String> jC_sala;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -728,6 +809,8 @@ public class PanelMaquinas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton jRadioButton_sala;
+    private javax.swing.JRadioButton jRadio_deshabilitada;
     private javax.swing.JTextField txt_año;
     private javax.swing.JTextField txt_descripcion;
     private javax.swing.JTextField txt_email;

@@ -218,7 +218,7 @@ public class HiloStation extends Thread {
          // Se crea la tarea.
         try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
             Statement stmt = conn.createStatement();) {
-            stmt.executeUpdate("INSERT INTO tareas(usuario,tarea, tipo_tarea,tipo_problema, id_maquina, nivel_preferencia, estado, observaciones, tipo_operario) VALUES (\"0\",\"" + mantenimiento + "\",\"mantenimiento operario\",\"mantenimiento\",\"" + id_m + "\",\"prioritaria\",\"en espera\",\"" + observaciones + "\",\"operario\")");
+            stmt.executeUpdate("INSERT INTO tareas(usuario,tarea, tipo_tarea,tipo_problema, id_maquina, nivel_preferencia, estado, operaciones, tarea, tipo_operario) VALUES (\"0\",\"" + mantenimiento + "\",\"mantenimiento operario\",\"mantenimiento\",\"" + id_m + "\",\"prioritaria\",\"en espera\",\"\",\"" + observaciones + "\",\"operario\")");
             JOptionPane.showMessageDialog(null, "Tarea creada correctamente.");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al intentar crear una tarea. " + e);
@@ -301,7 +301,12 @@ public class HiloStation extends Thread {
      */
     private void main() {
         
+        //------------------------------------------------------------------------------------------------------------------------------------------------//
+        //---------------------------- revisar esto para el tema de las fechas ---------------------------------------------------------------------------//
+        //------------------------------------------------------------------------------------------------------------------------------------------------//
+        
         extraeMaquinas();
+        
         for (int i = 0; i < n_maquina.size(); i++) {
             // Comprueba que la máquina está en el archivo de configuarción
             if (compruebaMaquinas(n_maquina.get(i))) {

@@ -148,6 +148,9 @@ public class Panel_Nueva_Tarea extends javax.swing.JFrame {
         jCMaquina = new javax.swing.JComboBox<>();
         etiMaquina = new javax.swing.JLabel();
         jCTarea = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tAIndicaciones = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nueva Tarea");
@@ -226,6 +229,17 @@ public class Panel_Nueva_Tarea extends javax.swing.JFrame {
         jCTarea.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jCTarea.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rotura", "Revisión", "Revisión Semestral", "Revisión Trimestral", "Revisión Anual", "Elaboración", "Sugerencia" }));
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(51, 0, 0));
+        jLabel5.setText("Indicaciones:");
+
+        tAIndicaciones.setColumns(20);
+        tAIndicaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tAIndicaciones.setLineWrap(true);
+        tAIndicaciones.setRows(5);
+        tAIndicaciones.setWrapStyleWord(true);
+        jScrollPane3.setViewportView(tAIndicaciones);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -260,7 +274,9 @@ public class Panel_Nueva_Tarea extends javax.swing.JFrame {
                                     .addComponent(jCNivelPreferencia, 0, 220, Short.MAX_VALUE)))))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel2)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 686, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(36, 36, 36))
             .addGroup(layout.createSequentialGroup()
                 .addGap(445, 445, 445)
@@ -296,10 +312,14 @@ public class Panel_Nueva_Tarea extends javax.swing.JFrame {
                 .addComponent(rbNeumatico)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rbElectrico)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -372,7 +392,7 @@ public class Panel_Nueva_Tarea extends javax.swing.JFrame {
             //Se pasa a la base de datos la nueva tarea
             try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                 Statement stmt = conn.createStatement()) {
-                stmt.executeUpdate("INSERT INTO tareas(usuario,tarea, tipo_tarea,tipo_problema, id_maquina, nivel_preferencia, estado, observaciones, tipo_operario) VALUES (\"" + usuario + "\",\"" + jCTarea.getSelectedItem().toString() + "\",\"" + jCTipoTarea.getSelectedItem().toString() + "\",\"" + tipoproblema + "\",\"" + idmaquina + "\",\"" + jCNivelPreferencia.getSelectedItem().toString() + "\",\"en espera\",\"" + tAObservaciones.getText() + "\",\"" + operario + "\")");
+                stmt.executeUpdate("INSERT INTO tareas(usuario,tarea, tipo_tarea,tipo_problema, id_maquina, nivel_preferencia, estado, observaciones, operaciones, tipo_operario) VALUES (\"" + usuario + "\",\"" + jCTarea.getSelectedItem().toString() + "\",\"" + jCTipoTarea.getSelectedItem().toString() + "\",\"" + tipoproblema + "\",\"" + idmaquina + "\",\"" + jCNivelPreferencia.getSelectedItem().toString() + "\",\"en espera\",\"" + tAObservaciones.getText() + "\",\"" + tAIndicaciones.getText() + "\",\"" + operario + "\")");
                 JOptionPane.showMessageDialog(null, "Tarea creada correctamente.");
                 modificaTxt();
                 dispose();
@@ -445,11 +465,14 @@ public class Panel_Nueva_Tarea extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JRadioButton rbElectrico;
     private javax.swing.JRadioButton rbHidraulico;
     private javax.swing.JRadioButton rbMecanico;
     private javax.swing.JRadioButton rbNeumatico;
+    private javax.swing.JTextArea tAIndicaciones;
     private javax.swing.JTextArea tAObservaciones;
     // End of variables declaration//GEN-END:variables
 }

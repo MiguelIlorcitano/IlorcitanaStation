@@ -31,6 +31,7 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
     String operaciones;         //Recoge las operaciones realizadas.
     String piezasSustituidas;   //Recoge las piezas sustituidas.
     String observaciones;       //Recoge las observaciones del usuario.
+    String obperaciones;       //Recoge las observaciones del usuario.
     String auxOperario;
     String auxMaquina;
     String dia;
@@ -50,7 +51,7 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         //this.setExtendedState(MAXIMIZED_BOTH);
         llenarComboMaquinas();
         id_tarea="0";
-        txtIndicaciones.setEditable(false);
+        txtOperaciones.setEditable(false);
     }
     
     /**
@@ -60,9 +61,10 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
      * @param t_tr variable para tipo de tarea
      * @param t_pr variable para tipo de problema
      * @param id_maquina
+     * @param op
      * @param ob variable para observaciones
      */
-    public Panel_Mantenimiento(String id_tarea, String tr, String t_tr, String t_pr, String id_maquina, String ob) {
+    public Panel_Mantenimiento(String id_tarea, String tr, String t_tr, String t_pr, String id_maquina, String op, String ob) {
         initComponents();
         this.setLocationRelativeTo(null);
         //this.setExtendedState(MAXIMIZED_BOTH);
@@ -77,7 +79,7 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         txtIndicaciones.setFont( new Font("Century Gothic",0, 14) );
         txtIndicaciones.setText(tr);
         txtIndicaciones.setEditable(false);
-        txtOperaciones.setText(ob);
+        txtOperaciones.setText(op);
         tipoProblemaMantenimiento(t_pr);
         this.ob = ob;
         es_tarea=true;
@@ -287,11 +289,11 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jCalendarCombo1 = new org.freixas.jcalendar.JCalendarCombo();
         jScrollPane3 = new javax.swing.JScrollPane();
-        txtIndicaciones = new javax.swing.JTextArea();
+        txtOperaciones = new javax.swing.JTextArea();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtObservaciones = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
-        txtOperaciones = new javax.swing.JTextArea();
+        txtIndicaciones = new javax.swing.JTextArea();
         jScrollPane6 = new javax.swing.JScrollPane();
         txtPiezasSustituidas = new javax.swing.JTextArea();
 
@@ -353,7 +355,7 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         jLabel5.setBackground(new java.awt.Color(51, 153, 255));
         jLabel5.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Operaciones:");
+        jLabel5.setText("Tipo de tarea:");
         jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
         jLabel5.setOpaque(true);
 
@@ -408,7 +410,7 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         jLabel10.setBackground(new java.awt.Color(51, 153, 255));
         jLabel10.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Indicaciones:");
+        jLabel10.setText("Operaciones:");
         jLabel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 153)));
         jLabel10.setOpaque(true);
 
@@ -470,12 +472,12 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
 
         jCalendarCombo1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        txtIndicaciones.setColumns(20);
-        txtIndicaciones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtIndicaciones.setLineWrap(true);
-        txtIndicaciones.setRows(5);
-        txtIndicaciones.setWrapStyleWord(true);
-        jScrollPane3.setViewportView(txtIndicaciones);
+        txtOperaciones.setColumns(20);
+        txtOperaciones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtOperaciones.setLineWrap(true);
+        txtOperaciones.setRows(5);
+        txtOperaciones.setWrapStyleWord(true);
+        jScrollPane3.setViewportView(txtOperaciones);
 
         txtObservaciones.setColumns(20);
         txtObservaciones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -484,12 +486,12 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         txtObservaciones.setWrapStyleWord(true);
         jScrollPane4.setViewportView(txtObservaciones);
 
-        txtOperaciones.setColumns(20);
-        txtOperaciones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        txtOperaciones.setLineWrap(true);
-        txtOperaciones.setRows(5);
-        txtOperaciones.setWrapStyleWord(true);
-        jScrollPane5.setViewportView(txtOperaciones);
+        txtIndicaciones.setColumns(20);
+        txtIndicaciones.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtIndicaciones.setLineWrap(true);
+        txtIndicaciones.setRows(5);
+        txtIndicaciones.setWrapStyleWord(true);
+        jScrollPane5.setViewportView(txtIndicaciones);
 
         txtPiezasSustituidas.setColumns(20);
         txtPiezasSustituidas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -622,22 +624,24 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
                     .addComponent(jCTarea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel14))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
@@ -679,7 +683,7 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         cogeMantenimiento();    //Obtenemos el tipo de mantenimiento.
         cogeProblema();         //Obtenemos el tipo de problema.
         
-        operaciones=this.txtOperaciones.getText();             //Optenemos las operaciones realizadas.
+        operaciones=this.txtIndicaciones.getText();             //Optenemos las operaciones realizadas.
         
         //Obtenemos las piezas sustituidas.
         if(this.txtPiezasSustituidas.getText().equals(""))
@@ -692,7 +696,7 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
         if(this.txtObservaciones.getText().equals(""))
             observaciones="Sin operación";         
         else{
-            observaciones=this.txtIndicaciones.getText();   
+            observaciones=this.txtOperaciones.getText();   
         }
         
         if ("".equals(fecha)){
@@ -726,10 +730,10 @@ public class Panel_Mantenimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jCTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCTareaActionPerformed
-        txtIndicaciones.setEditable(true);
-        txtIndicaciones.setText("");
-        txtIndicaciones.append(jCTarea.getSelectedItem().toString());
-        txtIndicaciones.setEditable(false);
+        txtOperaciones.setEditable(true);
+        txtOperaciones.setText("");
+        txtOperaciones.append(jCTarea.getSelectedItem().toString());
+        txtOperaciones.setEditable(false);
     }//GEN-LAST:event_jCTareaActionPerformed
 
     /**

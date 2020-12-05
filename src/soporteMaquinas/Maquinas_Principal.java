@@ -5,7 +5,6 @@
 
 package soporteMaquinas;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
@@ -47,6 +46,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
      */
     public Maquinas_Principal() throws SQLException {
         initComponents();
+        jLabel_sala.setVisible(false);
         KeyboardFocusManager.getCurrentKeyboardFocusManager().
                 addKeyEventDispatcher(new KeyEventDispatcher() {
                     @Override
@@ -75,17 +75,50 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
     
     private String generaConsulta(){
         if(jR_numeroMaquina.isSelected()){
-            return "SELECT * FROM maquinas WHERE numero_maquina="+Integer.parseInt(txt_numeroMaquina.getText());
+            return "SELECT * FROM maquinas WHERE numero_maquina="+Integer.parseInt(txt_numeroMaquina.getText())+" AND  estado=\"habilitada\"";
         }else if(jR_Descripcion.isSelected()){
-            return "SELECT * FROM maquinas WHERE descripcion LIKE \"%"+txt_descripcion.getText()+"%\"";
+            return "SELECT * FROM maquinas WHERE descripcion LIKE \"%"+txt_descripcion.getText()+"%\" AND estado=\"habilitada\"";
         }else if(jR_Fabricante.isSelected()){
-            return "SELECT * FROM maquinas WHERE fabricante LIKE \"%"+txt_fabricante.getText()+"%\"";
+            return "SELECT * FROM maquinas WHERE fabricante LIKE \"%"+txt_fabricante.getText()+"%\" AND estado=\"habilitada\"";
         }else if(jR_Empresa.isSelected()&&jR_Ubicacion.isSelected()==false){
-            return "SELECT * FROM maquinas WHERE Empresa=\""+jC_Empresa.getSelectedItem().toString()+"\"";
+            return "SELECT * FROM maquinas WHERE Empresa=\""+jC_Empresa.getSelectedItem().toString()+"\" AND  estado=\"habilitada\"";
         }else if(jR_Empresa.isSelected()&&jR_Ubicacion.isSelected()==true){
-            return "SELECT * FROM maquinas WHERE Empresa=\""+jC_Empresa.getSelectedItem().toString()+"\" AND ubicacion=\""+jC_Ubicacion.getSelectedItem().toString()+"\"";
+            return "SELECT * FROM maquinas WHERE Empresa=\""+jC_Empresa.getSelectedItem().toString()+"\" AND ubicacion=\""+jC_Ubicacion.getSelectedItem().toString()+"\" AND estado=\"habilitada\"";
         }else{
-            return "SELECT * FROM maquinas";
+            return "SELECT * FROM maquinas WHERE estado=\"habilitada\"";
+        }
+    }
+    
+    private String generaConsultaDeshabilitadas(){
+        if(jR_numeroMaquina.isSelected()){
+            return "SELECT * FROM maquinas WHERE numero_maquina="+Integer.parseInt(txt_numeroMaquina.getText())+" AND  estado=\"deshabilitada\"";
+        }else if(jR_Descripcion.isSelected()){
+            return "SELECT * FROM maquinas WHERE descripcion LIKE \"%"+txt_descripcion.getText()+"%\" AND estado=\"deshabilitada\"";
+        }else if(jR_Fabricante.isSelected()){
+            return "SELECT * FROM maquinas WHERE fabricante LIKE \"%"+txt_fabricante.getText()+"%\" AND estado=\"deshabilitada\"";
+        }else if(jR_Empresa.isSelected()&&jR_Ubicacion.isSelected()==false){
+            return "SELECT * FROM maquinas WHERE Empresa=\""+jC_Empresa.getSelectedItem().toString()+"\" AND  estado=\"deshabilitada\"";
+        }else if(jR_Empresa.isSelected()&&jR_Ubicacion.isSelected()==true){
+            return "SELECT * FROM maquinas WHERE Empresa=\""+jC_Empresa.getSelectedItem().toString()+"\" AND ubicacion=\""+jC_Ubicacion.getSelectedItem().toString()+"\" AND estado=\"deshabilitada\"";
+        }else{
+            return "SELECT * FROM maquinas WHERE estado=\"deshabilitada\"";
+        }
+    }
+    
+    private String generaConsultaSala(String sala){
+        switch (sala) {
+            case "1A":
+                return "SELECT * FROM maquinas WHERE sala=\"Sala 1A (CIM, N1)\"";
+            case "1B":
+                return "SELECT * FROM maquinas WHERE sala=\"Sala 1B (CIM, N1)\"";
+            case "2":
+                return "SELECT * FROM maquinas WHERE sala=\"Sala 2 (CIM, N3)\"";
+            case "3":
+                return "SELECT * FROM maquinas WHERE sala=\"Sala 3 (5A)\"";
+            case "4":
+                return "SELECT * FROM maquinas WHERE sala=\"Sala 4 (CS)\"";
+            default:
+                return "SELECT * FROM maquinas WHERE sala !=null";
         }
     }
    
@@ -93,7 +126,25 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
      * Extrae el contenido de la base de datos y lo inserta en una jtable.
      */
     public void mostrarTabla() {
-        String consulta = generaConsulta();
+        
+        String consulta= "";
+        
+        if (jRadioButtonMenuItem_deshabilitadas.isSelected()) {
+            consulta = generaConsultaDeshabilitadas();
+        } else if (jRadioButtonMenuItem_Sala1A.isSelected()) {
+            consulta = generaConsultaSala("1A");
+        } else if (jRadioButtonMenuItem_Sala1B.isSelected()) {
+            consulta = generaConsultaSala("1B");
+        } else if (jRadioButtonMenuItem_Sala2.isSelected()) {
+            consulta = generaConsultaSala("2");
+        } else if (jRadioButtonMenuItem_Sala3.isSelected()) {
+            consulta = generaConsultaSala("3");
+        } else if (jRadioButtonMenuItem_Sala4.isSelected()) {
+            consulta = generaConsultaSala("4");
+        } else {
+            consulta = generaConsulta();
+        }
+
         try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
             Statement stmt = conn.createStatement();
             ResultSet r = stmt.executeQuery(consulta)) {
@@ -116,9 +167,9 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             Tabla.setModel(n);
             Tabla.setDefaultRenderer(Object.class, new RenderM());
             Tabla.getColumnModel().getColumn(0).setPreferredWidth(250);
-            Tabla.getColumnModel().getColumn(1).setPreferredWidth(250);
+            Tabla.getColumnModel().getColumn(1).setPreferredWidth(300);
             Tabla.getColumnModel().getColumn(2).setPreferredWidth(150);
-            Tabla.getColumnModel().getColumn(3).setPreferredWidth(250);
+            Tabla.getColumnModel().getColumn(3).setPreferredWidth(300);
             Tabla.getColumnModel().getColumn(4).setPreferredWidth(250);
             Tabla.getColumnModel().getColumn(5).setPreferredWidth(250);
             Tabla.getColumnModel().getColumn(6).setPreferredWidth(150);
@@ -187,7 +238,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
         botonPrincipal = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel_titulo = new javax.swing.JLabel();
         txt_numeroMaquina = new javax.swing.JTextField();
         jR_numeroMaquina = new javax.swing.JRadioButton();
         jR_Descripcion = new javax.swing.JRadioButton();
@@ -200,11 +251,20 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         jR_Ubicacion = new javax.swing.JRadioButton();
         boton_documentos = new javax.swing.JButton();
         Boton_Añadir = new javax.swing.JButton();
+        jLabel_sala = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jRadioButtonMenuItem_deshabilitadas = new javax.swing.JRadioButtonMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jRadioButtonMenuItem_Sala1A = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem_Sala1B = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem_Sala2 = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem_Sala3 = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem_Sala4 = new javax.swing.JRadioButtonMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestión de máquinas");
@@ -261,16 +321,21 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
-        jLabel2.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(153, 0, 0));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/z_robot_1.png"))); // NOI18N
-        jLabel2.setText("Gestión de máquinas");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
-        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jLabel_titulo.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.light"));
+        jLabel_titulo.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel_titulo.setForeground(new java.awt.Color(153, 0, 0));
+        jLabel_titulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_titulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/z_robot_1.png"))); // NOI18N
+        jLabel_titulo.setText("Gestión de máquinas");
+        jLabel_titulo.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel_titulo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+        jLabel_titulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel_titulo.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        jLabel_titulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel_tituloMousePressed(evt);
+            }
+        });
 
         txt_numeroMaquina.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
         txt_numeroMaquina.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -402,6 +467,12 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             }
         });
 
+        jLabel_sala.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jLabel_sala.setForeground(new java.awt.Color(153, 0, 0));
+        jLabel_sala.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_sala.setText("jLabel1");
+        jLabel_sala.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255), 2));
+
         javax.swing.GroupLayout Panel1Layout = new javax.swing.GroupLayout(Panel1);
         Panel1.setLayout(Panel1Layout);
         Panel1Layout.setHorizontalGroup(
@@ -409,7 +480,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
             .addGroup(Panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel_titulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(Panel1Layout.createSequentialGroup()
                         .addComponent(jR_numeroMaquina)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -429,16 +500,21 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
                     .addComponent(jC_Empresa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(boton_documentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 755, Short.MAX_VALUE))
+                .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 755, Short.MAX_VALUE)
+                    .addComponent(jLabel_sala, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         Panel1Layout.setVerticalGroup(
             Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3)
                     .addGroup(Panel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(jLabel_sala, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3))
+                    .addGroup(Panel1Layout.createSequentialGroup()
+                        .addComponent(jLabel_titulo)
                         .addGap(18, 18, 18)
                         .addGroup(Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txt_numeroMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -459,7 +535,7 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
                         .addComponent(jR_Ubicacion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jC_Ubicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                         .addComponent(Boton_Añadir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(boton_documentos)
@@ -470,7 +546,6 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
 
         jMenu1.setBackground(new java.awt.Color(255, 255, 255));
         jMenu1.setText("Operaciones");
-        jMenu1.setFont(new java.awt.Font("3ds Light", 1, 14)); // NOI18N
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu1ActionPerformed(evt);
@@ -504,6 +579,62 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Opciones");
+
+        jRadioButtonMenuItem_deshabilitadas.setText("Máquinas deshabilitadas");
+        jRadioButtonMenuItem_deshabilitadas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem_deshabilitadasActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jRadioButtonMenuItem_deshabilitadas);
+
+        jMenu3.setText("Salas compresores");
+
+        jRadioButtonMenuItem_Sala1A.setText("Sala 1A (CIM, N1)");
+        jRadioButtonMenuItem_Sala1A.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem_Sala1AActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jRadioButtonMenuItem_Sala1A);
+
+        jRadioButtonMenuItem_Sala1B.setText("Sala 1B (CIM, N1)");
+        jRadioButtonMenuItem_Sala1B.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem_Sala1BActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jRadioButtonMenuItem_Sala1B);
+
+        jRadioButtonMenuItem_Sala2.setText("Sala 2 (CIM, N3)");
+        jRadioButtonMenuItem_Sala2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem_Sala2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jRadioButtonMenuItem_Sala2);
+
+        jRadioButtonMenuItem_Sala3.setText("Sala 3 (5A)");
+        jRadioButtonMenuItem_Sala3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem_Sala3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jRadioButtonMenuItem_Sala3);
+
+        jRadioButtonMenuItem_Sala4.setText("Sala 4 (CS)");
+        jRadioButtonMenuItem_Sala4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem_Sala4ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jRadioButtonMenuItem_Sala4);
+
+        jMenu2.add(jMenu3);
+
+        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -608,8 +739,8 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
 
     private void jR_UbicacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jR_UbicacionActionPerformed
         
-            mostrarTabla();
-            repaint();
+        mostrarTabla();
+        repaint();
     }//GEN-LAST:event_jR_UbicacionActionPerformed
 
     private void txt_numeroMaquinaAncestorRemoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_txt_numeroMaquinaAncestorRemoved
@@ -687,6 +818,107 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
         mod.setVisible(true);
     }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
 
+    private void jRadioButtonMenuItem_deshabilitadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem_deshabilitadasActionPerformed
+        jRadioButtonMenuItem_Sala1A.setSelected(false);
+        jRadioButtonMenuItem_Sala1B.setSelected(false);
+        jRadioButtonMenuItem_Sala2.setSelected(false);
+        jRadioButtonMenuItem_Sala3.setSelected(false);
+        jRadioButtonMenuItem_Sala4.setSelected(false);
+        jLabel_sala.setVisible(false);
+        mostrarTabla();
+    }//GEN-LAST:event_jRadioButtonMenuItem_deshabilitadasActionPerformed
+
+    private void jRadioButtonMenuItem_Sala1AActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem_Sala1AActionPerformed
+        jRadioButtonMenuItem_deshabilitadas.setSelected(false);
+        if(jRadioButtonMenuItem_Sala1A.isSelected()){
+            jRadioButtonMenuItem_Sala1B.setSelected(false);
+            jRadioButtonMenuItem_Sala2.setSelected(false);
+            jRadioButtonMenuItem_Sala3.setSelected(false);
+            jRadioButtonMenuItem_Sala4.setSelected(false);
+            jLabel_sala.setVisible(true);
+            jLabel_sala.setText(jRadioButtonMenuItem_Sala1A.getText());
+            mostrarTabla();
+        }else{
+            jLabel_sala.setVisible(false);
+            mostrarTabla();
+        }
+    }//GEN-LAST:event_jRadioButtonMenuItem_Sala1AActionPerformed
+
+    private void jRadioButtonMenuItem_Sala1BActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem_Sala1BActionPerformed
+        jRadioButtonMenuItem_deshabilitadas.setSelected(false);
+        if(jRadioButtonMenuItem_Sala1B.isSelected()){
+            jRadioButtonMenuItem_Sala1A.setSelected(false);
+            jRadioButtonMenuItem_Sala2.setSelected(false);
+            jRadioButtonMenuItem_Sala3.setSelected(false);
+            jRadioButtonMenuItem_Sala4.setSelected(false);
+            jLabel_sala.setVisible(true);
+            jLabel_sala.setText(jRadioButtonMenuItem_Sala1B.getText());
+            mostrarTabla();
+        }else{
+            jLabel_sala.setVisible(false);
+            mostrarTabla();
+        }
+    }//GEN-LAST:event_jRadioButtonMenuItem_Sala1BActionPerformed
+
+    private void jRadioButtonMenuItem_Sala2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem_Sala2ActionPerformed
+        jRadioButtonMenuItem_deshabilitadas.setSelected(false);
+        if(jRadioButtonMenuItem_Sala2.isSelected()){
+            jRadioButtonMenuItem_Sala1A.setSelected(false);
+            jRadioButtonMenuItem_Sala1B.setSelected(false);
+            jRadioButtonMenuItem_Sala3.setSelected(false);
+            jRadioButtonMenuItem_Sala4.setSelected(false);
+            jLabel_sala.setVisible(true);
+            jLabel_sala.setText(jRadioButtonMenuItem_Sala2.getText());
+            mostrarTabla();
+        }else{
+            jLabel_sala.setVisible(false);
+            mostrarTabla();
+        }
+    }//GEN-LAST:event_jRadioButtonMenuItem_Sala2ActionPerformed
+
+    private void jRadioButtonMenuItem_Sala3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem_Sala3ActionPerformed
+        jRadioButtonMenuItem_deshabilitadas.setSelected(false);
+        if(jRadioButtonMenuItem_Sala3.isSelected()){
+            jRadioButtonMenuItem_Sala1A.setSelected(false);
+            jRadioButtonMenuItem_Sala1B.setSelected(false);
+            jRadioButtonMenuItem_Sala2.setSelected(false);
+            jRadioButtonMenuItem_Sala4.setSelected(false);
+            jLabel_sala.setVisible(true);
+            jLabel_sala.setText(jRadioButtonMenuItem_Sala3.getText());
+            mostrarTabla();
+        }else{
+            jLabel_sala.setVisible(false);
+            mostrarTabla();
+        }
+    }//GEN-LAST:event_jRadioButtonMenuItem_Sala3ActionPerformed
+
+    private void jRadioButtonMenuItem_Sala4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem_Sala4ActionPerformed
+        jRadioButtonMenuItem_deshabilitadas.setSelected(false);
+        if(jRadioButtonMenuItem_Sala4.isSelected()){
+            jRadioButtonMenuItem_Sala1A.setSelected(false);
+            jRadioButtonMenuItem_Sala1B.setSelected(false);
+            jRadioButtonMenuItem_Sala2.setSelected(false);
+            jRadioButtonMenuItem_Sala3.setSelected(false);
+            jLabel_sala.setVisible(true);
+            jLabel_sala.setText(jRadioButtonMenuItem_Sala4.getText());
+            mostrarTabla();
+        }else{
+            jLabel_sala.setVisible(false);
+            mostrarTabla();
+        }
+    }//GEN-LAST:event_jRadioButtonMenuItem_Sala4ActionPerformed
+
+    private void jLabel_tituloMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_tituloMousePressed
+        jRadioButtonMenuItem_deshabilitadas.setSelected(false);
+        jRadioButtonMenuItem_Sala1A.setSelected(false);
+        jRadioButtonMenuItem_Sala1B.setSelected(false);
+        jRadioButtonMenuItem_Sala2.setSelected(false);
+        jRadioButtonMenuItem_Sala3.setSelected(false);
+        jRadioButtonMenuItem_Sala4.setSelected(false);
+        jLabel_sala.setVisible(false);
+        mostrarTabla();
+    }//GEN-LAST:event_jLabel_tituloMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -724,8 +956,11 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> jC_Empresa;
     private javax.swing.JComboBox<String> jC_Ubicacion;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel_sala;
+    private javax.swing.JLabel jLabel_titulo;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -735,6 +970,12 @@ public final class Maquinas_Principal extends javax.swing.JFrame {
     private javax.swing.JRadioButton jR_Ubicacion;
     private javax.swing.JRadioButton jR_numeroMaquina;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_Sala1A;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_Sala1B;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_Sala2;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_Sala3;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_Sala4;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem_deshabilitadas;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField txt_descripcion;
     private javax.swing.JTextField txt_fabricante;

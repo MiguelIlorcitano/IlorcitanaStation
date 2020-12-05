@@ -94,7 +94,7 @@ public class Main {
      */
     public static void main(String[] args) {
         try {
-            SERVER_SOCKET = new ServerSocket(9876);
+            SERVER_SOCKET = new ServerSocket(9871);
             Main main = new Main();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "La aplicación ya está abierta. "+ex, "Ilorcitana_Station", 1);

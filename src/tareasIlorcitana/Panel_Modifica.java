@@ -6,17 +6,21 @@
 package tareasIlorcitana;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import satation.Main;
 import satation.Propiedades;
@@ -30,6 +34,8 @@ public class Panel_Modifica extends javax.swing.JFrame {
     int id_t;
     String id_m;
     Calendar c1;
+    int contadorP = 0;
+    ArrayList <JCheckBox> array_checkbox;
 
     /**
      * Creates new form Panel_Nueva
@@ -40,10 +46,12 @@ public class Panel_Modifica extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);   
         muestraTarea(id_t=Integer.parseInt(id));  
         jCMaquina.setEnabled(false);
+        
     }
     
     public Panel_Modifica() {
         initComponents();
+        //array_checkbox = new ArrayList<>();
     }
     
     /**
@@ -72,13 +80,73 @@ public class Panel_Modifica extends javax.swing.JFrame {
     }
     
     private void extraeObservaciones(String ob){
+        array_checkbox = new ArrayList<>();
         String aux [];
-        aux = ob.split("#");
-        for (int i = 0; i<aux.length;i++) {
-            if (!aux[i].contains("#")) {
-                tAObservaciones.append("- "+aux[i]+"\n\n");
-            } 
+        
+        if (ob.contains("#")){
+            aux = ob.split("#");
+            for (int i = 0; i <= (aux.length - 1); i++) {
+                if (!aux[i].contains("#") && aux[i].trim().length()>0) {
+                    jPanel_tareas.setLayout(new BoxLayout(jPanel_tareas, BoxLayout.Y_AXIS));
+                    array_checkbox.add(new JCheckBox(aux[i]));
+                    array_checkbox.get(contadorP).setBackground(Color.white);
+                    array_checkbox.get(contadorP).setFont(new Font("Tahoma", 0, 14));
+                    jPanel_tareas.add(array_checkbox.get(contadorP));
+                    jPanel_tareas.revalidate();
+                    jPanel_tareas.repaint();
+                    contadorP++;
+                }
+            }
+        }else if(ob.contains("-")){
+            aux = ob.split("-");
+            for (int i = 0; i <= (aux.length - 1); i++) {
+                if (!aux[i].contains("-")&& aux[i].trim().length()>0) {
+                    jPanel_tareas.setLayout(new BoxLayout(jPanel_tareas, BoxLayout.Y_AXIS));
+                    array_checkbox.add(new JCheckBox(aux[i]));
+                    array_checkbox.get(contadorP).setBackground(Color.white);
+                    array_checkbox.get(contadorP).setFont(new Font("Tahoma", 0, 14));
+                    jPanel_tareas.add(array_checkbox.get(contadorP));
+                    jPanel_tareas.revalidate();
+                    jPanel_tareas.repaint();
+                    contadorP++;
+                }
+            }
+        }else{
+            jPanel_tareas.setLayout(new BoxLayout(jPanel_tareas, BoxLayout.Y_AXIS));
+            array_checkbox.add(new JCheckBox(ob));
+            array_checkbox.get(contadorP).setBackground(Color.white);
+            array_checkbox.get(contadorP).setFont(new Font("Tahoma", 0, 14));
+            jPanel_tareas.add(array_checkbox.get(contadorP));
+            jPanel_tareas.revalidate();
+            jPanel_tareas.repaint();
+            contadorP++;
         }
+    }
+    
+    private String extraeTexto(){
+        String resultado = "";
+        for(int i=0; i<array_checkbox.size();i++){
+            resultado= resultado+array_checkbox.get(i).getText()+" #";
+        }
+        return resultado;
+    }
+    
+    private boolean cumpruebaTermidas(){
+        boolean comprobado=true;
+        for(int i = 0; i<array_checkbox.size();i++){
+            if(array_checkbox.get(i).isSelected()==false){
+                comprobado=false;
+            }
+        }
+        return comprobado;
+    }
+    
+    private String extraeOperaciones(){
+        String operaciones = "";
+        for (int i = 0; i < array_checkbox.size(); i++) {
+            operaciones = operaciones + array_checkbox.get(i).getText()+ " # ";
+        }
+        return operaciones;
     }
     
     private void muestraTarea(int i){
@@ -86,38 +154,35 @@ public class Panel_Modifica extends javax.swing.JFrame {
         try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
             Statement stmt = conn.createStatement();
             ResultSet r = stmt.executeQuery("SELECT * FROM tareas INNER JOIN maquinas ON (tareas.id_maquina=maquinas.id_maquina) WHERE  Id_tarea="+i)) {
-            String obser;
             while (r.next()){ 
                 tATarea.append(r.getString("tarea"));
                 jCNivelPreferencia.setSelectedItem(r.getString("nivel_preferencia"));
-                //tAObservaciones.append(r.getString("observaciones")); 
-                obser= r.getString("observaciones");
-                extraeObservaciones(obser);
+                extraeObservaciones(r.getString("operaciones"));
                 jlMaquina.setText(r.getString("descripcion"));
                 id_m=r.getString("id_maquina");
-                String as = r.getString("estado");
-                if(null != as)switch (as) {
+                tAObservaciones.setText(r.getString("observaciones"));
+                
+                if(null != r.getString("estado"))switch (r.getString("estado")) {
                     case "en proceso":
-                        //jButton3.setVisible(false);
                         jbIniciar.setBackground(Color.gray);
                         jbIniciar.setEnabled(false);
-                        labelProceso.setVisible(true);
+                        labelProceso.setEnabled(true);
+                        
                         break;
                     case "en espera":
                         jbFinalizar.setBackground(Color.gray);
                         jbFinalizar.setEnabled(false);
-                        labelProceso.setVisible(false);
+                        labelProceso.setEnabled(false);
                         break;
                     default:
                         jbIniciar.setBackground(Color.gray);
                         jbIniciar.setEnabled(false);
                         jbFinalizar.setBackground(Color.gray);
                         jbFinalizar.setEnabled(false);
-                        labelProceso.setVisible(false);
+                        labelProceso.setEnabled(false);
                         break;
                 }
             }
-            
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,"Error al cargar los datos de la tabla Mantenimiento ");
         }
@@ -175,6 +240,35 @@ public class Panel_Modifica extends javax.swing.JFrame {
                 break;
         }
     }
+    
+    private void finalizaTarea() {
+        preparaSiguienteMantenimiento();
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate("UPDATE tareas SET tarea=\"" + tATarea.getText() + "\",nivel_preferencia=\"" + jCNivelPreferencia.getSelectedItem().toString() + "\",estado=\"finalizado\",observaciones=\"" + tAObservaciones.getText() + "\",operaciones=\"" + extraeOperaciones() + "\",fecha_fin=CURRENT_TIMESTAMP WHERE Id_tarea=" + id_t);
+            JOptionPane.showMessageDialog(null, "Tarea modificada correctamente.");
+            modificaTxt();
+        } catch (SQLException ex) {
+            Logger.getLogger(Panel_Modifica.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "No se ha podido modificar la tarea.");
+        } catch (IOException ex) {
+            Logger.getLogger(Panel_Modifica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        dispose();
+        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
+                Statement stmt = conn.createStatement();
+                ResultSet r = stmt.executeQuery("SELECT * FROM tareas WHERE Id_tarea=" + id_t)) {
+            while (r.next()) {
+                tATarea.append(r.getString("tarea"));
+                jCNivelPreferencia.setSelectedItem(r.getString("nivel_preferencia")); //r.getString("nivel_preferencia");
+                tAObservaciones.append(r.getString("observaciones")); //r.getString("observaciones");
+                Panel_Mantenimiento panel = new Panel_Mantenimiento(r.getString("Id_tarea"), r.getString("tarea"), r.getString("tipo_tarea"), r.getString("tipo_problema"), r.getString("id_maquina"), r.getString("operaciones"), r.getString("observaciones"));
+                panel.setVisible(true);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al cargar los datos de la tabla Mantenimiento.");
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -186,22 +280,26 @@ public class Panel_Modifica extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tATarea = new javax.swing.JTextArea();
-        jLabel2 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tAObservaciones = new javax.swing.JTextArea();
+        jbIniciar = new javax.swing.JButton();
+        jbFinalizar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         jCNivelPreferencia = new javax.swing.JComboBox<>();
         labelProceso = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jlMaquina = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jCMaquina = new javax.swing.JComboBox<>();
-        jPanel2 = new javax.swing.JPanel();
-        jbIniciar = new javax.swing.JButton();
-        jbFinalizar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tATarea = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jPanel_tareas = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -214,27 +312,22 @@ public class Panel_Modifica extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tarea");
         setBackground(new java.awt.Color(204, 204, 204));
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
         setPreferredSize(new java.awt.Dimension(816, 768));
-        setResizable(false);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(51, 0, 0));
-        jLabel1.setText("Tarea:");
-
-        tATarea.setColumns(20);
-        tATarea.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tATarea.setLineWrap(true);
-        tATarea.setRows(5);
-        tATarea.setWrapStyleWord(true);
-        jScrollPane1.setViewportView(tATarea);
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 0, 0));
-        jLabel2.setText("Observaciones:");
 
         tAObservaciones.setColumns(20);
         tAObservaciones.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -242,40 +335,6 @@ public class Panel_Modifica extends javax.swing.JFrame {
         tAObservaciones.setRows(5);
         tAObservaciones.setWrapStyleWord(true);
         jScrollPane2.setViewportView(tAObservaciones);
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(51, 0, 0));
-        jLabel4.setText("Nivel de preferencia:");
-
-        jCNivelPreferencia.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jCNivelPreferencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "urgente", "prioritaria", "normal" }));
-
-        labelProceso.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        labelProceso.setForeground(new java.awt.Color(255, 0, 0));
-        labelProceso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelProceso.setText("En proceso ...");
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(51, 0, 0));
-        jLabel5.setText("Maquina:");
-
-        jlMaquina.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jlMaquina.setText("jLabel3");
-        jlMaquina.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jlMaquinaMousePressed(evt);
-            }
-        });
-
-        jCMaquina.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jCMaquina.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Null" }));
-        jCMaquina.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCMaquinaActionPerformed(evt);
-            }
-        });
-
-        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
         jbIniciar.setBackground(new java.awt.Color(51, 255, 51));
         jbIniciar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -295,6 +354,10 @@ public class Panel_Modifica extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(51, 0, 0));
+        jLabel4.setText("Nivel de preferencia:");
+
         jButton1.setBackground(new java.awt.Color(0, 153, 153));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton1.setText("Modifica tarea");
@@ -304,6 +367,72 @@ public class Panel_Modifica extends javax.swing.JFrame {
             }
         });
 
+        jCNivelPreferencia.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jCNivelPreferencia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "urgente", "prioritaria", "normal" }));
+
+        labelProceso.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
+        labelProceso.setForeground(new java.awt.Color(255, 0, 0));
+        labelProceso.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelProceso.setText("En proceso ...");
+        labelProceso.setEnabled(false);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(51, 0, 0));
+        jLabel5.setText("Maquina:");
+
+        jlMaquina.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jlMaquina.setText("jLabel3");
+        jlMaquina.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jlMaquinaMousePressed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 0, 0));
+        jLabel1.setText("Tarea:");
+
+        jCMaquina.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jCMaquina.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Null" }));
+        jCMaquina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCMaquinaActionPerformed(evt);
+            }
+        });
+
+        tATarea.setColumns(20);
+        tATarea.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tATarea.setLineWrap(true);
+        tATarea.setRows(5);
+        tATarea.setWrapStyleWord(true);
+        jScrollPane1.setViewportView(tATarea);
+
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        jPanel_tareas.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout jPanel_tareasLayout = new javax.swing.GroupLayout(jPanel_tareas);
+        jPanel_tareas.setLayout(jPanel_tareasLayout);
+        jPanel_tareasLayout.setHorizontalGroup(
+            jPanel_tareasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 807, Short.MAX_VALUE)
+        );
+        jPanel_tareasLayout.setVerticalGroup(
+            jPanel_tareasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 216, Short.MAX_VALUE)
+        );
+
+        jScrollPane3.setViewportView(jPanel_tareas);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 0, 0));
+        jLabel2.setText("Operaciones:");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 0, 0));
+        jLabel3.setText("Observaciones:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -311,21 +440,68 @@ public class Panel_Modifica extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
-                    .addComponent(jbFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jbIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jCNivelPreferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(165, 165, 165)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jlMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel2))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(356, 356, 356)
+                        .addComponent(jCMaquina, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jbIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jbFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCNivelPreferencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlMaquina))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jCMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(labelProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1200, 1200, 1200))
         );
 
         jbIniciar.getAccessibleContext().setAccessibleDescription("");
@@ -335,57 +511,11 @@ public class Panel_Modifica extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jCNivelPreferencia, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(228, 228, 228)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(253, 253, 253))
-                            .addComponent(jlMaquina, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jCMaquina, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelProceso)
-                            .addComponent(jLabel2)
-                            .addComponent(jScrollPane2))
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(41, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCNivelPreferencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlMaquina))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCMaquina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
-                .addGap(18, 18, 18)
-                .addComponent(labelProceso)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 745, Short.MAX_VALUE)
         );
 
         pack();
@@ -409,14 +539,18 @@ public class Panel_Modifica extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jbIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbIniciarActionPerformed
+        String tareas="";
+        for (int i = 0; i<array_checkbox.size();i++){
+            tareas = tareas + array_checkbox.get(i).getText()+"#";
+        }
         try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
             Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate("UPDATE tareas SET tarea=\""+tATarea.getText()+"\",nivel_preferencia=\""+jCNivelPreferencia.getSelectedItem().toString()+"\",estado=\"en proceso\",observaciones=\""+tAObservaciones.getText()+"\",fecha_inicio=CURRENT_TIMESTAMP WHERE Id_tarea="+id_t);
+            stmt.executeUpdate("UPDATE tareas SET nivel_preferencia=\""+jCNivelPreferencia.getSelectedItem().toString()+"\",estado=\"en proceso\",observaciones=\""+tAObservaciones.getText()+"\",operaciones=\""+tareas+"\",fecha_inicio=CURRENT_TIMESTAMP WHERE Id_tarea="+id_t);
             JOptionPane.showMessageDialog(null, "Tarea modificada correctamente.");
             modificaTxt();
         } catch (SQLException ex) {
             Logger.getLogger(Panel_Modifica.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "No se ha podido modificar la tarea.");
+            JOptionPane.showMessageDialog(null, "No se ha podido iniciar la tarea.");
         } catch (IOException ex) {
             Logger.getLogger(Panel_Modifica.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -424,31 +558,15 @@ public class Panel_Modifica extends javax.swing.JFrame {
     }//GEN-LAST:event_jbIniciarActionPerformed
 
     private void jbFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFinalizarActionPerformed
-        preparaSiguienteMantenimiento();
-        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
-            Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate("UPDATE tareas SET tarea=\""+tATarea.getText()+"\",nivel_preferencia=\""+jCNivelPreferencia.getSelectedItem().toString()+"\",estado=\"finalizado\",observaciones=\""+tAObservaciones.getText()+"\",fecha_fin=CURRENT_TIMESTAMP WHERE Id_tarea="+id_t);
-            JOptionPane.showMessageDialog(null, "Tarea modificada correctamente.");
-            modificaTxt();
-        }catch (SQLException ex) {
-            Logger.getLogger(Panel_Modifica.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(null, "No se ha podido modificar la tarea.");
-        } catch (IOException ex) { 
-            Logger.getLogger(Panel_Modifica.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        dispose();
-        try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
-            Statement stmt = conn.createStatement();
-            ResultSet r = stmt.executeQuery("SELECT * FROM tareas WHERE Id_tarea="+id_t)) {
-            while (r.next()){ 
-                tATarea.append(r.getString("tarea"));
-                jCNivelPreferencia.setSelectedItem(r.getString("nivel_preferencia")); //r.getString("nivel_preferencia");
-                tAObservaciones.append(r.getString("observaciones")); //r.getString("observaciones");
-                Panel_Mantenimiento panel = new Panel_Mantenimiento(r.getString("Id_tarea"),r.getString("tarea"),r.getString("tipo_tarea"),r.getString("tipo_problema"),r.getString("id_maquina"),r.getString("observaciones"));
-                panel.setVisible(true);
+        if (cumpruebaTermidas() == true) {
+            finalizaTarea();
+        }else{
+            int seleccion = JOptionPane.showConfirmDialog(null, "Hay que operaciones sin seleccionar. ¿Estas seguro?.");
+            if (seleccion==0){
+                finalizaTarea();
+            }else{
+                JOptionPane.showMessageDialog(null, "Operación suspendida.");
             }
-        }catch(SQLException e){
-            JOptionPane.showMessageDialog(null,"Error al cargar los datos de la tabla Mantenimiento ");
         }
     }//GEN-LAST:event_jbFinalizarActionPerformed
 
@@ -509,12 +627,16 @@ public class Panel_Modifica extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCNivelPreferencia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel_tareas;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jbFinalizar;
     private javax.swing.JButton jbIniciar;
     private javax.swing.JLabel jlMaquina;

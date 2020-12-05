@@ -55,7 +55,7 @@ public class PanelStation extends javax.swing.JFrame {
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("IlorcitanaStation V1.04.02");
+        setTitle("IlorcitanaStation V1.04.03");
         setBackground(new java.awt.Color(155, 202, 233));
         setIconImage(new ImageIcon(getClass().getResource("/imagenes/satelite_p.png")).getImage());
         setResizable(false);

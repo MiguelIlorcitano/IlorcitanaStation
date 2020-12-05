@@ -161,7 +161,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                 try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                     Statement stmt = conn.createStatement();
                     ResultSet r = stmt.executeQuery(consulta)) {
-                    String titulos[] = {"Id", "Tarea", "Máquina", "Tipo_Problema", "Preferencia", "Estado", "Fecha de tarea", "Observaciones"};
+                    String titulos[] = {"Id", "Tarea", "Máquina", "Tipo_Problema", "Preferencia", "Estado", "Fecha de tarea", "Operaciones"};
                     n = new DefaultTableModel(null, titulos);
                     String fila[] = new String[8];
                     while (r.next()) {
@@ -175,7 +175,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                                 fila[4] = r.getString("nivel_preferencia");
                                 fila[5] = r.getString("estado");
                                 fila[6] = r.getString("fecha_tarea");
-                                fila[7] = r.getString("observaciones");
+                                fila[7] = r.getString("operaciones");
                                 n.addRow(fila);
                             } else if ("finalizado".equals(r.getString("estado")) && "finalizado".equals(jCEstado.getSelectedItem().toString())) {
                                 fila[0] = r.getString("Id_tarea");
@@ -185,7 +185,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                                 fila[4] = r.getString("nivel_preferencia");
                                 fila[5] = r.getString("estado");
                                 fila[6] = r.getString("fecha_tarea");
-                                fila[7] = r.getString("observaciones");
+                                fila[7] = r.getString("operaciones");
                                 n.addRow(fila);
                             }
                         }
@@ -216,7 +216,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                 try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                     Statement stmt = conn.createStatement();
                     ResultSet r = stmt.executeQuery(consulta)) {
-                    String titulos[] = {"Id", "Tarea", "Máquina", "Tipo_Problema", "Preferencia", "Estado", "Fecha de tarea", "Observaciones"};
+                    String titulos[] = {"Id", "Tarea", "Máquina", "Tipo_Problema", "Preferencia", "Estado", "Fecha de tarea", "Operaciones"};
                     n = new DefaultTableModel(null, titulos);
                     String fila[] = new String[8];
                     while (r.next()) {
@@ -230,7 +230,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                                 fila[4] = r.getString("nivel_preferencia");
                                 fila[5] = r.getString("estado");
                                 fila[6] = r.getString("fecha_tarea");
-                                fila[7] = r.getString("observaciones");
+                                fila[7] = r.getString("operaciones");
                                 n.addRow(fila);
                             } else if ("finalizado".equals(r.getString("estado")) && "finalizado".equals(jCEstado.getSelectedItem().toString())) {
                                 fila[0] = r.getString("Id_tarea");
@@ -240,7 +240,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                                 fila[4] = r.getString("nivel_preferencia");
                                 fila[5] = r.getString("estado");
                                 fila[6] = r.getString("fecha_tarea");
-                                fila[7] = r.getString("observaciones");
+                                fila[7] = r.getString("operaciones");
                                 n.addRow(fila);
                             }
                         }
@@ -271,7 +271,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                 try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                     Statement stmt = conn.createStatement();
                     ResultSet r = stmt.executeQuery(consulta)) {
-                    String titulos[] = {"Id", "Usuario", "Tarea", "Tipo de tarea", "Maquina", "Tipo de problema", "Preferencia", "Estado", "Observaciones", "Fecha de tarea", "Fecha de inicio", "Fecha de fin"};
+                    String titulos[] = {"Id", "Usuario", "Tarea", "Tipo de tarea", "Maquina", "Tipo de problema", "Preferencia", "Estado", "Operaciones", "Fecha de tarea", "Fecha de inicio", "Fecha de fin"};
                     n = new DefaultTableModel(null, titulos);
                     String fila[] = new String[12];
                     while (r.next()) {
@@ -283,7 +283,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                         fila[5] = r.getString("tipo_problema");
                         fila[6] = r.getString("nivel_preferencia");
                         fila[7] = r.getString("estado");
-                        fila[8] = r.getString("observaciones");
+                        fila[8] = r.getString("operaciones");
                         fila[9] = r.getString("fecha_tarea");
                         fila[10] = r.getString("fecha_inicio");
                         fila[11] = r.getString("fecha_fin");
@@ -320,7 +320,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                 try (Connection conn = DriverManager.getConnection(Main.driver, Main.usuario, Main.clave);
                     Statement stmt = conn.createStatement();
                     ResultSet r = stmt.executeQuery(consulta)) {
-                    String titulos[] = {"Id", "Tarea", "Máquina", "Tipo_Problema", "Preferencia", "Estado", "Fecha de tarea", "Observaciones"};
+                    String titulos[] = {"Id", "Tarea", "Máquina", "Tipo_Problema", "Preferencia", "Estado", "Fecha de tarea", "Operaciones"};
                     n = new DefaultTableModel(null, titulos);
                     String fila[] = new String[8];
                     while (r.next()) {
@@ -334,7 +334,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                                 fila[4] = r.getString("nivel_preferencia");
                                 fila[5] = r.getString("estado");
                                 fila[6] = r.getString("fecha_tarea");
-                                fila[7] = r.getString("observaciones");
+                                fila[7] = r.getString("operaciones");
                                 n.addRow(fila);
                             } else if ("finalizado".equals(r.getString("estado")) && "finalizado".equals(jCEstado.getSelectedItem().toString())) {
                                 fila[0] = r.getString("Id_tarea");
@@ -344,7 +344,7 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                                 fila[4] = r.getString("nivel_preferencia");
                                 fila[5] = r.getString("estado");
                                 fila[6] = r.getString("fecha_tarea");
-                                fila[7] = r.getString("observaciones");
+                                fila[7] = r.getString("operaciones");
                                 n.addRow(fila);
                             }
                         }
@@ -768,7 +768,6 @@ public final class Tareas_Principal extends javax.swing.JFrame {
                         @Override
                         public boolean postProcessKeyEvent(KeyEvent e) {
                             if (e.getKeyCode() == KeyEvent.VK_ESCAPE && this != null) {
-                                System.out.println("probando...");
                                 mod.dispose();
                                 return false;
                             }
